@@ -5,12 +5,12 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Assertions.assertFalse
 
-import frc.team5499.monkeyLib.math.geometry.Vector2
-import frc.team5499.monkeyLib.math.geometry.Rotation2d
-import frc.team5499.monkeyLib.math.geometry.Pose2d
-import frc.team5499.monkeyLib.math.geometry.Twist2d
+import org.team5499.monkeyLib.math.geometry.Vector2
+import org.team5499.monkeyLib.math.geometry.Rotation2d
+import org.team5499.monkeyLib.math.geometry.Pose2d
+import org.team5499.monkeyLib.math.geometry.Twist2d
 
-import frc.team5499.monkeyLib.math.Epsilon
+import org.team5499.monkeyLib.math.Epsilon
 
 @Suppress("LargeClass")
 public class GeometryTests {

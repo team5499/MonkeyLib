@@ -1,6 +1,6 @@
 package tests.math
 
-import frc.team5499.monkeyLib.math.Epsilon
+import org.team5499.monkeyLib.math.Epsilon
 
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.Assertions.assertTrue

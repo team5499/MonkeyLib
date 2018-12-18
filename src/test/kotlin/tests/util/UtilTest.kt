@@ -1,9 +1,9 @@
 package tests.utils
 
-import frc.team5499.monkeyLib.input.DriveSignal
-import frc.team5499.monkeyLib.util.Utils
+import org.team5499.monkeyLib.input.DriveSignal
+import org.team5499.monkeyLib.util.Utils
 
-import frc.team5499.monkeyLib.math.Epsilon
+import org.team5499.monkeyLib.math.Epsilon
 
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.Assertions.assertEquals
