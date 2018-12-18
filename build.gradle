@@ -114,18 +114,28 @@ publishing {
 
 class PublishToMavenRepositoryWithCreds extends PublishToMavenRepository {
     @Option(option="username", description="username of the user")
-    String username
+    public String username
+
+    void setUsername(String username) {
+        this.username = username
+    }
+
+    String getUsername() {
+        return this.username
+    }
 
     @Option(option="password", description="password of the user")
-    String password
+    public String password
 
-    @TaskAction
-    void echo() {
-        logger.lifecycle("Username: ${username}, Password: ${password}")
+    void setPassword(String password) {
+        this.password = password
     }
+
+    String getPassword() {
+        return this.password
+    }
+
 }
-
-
 
 task publishToTeamRepo(type: PublishToMavenRepositoryWithCreds) {
     doFirst {
