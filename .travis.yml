@@ -6,6 +6,9 @@ script:
 after_success:
 - bash <(curl -s https://codecov.io/bash)
 # - /code/gradlew -p /code publishToTeamRepo --username=$USERNAME --password=$PASSWORD
+branches:
+  only:
+  - master
 env:
   global:
   - secure: 27QEXgoxkZnGbAVmSrbG5Sg70XRvhPpGKXzFY59IAJmt5E8F58XV9rshaaqbR9wJ77zb5UHYJmJC+aOwJCwdWBZqwC9tMiU/10Ep7qZQMIgfwNzXvRR4CJwUs2mmdlsSOVBPpRhM/RQKDqKBmTWqoMm1DZSu/dfvAIseS4aLsUjD+y1wg3rGvoC+9+GoO/yZi4Ih/Hi4i/7hINZK6FgSmtMfWZhzM0oTwRMQ6ENVGqUP7QwBoWB1yxRvzqyHIJ3CA2kPdoEXIDVFwxeEzLPSGv4RrdI3eVVFxsEqxsgKxXmKX3kSgLMJKgE6/BYFTfSMJ9F86wZEfctGwvY2LFh18REKM+mQfEkSXqakCq4ubkA47qkdFm87MOMe8KAR30IdKBHTgzRFs8b+y4esPNMpaEkbMWNxyTCnPKoJyE5Ly5MJPnDKFrlHG2MMOSDcjPVinU25B81L1Tvb5XRRpnFRcsinAneG9jEAhD6YEtW3rkcmfvLqRiAYy0r2gKsQ1tSnnXKYY+Bc5nKL/sHl8ZM2xFO3PkoYFHhkempLJ1lc3RNPUYeO2uWHgXHVsHcjwDWCacixegaTuHVIkb9cn09Rejm9/V1h5G1IIVUIsicDO+ejmbN4hy1N95ReFm9G6Qfjglq3EibdNkl3CWWNsJX/2xOyMPJ+tN0L0ra3btWSJvA=
