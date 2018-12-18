@@ -2,8 +2,9 @@ sudo: required
 services:
 - docker
 script:
-- docker run -v $(pwd):/code:rw team5499/frc-testing-image /code/gradlew -p /code test jacocoTestReport publishToTeamRepo --username=$USERNAME --password=$PASSWORD
+- docker run -v $(pwd):/code:rw team5499/frc-testing-image /code/gradlew -p /code test jacocoTestReport
 after_success:
+- echo "$TRAVIS_BRANCH"; if [ "$TRAVIS_BRANCH" == "master" ]; then docker run -v $(pwd):/code:rw team5499/frc-testing-image /code/gradlew -p /code publishToTeamRepo --username=$USERNAME --password=$PASSWORD; fi
 - bash <(curl -s https://codecov.io/bash)
 # - /code/gradlew -p /code publishToTeamRepo --username=$USERNAME --password=$PASSWORD
 branches:
