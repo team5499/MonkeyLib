@@ -3,8 +3,8 @@ plugins {
     id 'edu.wpi.first.GradleRIO' version '2019.0.0-alpha-3'
     id 'java-library'
     id 'maven-publish'
-    id 'signing'
     id 'jacoco'
+    id 'maven'
 }
 
 repositories {
@@ -82,31 +82,24 @@ task tox {
 test.finalizedBy 'tox'
 task install_hooks(dependsOn: 'tox')
 
-
-// publishing {
-//     publications {
-//         mavenJava(MavenPublication) {
-//             artifactId = 'MonkeyLib'
-//             from components.java
-//             artifact sourcesJar
-//             artifact javadocJar
-//             pom {
-//                 name = 'MonkeyLib'
-//                 description = 'Commonly used utilities in FRC Team 5499\'s codebase'
-//                 url = 'https://github.com/team5499/MonkeyLib'
-//             }
-//         }
-//     }
-//     repositories {
-//         maven {
-//             // url = "somethin
-//         }
-//     }
-// }
-
-// signing.
-
-// signing {
-//     sign sourcesJar
-//     sign publishing.publications.mavenJava
-// }
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            artifactId = 'monkey-lib'
+            from components.java
+            artifact sourcesJar
+            artifact javadocJar
+            pom {
+                name = 'MonkeyLib'
+                description = 'Commonly used utilities in FRC Team 5499\'s codebase'
+                url = 'https://github.com/team5499/MonkeyLib'
+            }
+        }
+    }
+    repositories {
+        mavenLocal()
+        maven {
+            url = "$buildDir/repo"
+        }
+    }
+}
