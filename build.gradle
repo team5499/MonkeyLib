@@ -101,7 +101,6 @@ publishing {
         }
     }
     repositories {
-        mavenLocal()
         maven {
             url = "sftp://rio.team5499.org:54990/home/team5499/maven"
             credentials {
