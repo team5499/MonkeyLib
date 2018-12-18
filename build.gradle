@@ -15,27 +15,6 @@ repositories {
     mavenCentral()
 }
 
-
-class GrabUserAndPass extends DefaultTask {
-    @Option(option="username", description="username")
-    String username
-
-    @Option(option="password", description="password")
-    String password
-
-    @TaskAction
-    void echoUserAndPass() {
-        project.ext.set("username", username)
-        project.ext.set("password", password)
-        //logger.lifecyle(" ${project.username}")
-        logger.lifecycle("username: ${project.username}")
-        logger.lifecycle("password: ${project.password}")
-    }
-}
-
-task getUser(type: GrabUserAndPass) {
-}
-
 dependencies {
     api 'org.jetbrains.kotlin:kotlin-stdlib'
     api ctre()
@@ -107,9 +86,10 @@ task tox {
 test.finalizedBy 'tox'
 task install_hooks(dependsOn: 'tox')
 
+
 publishing {
     publications {
-        mavenJava(MavenPublication) {
+        library(MavenPublication) {
             artifactId = 'monkey-lib'
             from components.java
             artifact sourcesJar
@@ -126,9 +106,32 @@ publishing {
         maven {
             url = "sftp://rio.team5499.org:54990/home/team5499/maven"
             credentials {
-                username project.username
-                password project.password
+
             }
         }
     }
+}
+
+class PublishToMavenRepositoryWithCreds extends PublishToMavenRepository {
+    @Option(option="username", description="username of the user")
+    String username
+
+    @Option(option="password", description="password of the user")
+    String password
+
+    @TaskAction
+    void echo() {
+        logger.lifecycle("Username: ${username}, Password: ${password}")
+    }
+}
+
+
+
+task publishToTeamRepo(type: PublishToMavenRepositoryWithCreds) {
+    doFirst {
+        publishing.repositories.maven.credentials.username = username
+        publishing.repositories.maven.credentials.password = password
+    }
+    publication = publishing.publications.library
+    repository = publishing.repositories.maven
 }
