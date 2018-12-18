@@ -1,3 +1,6 @@
+import org.gradle.api.tasks.options.Option
+
+
 plugins {
     id 'org.jetbrains.kotlin.jvm' version '1.3.0'
     id 'edu.wpi.first.GradleRIO' version '2019.0.0-alpha-3'
@@ -8,7 +11,29 @@ plugins {
 }
 
 repositories {
+    mavenLocal()
     mavenCentral()
+}
+
+
+class GrabUserAndPass extends DefaultTask {
+    @Option(option="username", description="username")
+    String username
+
+    @Option(option="password", description="password")
+    String password
+
+    @TaskAction
+    void echoUserAndPass() {
+        project.ext.set("username", username)
+        project.ext.set("password", password)
+        //logger.lifecyle(" ${project.username}")
+        logger.lifecycle("username: ${project.username}")
+        logger.lifecycle("password: ${project.password}")
+    }
+}
+
+task getUser(type: GrabUserAndPass) {
 }
 
 dependencies {
@@ -99,7 +124,11 @@ publishing {
     repositories {
         mavenLocal()
         maven {
-            url = "$buildDir/repo"
+            url = "sftp://rio.team5499.org:54990/home/team5499/maven"
+            credentials {
+                username project.username
+                password project.password
+            }
         }
     }
 }
