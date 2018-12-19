@@ -1,6 +1,4 @@
-package org.team5499.monkeyLib.auto.routines
-
-import org.team5499.monkeyLib.auto.Action
+package org.team5499.monkeyLib.auto
 
 import org.team5499.monkeyLib.math.geometry.Rotation2d
 
