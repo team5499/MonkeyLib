@@ -101,11 +101,8 @@ publishing {
         }
     }
     repositories {
-        maven {
-            url = "sftp://rio.team5499.org:54990/home/team5499/maven"
-            credentials {
+        maven{
 
-            }
         }
     }
 }
@@ -133,12 +130,24 @@ class PublishToMavenRepositoryWithCreds extends PublishToMavenRepository {
         return this.password
     }
 
+    @Option(option="url", description="url to deploy to")
+    public String url
+
+    void setUrl(String url) {
+        this.url = url
+    }
+
+    String getUrl() {
+        return this.url
+    }
+
 }
 
 task publishToTeamRepo(type: PublishToMavenRepositoryWithCreds) {
     doFirst {
         publishing.repositories.maven.credentials.username = username
         publishing.repositories.maven.credentials.password = password
+        publishing.repositories.maven.url = url
     }
     publication = publishing.publications.library
     repository = publishing.repositories.maven
