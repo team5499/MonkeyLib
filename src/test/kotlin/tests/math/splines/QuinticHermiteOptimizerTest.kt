@@ -1,4 +1,4 @@
-package tests.utils.math.splines
+package tests.math.splines
 
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.Assertions.assertEquals
