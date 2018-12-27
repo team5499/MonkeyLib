@@ -1,4 +1,4 @@
-package tests.utils.math.splines
+package tests.math.splines
 
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.Assertions.assertEquals
@@ -16,7 +16,7 @@ import org.team5499.monkeyLib.math.splines.QuinticHermiteSpline
 class SplineGeneratorTest {
 
     @Test
-    fun test_generator() {
+    fun testGenerator() {
         val p1 = Pose2d(Vector2(0, 0), Rotation2d())
         val p2 = Pose2d(Vector2(15, 10), Rotation2d(1, -5, true))
         var s = QuinticHermiteSpline(p1, p2)
