@@ -2,8 +2,6 @@ package org.team5499.monkeyLib.math.pid
 
 import edu.wpi.first.wpilibj.Timer
 
-import org.team5499.monkeyLib.util.Utils
-
 public class PIDF {
 
     public var kP: Double
@@ -16,10 +14,6 @@ public class PIDF {
     // number of iterations the accumulator keeps track of.
     // 0 disables this (keeps track of all loops)
     public var integralZone: Int
-
-    public var upperOutputCap: Double
-    public var lowerOutputCap: Double
-    public var useOutputCaps: Boolean
 
     public var inverted: Boolean
 
@@ -35,9 +29,6 @@ public class PIDF {
         this.timer = Timer()
         this.timer.reset()
         this.accumulator = 0.0
-        this.upperOutputCap = Double.MAX_VALUE
-        this.lowerOutputCap = Double.MIN_VALUE
-        this.useOutputCaps = false
         this.lastError = 0.0
         this.setpoint = 0.0
         this.processVariable = 0.0
@@ -78,10 +69,7 @@ public class PIDF {
         timer.start()
         lastError = error
         val total = pt + it + dt + ft
-        if (useOutputCaps) {
-            return if (!inverted) Utils.limit(total, lowerOutputCap, upperOutputCap)
-            else -Utils.limit(total, lowerOutputCap, upperOutputCap)
-        } else return total
+        return total
     }
 
     public fun reset() {
