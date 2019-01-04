@@ -6,12 +6,26 @@ import org.team5499.monkeyLib.math.geometry.Pose2d
 import org.team5499.monkeyLib.math.geometry.Rotation2d
 import org.team5499.monkeyLib.math.geometry.Pose2dWithCurvature
 
-object PathGenerator {
+class PathGenerator {
 
-    private const val kMaxVelocity = 100.0 // i / s
-    private const val kMaxAcceleration = 80.0 // in / s / s
-    private const val kDefaultStartPathVelocity = 10.0 // i / s
-    private const val kDefaultEndPathVelocity = 0.0 // i / s
+    private val mMaxVelocity: Double // i / s
+    private val mMaxAcceleration: Double // in / s / s
+    private val mStartPathVelocity: Double // i / s
+    private val mEndPathVelocity: Double // i / s
+
+    public constructor(
+        defaultMaxVelocity: Double,
+        defaultMaxAcceleration: Double,
+        defaultStartVelocity: Double,
+        defaultEndVelocity: Double
+    ) {
+        mMaxVelocity = defaultMaxVelocity
+        mMaxAcceleration = defaultMaxAcceleration
+        mStartPathVelocity = defaultStartVelocity
+        mEndPathVelocity = defaultEndVelocity
+    }
+
+    public constructor(): this(100.0, 80.0, 10.0, 0.0)
 
     @Suppress("LongParameterList", "ComplexMethod")
     public fun generatePath(
@@ -89,10 +103,10 @@ object PathGenerator {
     public fun generatePath(reversed: Boolean, waypoints: Array<Pose2d>): Path {
         return generatePath(
             reversed, waypoints,
-            kMaxVelocity,
-            kMaxAcceleration,
-            kDefaultStartPathVelocity,
-            kDefaultEndPathVelocity
+            mMaxVelocity,
+            mMaxAcceleration,
+            mStartPathVelocity,
+            mEndPathVelocity
         )
     }
 }
