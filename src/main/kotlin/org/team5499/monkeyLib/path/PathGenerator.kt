@@ -25,8 +25,6 @@ class PathGenerator {
         mEndPathVelocity = defaultEndVelocity
     }
 
-    public constructor(): this(100.0, 80.0, 10.0, 0.0)
-
     @Suppress("LongParameterList", "ComplexMethod")
     public fun generatePath(
         reversed: Boolean,
