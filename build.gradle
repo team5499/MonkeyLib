@@ -17,6 +17,7 @@ repositories {
 
 dependencies {
     api 'org.jetbrains.kotlin:kotlin-stdlib'
+    api 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.0.0'
     api ctre()
     api wpilib()
 
