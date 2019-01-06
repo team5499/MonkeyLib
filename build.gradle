@@ -37,7 +37,7 @@ task sourcesJar(type: Jar) {
 }
 
 task dokkaJavadoc(type: org.jetbrains.dokka.gradle.DokkaTask) {
-    outputFormat = 'javadoc'
+    outputFormat = 'html'
     outputDirectory = javadoc.destinationDir
     inputs.dir 'src/main/kotlin'
 }
@@ -48,7 +48,7 @@ task javadocJar(type: Jar, dependsOn: dokkaJavadoc) {
 }
 
 dokka {
-    outputFormat = 'javadoc'
+    outputFormat = 'html'
     outputDirectory = "$buildDir/javadoc"
 }
 
