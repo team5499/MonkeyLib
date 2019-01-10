@@ -34,7 +34,9 @@ public class XboxControllerPlus(portNumber: Int) : XboxController(portNumber) {
 
         mTimer = Timer()
         mRumbleThread = Thread(Runnable {
-                synchronized(this) {
+            synchronized(this) {
+                var running = true
+                while (running) {
                     if (mTimer.get() >= mDuration) {
                         mTimer.stop()
                         mDuration = 0.0
@@ -42,27 +44,24 @@ public class XboxControllerPlus(portNumber: Int) : XboxController(portNumber) {
                         mSide = RumbleSide.NONE
                     }
                     when (mSide) {
-                        RumbleSide.BOTH -> {
-                            super.setRumble(RumbleType.kLeftRumble, mStrength)
-                            super.setRumble(RumbleType.kRightRumble, mStrength)
-                        }
-                        RumbleSide.LEFT -> {
-                            super.setRumble(RumbleType.kLeftRumble, mStrength)
-                        }
-                        RumbleSide.RIGHT -> {
-                            super.setRumble(RumbleType.kRightRumble, mStrength)
-                        }
-                        RumbleSide.NONE -> {
-                            super.setRumble(RumbleType.kLeftRumble, 0.0)
-                            super.setRumble(RumbleType.kRightRumble, 0.0)
-                        }
+                        RumbleSide.BOTH -> setRumble(mStrength, mStrength)
+                        RumbleSide.LEFT -> setRumble(mStrength, 0.0)
+                        RumbleSide.RIGHT -> setRumble(mStrength, 0.0)
+                        RumbleSide.NONE -> setRumble(0.0, 0.0)
                     }
                     Thread.sleep(kRumbleThreadPeriod) // sleep for a tenth of a second to save cpu time
                 }
-            },
-            "rumble-thread-$mPortNumber" // name of thread
+            }
+        },
+        "rumble-thread-$mPortNumber" // name of thread
         )
         mRumbleThread.start()
+    }
+
+    @Synchronized
+    private fun setRumble(left: Double, right: Double) {
+        super.setRumble(RumbleType.kLeftRumble, left)
+        super.setRumble(RumbleType.kRightRumble, right)
     }
 
     /**
@@ -72,11 +71,12 @@ public class XboxControllerPlus(portNumber: Int) : XboxController(portNumber) {
     */
     @Synchronized
     public fun rumbleForSeconds(duration: Double, strength: Double, side: RumbleSide) {
-        mDuration = duration
-        mStrength = strength
-        mSide = side
-        mTimer.stop()
-        mTimer.reset()
-        mTimer.start()
+        // mDuration = duration
+        // mStrength = strength
+        // mSide = side
+        // mTimer.stop()
+        // mTimer.reset()
+        // mTimer.start()
+        println("set rumble")
     }
 }
