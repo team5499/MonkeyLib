@@ -1,16 +1,16 @@
 package tests.math
 
-import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertTrue
-import org.junit.jupiter.api.Assertions.assertFalse
-
 import org.team5499.monkeyLib.math.geometry.Vector2
 import org.team5499.monkeyLib.math.geometry.Rotation2d
 import org.team5499.monkeyLib.math.geometry.Pose2d
 import org.team5499.monkeyLib.math.geometry.Twist2d
 
 import org.team5499.monkeyLib.math.Epsilon
+
+import org.junit.Test
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertTrue
+import org.junit.Assert.assertFalse
 
 @Suppress("LargeClass")
 public class GeometryTests {

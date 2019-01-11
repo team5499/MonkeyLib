@@ -24,8 +24,11 @@ dependencies {
     nativeZip wpi.deps.vendor.jni(wpi.platforms.roborio)
     nativeDesktopZip wpi.deps.vendor.jni(wpi.platforms.desktop)
 
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.1.1'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.1.1'
+    testCompile 'junit:junit:4.12'
+    testCompile 'org.mockito:mockito-core:2.0.42-beta'
+    testCompile 'org.powermock:powermock-module-junit4:1.6.6'
+    testCompile 'org.powermock:powermock-api-mockito2:1.6.6'
+
 }
 
 group = 'org.team5499'
@@ -55,7 +58,7 @@ dokka {
 test {
     dependsOn 'cleanTest'
 
-    useJUnitPlatform()
+    useJUnit()
 
     testLogging {
         events 'PASSED', 'FAILED', 'SKIPPED'
