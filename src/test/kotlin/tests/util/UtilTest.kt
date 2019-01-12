@@ -2,8 +2,8 @@ package tests.utils
 
 import org.team5499.monkeyLib.util.Utils
 
-import org.junit.Test
-import org.junit.Assert.assertTrue
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.Assertions.assertTrue
 
 public class UtilTest {
 

@@ -1,26 +1,25 @@
 package tests.auto
 
-import org.junit.Test
-import org.junit.runner.RunWith
-import org.powermock.modules.junit4.PowerMockRunner
-import org.powermock.core.classloader.annotations.PrepareForTest
-import org.powermock.api.mockito.PowerMockito
-import org.mockito.Mockito
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.extension.ExtendWith
 
-import org.team5499.monkeyLib.auto.NothingAction
+import io.mockk.junit5.MockKExtension
 
-import edu.wpi.first.wpilibj.Timer
-
-@RunWith(PowerMockRunner::class)
-@PrepareForTest(Timer::class)
+@ExtendWith(MockKExtension::class)
 public class AutoTests {
 
-    private val fakeTimer: Timer = PowerMockito.mock(Timer::class.java)
+    // @BeforeAll
+    // private fun beforeTests() {
+    //     MockKAnnotations.init(this)
+    // }
+
+    // @AfterAll
+    // private fun afterTests() {
+
+    // }
 
     @Test
     public fun testNothingCommand() {
-        PowerMockito.whenNew(Timer::class.java).withAnyArguments().thenReturn(fakeTimer)
-        val action = NothingAction(10.0)
+        // val timer = MockK.mockk<Timer>()
     }
-
 }
