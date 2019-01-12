@@ -24,8 +24,13 @@ dependencies {
     nativeZip wpi.deps.vendor.jni(wpi.platforms.roborio)
     nativeDesktopZip wpi.deps.vendor.jni(wpi.platforms.desktop)
 
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.1.1'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.1.1'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.3.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.3.1'
+
+    // testCompile 'junit:junit:4.12'
+    testImplementation "io.mockk:mockk:1.9"
+    // compile group: 'io.mockk', name: 'mockk-dsl', version: '1.6.3'
+
 }
 
 group = 'org.team5499'
@@ -55,6 +60,7 @@ dokka {
 test {
     dependsOn 'cleanTest'
 
+    // useJUnit()
     useJUnitPlatform()
 
     testLogging {

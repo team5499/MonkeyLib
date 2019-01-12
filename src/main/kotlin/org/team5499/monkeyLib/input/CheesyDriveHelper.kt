@@ -20,7 +20,7 @@ public class CheesyDriveHelper(config: CheesyDriveConfig) : DriveHelper() {
         public var lowSensitivity = 0.0
     }
 
-    public var config: CheesyDriveConfig
+    private var config: CheesyDriveConfig
 
     private var mOldWheel = 0.0
     private var mQuickStopAccumlator = 0.0
