@@ -1,7 +1,8 @@
 package tests.math.splines
 
 import org.junit.Test
-import org.junit.Assert.*
+import org.junit.Assert.assertTrue
+import org.junit.Assert.assertEquals
 
 import org.team5499.monkeyLib.math.geometry.Vector2
 import org.team5499.monkeyLib.math.geometry.Rotation2d
