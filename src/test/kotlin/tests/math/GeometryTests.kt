@@ -1,16 +1,16 @@
 package tests.math
 
-import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertTrue
-import org.junit.jupiter.api.Assertions.assertFalse
-
 import org.team5499.monkeyLib.math.geometry.Vector2
 import org.team5499.monkeyLib.math.geometry.Rotation2d
 import org.team5499.monkeyLib.math.geometry.Pose2d
 import org.team5499.monkeyLib.math.geometry.Twist2d
 
 import org.team5499.monkeyLib.math.Epsilon
+
+import org.junit.Test
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertTrue
+import org.junit.Assert.assertFalse
 
 @Suppress("LargeClass")
 public class GeometryTests {
@@ -228,6 +228,13 @@ public class GeometryTests {
     @Test
     fun testPose2d() {
         var pose1 = Pose2d()
+        var pose2 = Pose2d()
+
+        // assertTrue(pose1.equals(pose2))
+        println(pose1.toString())
+        println(pose1.toCSV())
+        println(pose1.hashCode())
+
         assertEquals(0.0, pose1.translation.x, testEpsilon)
         assertEquals(0.0, pose1.translation.y, testEpsilon)
         assertEquals(0.0, pose1.rotation.degrees, testEpsilon)
@@ -238,7 +245,7 @@ public class GeometryTests {
         assertEquals(45.0, pose1.rotation.degrees, testEpsilon)
 
         pose1 = Pose2d(Vector2(3, 4), Rotation2d.fromDegrees(90.0))
-        var pose2 = Pose2d(Vector2(1, 0), Rotation2d.fromDegrees(0.0))
+        pose2 = Pose2d(Vector2(1, 0), Rotation2d.fromDegrees(0.0))
         var pose3 = pose1.transformBy(pose2)
         assertEquals(3.0, pose3.translation.x, testEpsilon)
         assertEquals(5.0, pose3.translation.y, testEpsilon)
