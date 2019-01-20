@@ -10,7 +10,7 @@ public class TankDriveHelper(deadband: Double, slowMultiplier: Double) : DriveHe
         mSlowMult = slowMultiplier
     }
 
-    public fun calculateOutput(left: Double, right: Double, isSlow: Boolean): DriveSignal {
+    public override fun calculateOutput(left: Double, right: Double, isSlow: Boolean, notUsed: Boolean): DriveSignal {
         var newLeft = super.handleDeadband(left, mDeadband)
         var newRight = super.handleDeadband(right, mDeadband)
         if (isSlow) {
