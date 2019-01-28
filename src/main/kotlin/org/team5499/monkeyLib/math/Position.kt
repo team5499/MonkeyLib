@@ -3,6 +3,8 @@ package org.team5499.monkeyLib.math
 import org.team5499.monkeyLib.math.geometry.Vector2
 import org.team5499.monkeyLib.util.CSVWritable
 
+import org.tinylog.Logger
+
 class Position : CSVWritable {
 
     private var x = 0.0
@@ -33,6 +35,7 @@ class Position : CSVWritable {
         lastLeft = leftDistance
         lastRight = rightDistance
         lastAngle = newAngle
+        Logger.info(positionVector)
     }
 
     fun reset() {
