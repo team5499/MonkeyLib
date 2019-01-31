@@ -1,11 +1,9 @@
 package org.team5499.monkeyLib.auto
 
-import edu.wpi.first.wpilibj.Timer
-
 import org.team5499.monkeyLib.util.time.ITimer
 import org.team5499.monkeyLib.util.time.WPITimer
 
-public open class Action(timeoutSeconds: Double, timer: ITimer = WPITimer(Timer())) {
+public open class Action(timeoutSeconds: Double, timer: ITimer = WPITimer()) {
 
     private val mTimer: ITimer
     private val mTimeoutSeconds: Double
