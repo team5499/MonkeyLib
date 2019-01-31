@@ -1,5 +1,10 @@
 package org.team5499.monkeyLib.auto
 
+/**
+ * An action that runs multiple Actions at once
+ * @param actions The Actions to run
+ */
+
 class ParallelAction(vararg actions: Action) : Action(0.0) {
 
     private val mActions: Array<out Action>

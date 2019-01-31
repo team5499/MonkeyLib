@@ -1,6 +1,10 @@
 
 package org.team5499.monkeyLib.auto
 
+/**
+ * An Action that runs multiple actions sequentially
+ * @param actions The actions to run
+ */
 public class SerialAction(vararg actions: Action) : Action(0.0) {
 
     private val childActions: Array<out Action>
