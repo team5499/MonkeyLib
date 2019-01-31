@@ -6,7 +6,7 @@ import org.junit.Assert.assertEquals
 import org.team5499.monkeyLib.math.physics.DCMotorTransmission
 
 class DCMotorTransmissionTest {
-    val motor = DCMotorTransmission(1000.0, 0.5, 1.0)
+    val motor = DCMotorTransmission(1000.0, 0.5, 1.0, 120.0)
     val stallTorque = 5.5 // N•m
     val freeSpeed = 11000.0 // rad/s
     val epsilon = 0.1
@@ -30,5 +30,12 @@ class DCMotorTransmissionTest {
         assertEquals(1000.0, motor.speedPerVolt, 0.0)
         assertEquals(0.5, motor.torquePerVolt, 0.0)
         assertEquals(1.0, motor.frictionVoltage, 0.0)
+    }
+
+    @Test
+    fun speedForVoltageAndAmperageTest() {
+        val predictedSpeed = motor.getSpeedForVoltageAndAmperage(6.0, 24.0)
+        println(predictedSpeed)
+        assertEquals(2600.0, predictedSpeed, epsilon)
     }
 }
