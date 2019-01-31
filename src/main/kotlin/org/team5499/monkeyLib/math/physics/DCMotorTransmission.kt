@@ -5,15 +5,25 @@ package org.team5499.monkeyLib.math.physics
  * and efficiency losses).  The motor is assumed to be symmetric forward/reverse.
  *
  * @property speedPerVolt kV, or rad/s per V (no load)
- * @property torquePerVolt N•m per V (stall)
+ * @property torquePerVolt N•m per Amp (stall)
  * @property frictionVoltage the voltage needed to overcome static
+ * @property stallAmperage the stall amperage at 12 volts
  */
 class DCMotorTransmission(
     val speedPerVolt: Double,
     val torquePerVolt: Double,
-    val frictionVoltage: Double
+    val frictionVoltage: Double,
+    val stallAmperage: Double
 ) {
     // TODO add electrical constants?  (e.g. current)
+
+    val torquePerAmp: Double
+    val internalResistance: Double
+
+    init {
+        torquePerAmp = torquePerVolt * 12.0 / stallAmperage
+        internalResistance = 12.0 / stallAmperage
+    }
 
     /**
      * Returns the idle speed of the motor at this voltage
@@ -86,5 +96,17 @@ class DCMotorTransmission(
             return 0.0
         }
         return torque / torquePerVolt + outputSpeed / speedPerVolt + modifiedFrictionVoltage
+    }
+
+    /**
+     * Get the theoretical speed for voltage and amperage.
+     *
+     * @param voltage
+     * @param amperage
+     * @return speed rad/s
+     */
+    fun getSpeedForVoltageAndAmperage(voltage: Double, amperage: Double): Double {
+        var modifiedVoltage = voltage - frictionVoltage
+        return (modifiedVoltage - amperage * internalResistance) * speedPerVolt
     }
 }
