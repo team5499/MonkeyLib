@@ -31,7 +31,7 @@ class DCMotorTransmissionTest {
         assertEquals(0.5, motor.torquePerVolt, 0.0)
         assertEquals(1.0, motor.frictionVoltage, 0.0)
     }
-
+  
     @Test
     fun speedForVoltageAndAmperageTest() {
         val predictedSpeed = motor.getSpeedForVoltageAndAmperage(6.0, 24.0)

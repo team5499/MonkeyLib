@@ -24,7 +24,6 @@ class DCMotorTransmission(
         torquePerAmp = torquePerVolt * 12.0 / stallAmperage
         internalResistance = 12.0 / stallAmperage
     }
-
     /**
      * Returns the idle speed of the motor at this voltage
      *
