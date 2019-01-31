@@ -1,6 +1,9 @@
 package org.team5499.monkeyLib.auto
 
-class ParallelAction(vararg actions: Action) : Action(0.0) {
+import org.team5499.monkeyLib.util.time.ITimer
+import org.team5499.monkeyLib.util.time.WPITimer
+
+class ParallelAction(vararg actions: Action, timer: ITimer = WPITimer()) : Action(0.0, timer) {
 
     private val mActions: Array<out Action>
 
