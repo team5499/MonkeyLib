@@ -2,15 +2,17 @@ package org.team5499.monkeyLib.util
 
 public class CircularDoubleBuffer(maxSize: Int) : CircularBuffer<Double>(maxSize) {
 
-    public val sum by lazy {
-        var total = 0.0
-        for (num in super.elements) {
-            total += num
+    public val sum: Double
+        get() {
+            var total = 0.0
+            for (num in super.elements) {
+                total += num
+            }
+            return total
         }
-        total
-    }
 
-    public val average by lazy {
-        sum / super.elements.size.toDouble()
-    }
+    public val average: Double
+        get() {
+            return sum / super.elements.size.toDouble()
+        }
 }
