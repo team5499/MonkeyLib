@@ -1,3 +1,6 @@
 package org.team5499.monkeyLib.auto
 
-public class NothingAction(timeout: Double) : Action(timeout)
+import org.team5499.monkeyLib.util.time.ITimer
+import org.team5499.monkeyLib.util.time.WPITimer
+
+public class NothingAction(timeout: Double, timer: ITimer = WPITimer()) : Action(timeout, timer)
