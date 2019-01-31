@@ -101,8 +101,8 @@ class DCMotorTransmission(
     /**
      * Get the theoretical speed for voltage and amperage.
      *
-     * @param voltage
-     * @param amperage
+     * @param voltage the applied voltage
+     * @param amperage the measured amperage
      * @return speed rad/s
      */
     fun getSpeedForVoltageAndAmperage(voltage: Double, amperage: Double): Double {
