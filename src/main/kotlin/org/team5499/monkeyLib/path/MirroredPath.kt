@@ -2,6 +2,10 @@ package org.team5499.monkeyLib.path
 
 import org.team5499.monkeyLib.math.geometry.Pose2dWithCurvature
 
+/**
+* this class represents a path that can be mirrored over the centerline of the field
+* @property left is path on the left side of the field
+*/
 public class MirroredPath(left: Path) {
 
     public val left: Path
