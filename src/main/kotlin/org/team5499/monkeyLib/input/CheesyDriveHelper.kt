@@ -20,7 +20,7 @@ public class CheesyDriveHelper(config: CheesyDriveConfig) : DriveHelper() {
         public var lowSensitivity = 0.0
     }
 
-    public var config: CheesyDriveConfig
+    private var config: CheesyDriveConfig
 
     private var mOldWheel = 0.0
     private var mQuickStopAccumlator = 0.0
@@ -34,7 +34,12 @@ public class CheesyDriveHelper(config: CheesyDriveConfig) : DriveHelper() {
     public constructor(): this(CheesyDriveConfig())
 
     @Suppress("LongMethod", "ComplexMethod")
-    fun calculateOutput(throttle: Double, wheel: Double, isQuickTurn: Boolean, isHighGear: Boolean): DriveSignal {
+    public override fun calculateOutput(
+        throttle: Double,
+        wheel: Double,
+        isQuickTurn: Boolean,
+        isHighGear: Boolean
+    ): DriveSignal {
         var newWheel = handleDeadband(wheel, config.deadband)
         var newThrottle = handleDeadband(throttle, config.deadband)
 

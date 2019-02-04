@@ -29,12 +29,15 @@ dependencies {
     nativeZip wpi.deps.vendor.jni(wpi.platforms.roborio)
     nativeDesktopZip wpi.deps.vendor.jni(wpi.platforms.desktop)
 
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.1.1'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.1.1'
+    testCompile 'junit:junit:4.12'
+    testCompile 'org.mockito:mockito-core:2.0.42-beta'
+    testCompile 'org.powermock:powermock-module-junit4:1.6.6'
+    testCompile 'org.powermock:powermock-api-mockito2:1.6.6'
+
 }
 
 group = 'org.team5499'
-version = '2.2.0'
+version = '2.5.0'
 
 task sourcesJar(type: Jar) {
     from sourceSets.main.allJava
@@ -42,25 +45,25 @@ task sourcesJar(type: Jar) {
 }
 
 task dokkaJavadoc(type: org.jetbrains.dokka.gradle.DokkaTask) {
-    outputFormat = 'html'
-    outputDirectory = javadoc.destinationDir
+    outputFormat = 'javadoc'
+    outputDirectory = "$buildDir/javadoc"
     inputs.dir 'src/main/kotlin'
 }
 
-task javadocJar(type: Jar, dependsOn: dokkaJavadoc) {
+task javadocJar(type: Jar) {
     classifier = 'javadoc'
-    from javadoc.destinationDir
+    from "$buildDir/javadoc"
 }
 
 dokka {
     outputFormat = 'html'
-    outputDirectory = "$buildDir/javadoc"
+    outputDirectory = "$buildDir/htmldoc"
 }
 
 test {
     dependsOn 'cleanTest'
 
-    useJUnitPlatform()
+    useJUnit()
 
     testLogging {
         events 'PASSED', 'FAILED', 'SKIPPED'

@@ -31,6 +31,10 @@ class Pose2dWithCurvature(
     constructor(): this(Vector2(), Rotation2d(), 0.0, 0.0)
     constructor(other: Pose2dWithCurvature): this(other.translation, other.rotation, other.curvature, other.dCurvature)
 
+    public fun mirror(): Pose2dWithCurvature {
+        return Pose2dWithCurvature(pose.mirror(), -curvature, -dCurvature)
+    }
+
     override fun interpolate(other: Pose2dWithCurvature, x: Double): Pose2dWithCurvature {
         return Pose2dWithCurvature(pose.interpolate(other.pose, x),
             Utils.interpolate(curvature, other.curvature, x),

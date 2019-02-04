@@ -2,8 +2,8 @@ package tests.math
 
 import org.team5499.monkeyLib.math.Epsilon
 
-import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.Assertions.assertTrue
+import org.junit.Test
+import org.junit.Assert.assertTrue
 
 class EpsilonTest {
 
