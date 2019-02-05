@@ -11,8 +11,10 @@ import java.util.concurrent.atomic.AtomicBoolean
 public class XboxControllerPlus(portNumber: Int, timer: ITimer = WPITimer()) : XboxController(portNumber) {
 
     private val mRumbling: AtomicBoolean
-
     private val mTimer: ITimer
+
+    public val isRumbling: Boolean
+        get() = mRumbling.get()
 
     init {
         mRumbling = AtomicBoolean(false)
