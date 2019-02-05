@@ -13,6 +13,9 @@ plugins {
 repositories {
     mavenLocal()
     mavenCentral()
+    maven {
+        url "http://devsite.ctr-electronics.com/maven/release/"
+    }
 }
 
 dependencies {
@@ -32,7 +35,7 @@ dependencies {
 }
 
 group = 'org.team5499'
-version = '2.5.0'
+version = '2.6.0'
 
 task sourcesJar(type: Jar) {
     from sourceSets.main.allJava
