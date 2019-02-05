@@ -5,20 +5,26 @@ import edu.wpi.first.wpilibj.XboxController
 import org.team5499.monkeyLib.util.time.ITimer
 import org.team5499.monkeyLib.util.time.WPITimer
 
+import java.util.concurrent.atomic.AtomicBoolean
+
 // adapted from 1323
 public class XboxControllerPlus(portNumber: Int, timer: ITimer = WPITimer()) : XboxController(portNumber) {
 
-    public var rumbling = false
-        private set
+    private val mRumbling: AtomicBoolean
 
     private val mTimer: ITimer
 
     init {
+        mRumbling = AtomicBoolean(false)
         mTimer = timer
     }
 
+    public fun cancelRumble() {
+        mRumbling.set(false)
+    }
+
     public fun rumble(rumblesPerSecond: Double, numberOfSeconds: Double) {
-        if (!rumbling) {
+        if (!mRumbling.get()) {
             val thread = RumbleThread(rumblesPerSecond, numberOfSeconds)
             thread.start()
         }
@@ -36,12 +42,12 @@ public class XboxControllerPlus(portNumber: Int, timer: ITimer = WPITimer()) : X
         }
 
         public override fun start() {
-            rumbling = true
+            mRumbling.set(true)
             mTimer.stop()
             mTimer.reset()
             mTimer.start()
             try {
-                while (mTimer.get() < mSeconds) {
+                while (mTimer.get() < mSeconds && mRumbling.get()) {
                     setRumble(RumbleType.kLeftRumble, 1.0)
                     setRumble(RumbleType.kRightRumble, 1.0)
                     sleep(mInterval)
@@ -50,10 +56,10 @@ public class XboxControllerPlus(portNumber: Int, timer: ITimer = WPITimer()) : X
                     sleep(mInterval)
                 }
             } catch (e: InterruptedException) {
-                rumbling = false
+                mRumbling.set(false)
                 e.printStackTrace()
             }
-            rumbling = false
+            mRumbling.set(false)
         }
     }
 }
