@@ -37,7 +37,7 @@ object Utils {
     }
 
     /**
-    * @param encoderTicksPerRotation encoder ticks per 360 degrees of rotation
+    * @param encoderTicksPerRotation encoder ticks per 360 degrees of rotation of the encoder shaft
     * @param circumference circumference of the object being rotated
     * @param inchesPerSecond velocity to be converted
     * @param reduction reduction from the encoder shaft to the output shaft
@@ -53,7 +53,7 @@ object Utils {
     }
 
     /**
-    * @param encoderTicksPerRotation encoder ticks per 360 degrees of rotation
+    * @param encoderTicksPerRotation encoder ticks per 360 degrees of rotation of the encoder shaft
     * @param circumference circumference of the object being rotated
     * @param encoderTicksPer100ms velocity to be converted
     * @param reduction reduction from the encoder shaft to the output shaft
@@ -68,7 +68,7 @@ object Utils {
     }
 
     /**
-    * @param encoderTicksPerRotation encoder ticks per 360 degrees of rotation
+    * @param encoderTicksPerRotation encoder ticks per 360 degrees of rotation of the encoder shaft
     * @param circumference circumference of the object being rotated
     * @param inches inches of travel to be converted to ticks of travel
     * @param reduction reduction from the encoder shaft to the output shaft
@@ -79,11 +79,11 @@ object Utils {
         inches: Double,
         reduction: Double = 1.0
     ): Int {
-        return (((encoderTicksPerRotation / circumference) * inches) / reduction).toInt()
+        return (encoderTicksPerRotation * inches * reduction / circumference).toInt()
     }
 
     /**
-    * @param encoderTicksPerRotation encoder ticks per 360 degrees of rotation
+    * @param encoderTicksPerRotation encoder ticks per 360 degrees of rotation of the encoder shaft
     * @param circumference circumference of the object being rotated
     * @param ticks ticks of travel to be converted to inches of travel
     * @param reduction reduction from the encoder shaft to the output shaft
@@ -94,7 +94,7 @@ object Utils {
         ticks: Int,
         reduction: Double = 1.0
     ): Double {
-        return (circumference / encoderTicksPerRotation) * ticks * reduction
+        return (circumference * ticks) / (encoderTicksPerRotation * reduction)
     }
 
     public fun talonAngleToDegrees(gyroTicksPerRotation: Int, ticks: Int): Double {
