@@ -1,31 +1,29 @@
 package org.team5499.monkeyLib.auto
 
 import org.team5499.monkeyLib.math.geometry.Rotation2d
+import org.team5499.monkeyLib.math.geometry.Vector2
+import org.team5499.monkeyLib.math.geometry.Pose2d
 
-class Routine(name: String, startHeading: Rotation2d, vararg actions: Action) {
+class Routine(name: String, startPose: Pose2d, vararg actions: Action) {
 
-    val actions: Array<out Action>
+    private val actions: Array<out Action>
     var stepNumber: Int
-        private set
         get() = field
-    val mName: String
+    val name: String
         get() = field
-    val startHeading: Rotation2d
+    val startPose: Pose2d
         get() = field
 
     init {
         this.stepNumber = 0
-        this.mName = name
-        this.startHeading = startHeading
+        this.name = name
+        this.startPose = startPose
         this.actions = actions.copyOf()
     }
 
     @Suppress("SpreadOperator")
-    constructor(
-        name: String,
-        degreesHeading: Double,
-        vararg actions: Action
-    ): this(name, Rotation2d.fromDegrees(degreesHeading), *actions)
+    public constructor(name: String, vararg actions: Action) :
+        this(name, Pose2d(Vector2(0, 0), Rotation2d.fromDegrees(0.0)), *actions)
 
     public fun getCurrentAction(): Action {
         return actions.get(stepNumber)
@@ -37,10 +35,6 @@ class Routine(name: String, startHeading: Rotation2d, vararg actions: Action) {
         }
         stepNumber++
         return true
-    }
-
-    public fun setActionIndex(index: Int) {
-        stepNumber = index
     }
 
     public fun reset() {
