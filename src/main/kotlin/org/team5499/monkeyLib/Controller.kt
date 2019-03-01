@@ -5,10 +5,10 @@ import org.team5499.monkeyLib.util.time.WPITimer
 
 public abstract class Controller(timer: ITimer = WPITimer()) {
 
-    private val mTimer: ITimer
+    protected val timer: ITimer
 
     init {
-        mTimer = timer
+        this.timer = timer
     }
 
     abstract fun start()
