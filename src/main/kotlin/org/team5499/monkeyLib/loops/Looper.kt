@@ -5,7 +5,7 @@ import edu.wpi.first.wpilibj.Timer
 
 import java.lang.Runnable
 
-public class Looper(period: Double = 0.005) {
+public class Looper(val period: Double = 0.005) {
 
     private var mRunning: Boolean
     private val mNotifier: Notifier
@@ -51,7 +51,7 @@ public class Looper(period: Double = 0.005) {
                 }
                 mRunning = true
             }
-            mNotifier.startPeriodic(kPeriod)
+            mNotifier.startPeriodic(period)
         }
     }
 
