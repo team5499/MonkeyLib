@@ -35,7 +35,7 @@ dependencies {
 }
 
 group = 'org.team5499'
-version = '2.7.2'
+version = '2.7.3'
 
 task sourcesJar(type: Jar) {
     from sourceSets.main.allJava
