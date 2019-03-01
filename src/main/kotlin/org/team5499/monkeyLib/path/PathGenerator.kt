@@ -98,6 +98,10 @@ class PathGenerator {
         return Path(samples, velocities, reversed)
     }
 
+    public fun generatePath(reversed: Boolean, waypoints: Array<Pose2d>, maxVelo: Double, maxAccel: Double): Path {
+        return generatePath(reversed, waypoints, maxVelo, maxAccel, mStartPathVelocity, mEndPathVelocity)
+    }
+
     public fun generatePath(reversed: Boolean, waypoints: Array<Pose2d>): Path {
         return generatePath(
             reversed, waypoints,
@@ -105,6 +109,52 @@ class PathGenerator {
             mMaxAcceleration,
             mStartPathVelocity,
             mEndPathVelocity
+        )
+    }
+
+    @Suppress("LongParameterList")
+    public fun generateMirroredPath(
+        reversed: Boolean,
+        waypoints: Array<Pose2d>,
+        maxVelo: Double,
+        maxAccel: Double,
+        startVelocity: Double,
+        endVelocity: Double
+    ): MirroredPath {
+        return MirroredPath(
+            generatePath(
+                reversed,
+                waypoints,
+                maxVelo,
+                maxAccel,
+                startVelocity,
+                endVelocity
+            )
+        )
+    }
+
+    public fun generateMirroredPath(
+        reversed: Boolean,
+        waypoints: Array<Pose2d>,
+        maxVelo: Double,
+        maxAccel: Double
+    ): MirroredPath {
+        return MirroredPath(
+            generatePath(
+                reversed,
+                waypoints,
+                maxVelo,
+                maxAccel
+            )
+        )
+    }
+
+    public fun generateMirroredPath(reversed: Boolean, waypoints: Array<Pose2d>): MirroredPath {
+        return MirroredPath(
+            generatePath(
+                reversed,
+                waypoints
+            )
         )
     }
 }
