@@ -4,6 +4,12 @@ typealias PathSet = MutableList<Path>
 
 typealias MirroredPathSet = MutableList<MirroredPath>
 
+@Suppress("FunctionNaming")
+public fun PathSet() = pathSetOf()
+
+@Suppress("FunctionNaming")
+public fun MirroredPathSet() = mirroredPathSetOf()
+
 @Suppress("SpreadOperator")
 fun pathSetOf(vararg paths: Path) = mutableListOf<Path>(*paths)
 
