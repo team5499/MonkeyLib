@@ -27,6 +27,12 @@ class Path(
     val endPose: Pose2dWithCurvature
         get() = Pose2dWithCurvature(points.get(pathLength - 1))
 
+    val startVelocity: Double
+        get() = velocities.get(0)
+
+    val endVelocity: Double
+        get() = velocities.get(velocities.size - 1)
+
     init {
         if (points.size != velocities.size) {
             println("coords length: ${points.size}, velo length: ${velocities.size}")
