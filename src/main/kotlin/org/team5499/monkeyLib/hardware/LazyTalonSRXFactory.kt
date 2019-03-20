@@ -25,7 +25,7 @@ public object  LazyTalonSRXFactory {
     private const val kTimeoutMs = 100 
 
     public class Configuration {
-        public NeutralMode NEUTRAL_MODE = NeutralMode.Coast 
+        public var NEUTRAL_MODE = NeutralMode.Coast 
         // This is factory default.
         public var NEUTRAL_DEADBAND = 0.04  
 
@@ -97,12 +97,12 @@ public object  LazyTalonSRXFactory {
 
         // Turn off re-zeroing by default.
         talon.configSetParameter(
-                ParamEnum.eClearPositionOnLimitF, 0, 0, 0, kTimeoutMs) 
+                ParamEnum.eClearPositionOnLimitF, 0.0, 0, 0, kTimeoutMs) 
         talon.configSetParameter(
-                ParamEnum.eClearPositionOnLimitR, 0, 0, 0, kTimeoutMs) 
+                ParamEnum.eClearPositionOnLimitR, 0.0, 0, 0, kTimeoutMs) 
 
-        talon.configNominalOutputForward(0, kTimeoutMs) 
-        talon.configNominalOutputReverse(0, kTimeoutMs) 
+        talon.configNominalOutputForward(0.0, kTimeoutMs) 
+        talon.configNominalOutputReverse(0.0, kTimeoutMs) 
         talon.configNeutralDeadband(config.NEUTRAL_DEADBAND, kTimeoutMs) 
 
         talon.configPeakOutputForward(1.0, kTimeoutMs) 
