@@ -1,4 +1,4 @@
-package org.team5499.monkeyLib.loops
+package org.team5499.monkeyLib.util.loops
 
 public interface Loop {
 
