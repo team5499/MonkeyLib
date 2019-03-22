@@ -1,4 +1,4 @@
-package org.team5499.monkeyLib.coroutines
+package org.team5499.monkeyLib.util.coroutines
 
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.asCoroutineDispatcher
