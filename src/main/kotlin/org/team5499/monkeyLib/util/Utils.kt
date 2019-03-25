@@ -1,6 +1,5 @@
 package org.team5499.monkeyLib.util
 
-
 import org.team5499.monkeyLib.math.Epsilon
 
 @SuppressWarnings("MagicNumber")
@@ -110,7 +109,7 @@ object Utils {
 
     public fun allCloseTo(list: MutableList<Double>, value: Double, epsilon: Double): Boolean {
         var result = false
-        for(v in list) {
+        for (v in list) {
             result = result && Epsilon.epsilonEquals(v, value, epsilon)
         }
         return result
