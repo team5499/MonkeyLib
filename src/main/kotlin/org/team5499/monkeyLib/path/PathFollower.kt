@@ -120,7 +120,7 @@ class PathFollower(path: Path, trackWidth: Double, initLookaheadDistance: Double
     */
     fun doneWithPath(robotPose: Pose2d): Boolean {
         val distance = robotPose.translation.distanceTo(mPath.endPose.translation)
-        val done = distance < 12.0
+        val done = distance < PATH_EXTENSION_LENGTH
         return done
     }
 

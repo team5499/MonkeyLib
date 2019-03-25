@@ -6,6 +6,9 @@ import org.team5499.monkeyLib.math.geometry.Pose2d
 import org.team5499.monkeyLib.math.geometry.Rotation2d
 import org.team5499.monkeyLib.math.geometry.Pose2dWithCurvature
 
+// length added to end of path to allow easier path following
+const val PATH_EXTENSION_LENGTH = 12.0 // inches
+
 class PathGenerator {
 
     private val mMaxVelocity: () -> Double // i / s
