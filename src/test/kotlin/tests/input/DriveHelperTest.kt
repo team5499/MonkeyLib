@@ -92,7 +92,7 @@ class DriveHelperTest {
     @Suppress("LongMethod")
     @Test
     fun testSpaceDriveHelper() {
-        val helper = SpaceDriveHelper(0.02, 0.4)
+        val helper = SpaceDriveHelper(0.02, 0.4, 0.5)
         var output = helper.calculateOutput(0.01, 0.01, false)
         assertEquals(output.left, 0.0, Epsilon.EPSILON)
         assertEquals(output.right, 0.0, Epsilon.EPSILON)
