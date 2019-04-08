@@ -11,20 +11,20 @@ import org.team5499.monkeyLib.math.geometry.Pose2d
 * @property path the path the follower will follow
 */
 @SuppressWarnings("MagicNumber")
-class PathFollower(path: Path, trackWidth: Double, lookaheadDistance: Double) {
+class PathFollower(path: Path, trackWidth: Double, initLookaheadDistance: Double) {
 
     private val mPath: Path
     private var mLastClosestPointIndex: Int
 
     private val mTrackWidth: Double
-    private val mLookaheadDistance: Double
+    public var lookaheadDistance: Double
 
     init {
         mPath = path
         mLastClosestPointIndex = 0
 
         mTrackWidth = trackWidth
-        mLookaheadDistance = lookaheadDistance
+        lookaheadDistance = initLookaheadDistance
     }
 
     /**
@@ -65,7 +65,7 @@ class PathFollower(path: Path, trackWidth: Double, lookaheadDistance: Double) {
 
             val a = d.dot(d)
             val b = 2.0 * f.dot(d)
-            val c = f.dot(f) - Math.pow(mLookaheadDistance, 2.0)
+            val c = f.dot(f) - Math.pow(lookaheadDistance, 2.0)
             var dis = (b * b) - (4.0 * a * c)
             if (dis < 0.0) {
                 continue
@@ -88,7 +88,7 @@ class PathFollower(path: Path, trackWidth: Double, lookaheadDistance: Double) {
             lookahead = mPath.endPose.translation
         } else {
             val distanceToEnd = robotPose.translation.distanceTo(mPath.endPose.translation)
-            if (distanceToEnd < mLookaheadDistance) {
+            if (distanceToEnd < lookaheadDistance) {
                 lookahead = mPath.endPose.translation
             }
         }
@@ -107,7 +107,7 @@ class PathFollower(path: Path, trackWidth: Double, lookaheadDistance: Double) {
         val b = -1
         val c = -(1 / Math.tan(robotAngle)) * robotPose.translation.y + robotPose.translation.x
         val x = Math.abs(a * lookahead.y + b * lookahead.x + c) / ((Math.sqrt(a * a + b * b)))
-        val curvature = (2.0 * x) / (Math.pow(mLookaheadDistance, 2.0))
+        val curvature = (2.0 * x) / (Math.pow(lookaheadDistance, 2.0))
         val side = Math.signum(
             Math.sin(robotAngle) * (lookahead.x - robotPose.translation.x) -
             Math.cos(robotAngle) * (lookahead.y - robotPose.translation.y)
@@ -120,7 +120,8 @@ class PathFollower(path: Path, trackWidth: Double, lookaheadDistance: Double) {
     */
     fun doneWithPath(robotPose: Pose2d): Boolean {
         val distance = robotPose.translation.distanceTo(mPath.endPose.translation)
-        return distance < 12.0
+        val done = distance < PATH_EXTENSION_LENGTH
+        return done
     }
 
     /**

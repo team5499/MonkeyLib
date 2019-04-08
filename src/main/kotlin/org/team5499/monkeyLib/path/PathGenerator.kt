@@ -6,12 +6,15 @@ import org.team5499.monkeyLib.math.geometry.Pose2d
 import org.team5499.monkeyLib.math.geometry.Rotation2d
 import org.team5499.monkeyLib.math.geometry.Pose2dWithCurvature
 
+// length added to end of path to allow easier path following
+const val PATH_EXTENSION_LENGTH = 12.0 // inches
+
 class PathGenerator {
 
-    private val mMaxVelocity: Double // i / s
-    private val mMaxAcceleration: Double // in / s / s
-    private val mStartPathVelocity: Double // i / s
-    private val mEndPathVelocity: Double // i / s
+    private val mMaxVelocity: () -> Double // i / s
+    private val mMaxAcceleration: () -> Double // in / s / s
+    private val mStartPathVelocity: () -> Double // i / s
+    private val mEndPathVelocity: () -> Double // i / s
 
     public constructor(
         defaultMaxVelocity: Double,
@@ -19,10 +22,22 @@ class PathGenerator {
         defaultStartVelocity: Double,
         defaultEndVelocity: Double
     ) {
-        mMaxVelocity = defaultMaxVelocity
-        mMaxAcceleration = defaultMaxAcceleration
-        mStartPathVelocity = defaultStartVelocity
-        mEndPathVelocity = defaultEndVelocity
+        mMaxVelocity = { defaultMaxVelocity }
+        mMaxAcceleration = { defaultMaxAcceleration }
+        mStartPathVelocity = { defaultStartVelocity }
+        mEndPathVelocity = { defaultEndVelocity }
+    }
+
+    public constructor(
+        defaultMaxVelocity: () -> Double,
+        defaultMaxAcceleration: () -> Double,
+        defaultStartVelocity: () -> Double,
+        defaultEndVelocity: () -> Double
+    ) {
+        mMaxVelocity = { defaultMaxVelocity() }
+        mMaxAcceleration = { defaultMaxAcceleration() }
+        mStartPathVelocity = { defaultStartVelocity() }
+        mEndPathVelocity = { defaultEndVelocity() }
     }
 
     @Suppress("LongParameterList", "ComplexMethod")
@@ -66,7 +81,7 @@ class PathGenerator {
         // extend last segment by lookahead distance
         val lastNorm = (samples.get(samples.size - 1).translation -
             samples.get(samples.size - 2).translation).normalized
-        val newSegment = samples.get(samples.size - 1).translation + (lastNorm * 12.0)
+        val newSegment = samples.get(samples.size - 1).translation + (lastNorm * PATH_EXTENSION_LENGTH)
         samples.set(samples.size - 1, Pose2dWithCurvature(
             Pose2d(newSegment, samples.get(samples.size - 1).rotation),
             samples.get(samples.size - 1).curvature,
@@ -98,13 +113,63 @@ class PathGenerator {
         return Path(samples, velocities, reversed)
     }
 
+    public fun generatePath(reversed: Boolean, waypoints: Array<Pose2d>, maxVelo: Double, maxAccel: Double): Path {
+        return generatePath(reversed, waypoints, maxVelo, maxAccel, mStartPathVelocity(), mEndPathVelocity())
+    }
+
     public fun generatePath(reversed: Boolean, waypoints: Array<Pose2d>): Path {
         return generatePath(
             reversed, waypoints,
-            mMaxVelocity,
-            mMaxAcceleration,
-            mStartPathVelocity,
-            mEndPathVelocity
+            mMaxVelocity(),
+            mMaxAcceleration(),
+            mStartPathVelocity(),
+            mEndPathVelocity()
+        )
+    }
+
+    @Suppress("LongParameterList")
+    public fun generateMirroredPath(
+        reversed: Boolean,
+        waypoints: Array<Pose2d>,
+        maxVelo: Double,
+        maxAccel: Double,
+        startVelocity: Double,
+        endVelocity: Double
+    ): MirroredPath {
+        return MirroredPath(
+            generatePath(
+                reversed,
+                waypoints,
+                maxVelo,
+                maxAccel,
+                startVelocity,
+                endVelocity
+            )
+        )
+    }
+
+    public fun generateMirroredPath(
+        reversed: Boolean,
+        waypoints: Array<Pose2d>,
+        maxVelo: Double,
+        maxAccel: Double
+    ): MirroredPath {
+        return MirroredPath(
+            generatePath(
+                reversed,
+                waypoints,
+                maxVelo,
+                maxAccel
+            )
+        )
+    }
+
+    public fun generateMirroredPath(reversed: Boolean, waypoints: Array<Pose2d>): MirroredPath {
+        return MirroredPath(
+            generatePath(
+                reversed,
+                waypoints
+            )
         )
     }
 }
