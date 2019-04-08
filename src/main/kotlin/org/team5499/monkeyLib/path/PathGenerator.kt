@@ -6,6 +6,9 @@ import org.team5499.monkeyLib.math.geometry.Pose2d
 import org.team5499.monkeyLib.math.geometry.Rotation2d
 import org.team5499.monkeyLib.math.geometry.Pose2dWithCurvature
 
+// length added to end of path to allow easier path following
+const val PATH_EXTENSION_LENGTH = 12.0 // inches
+
 class PathGenerator {
 
     private val mMaxVelocity: () -> Double // i / s
@@ -78,7 +81,7 @@ class PathGenerator {
         // extend last segment by lookahead distance
         val lastNorm = (samples.get(samples.size - 1).translation -
             samples.get(samples.size - 2).translation).normalized
-        val newSegment = samples.get(samples.size - 1).translation + (lastNorm * 12.0)
+        val newSegment = samples.get(samples.size - 1).translation + (lastNorm * PATH_EXTENSION_LENGTH)
         samples.set(samples.size - 1, Pose2dWithCurvature(
             Pose2d(newSegment, samples.get(samples.size - 1).rotation),
             samples.get(samples.size - 1).curvature,
