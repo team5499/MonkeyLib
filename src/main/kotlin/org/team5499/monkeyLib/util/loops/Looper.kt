@@ -5,7 +5,7 @@ import edu.wpi.first.wpilibj.Timer
 
 import java.lang.Runnable
 
-public class Looper(val period: Double = 0.005) {
+public class Looper(val period: Double = 0.005) : ILooper {
 
     private var mRunning: Boolean
     private val mNotifier: Notifier
@@ -35,7 +35,7 @@ public class Looper(val period: Double = 0.005) {
             }
         }
 
-    @Synchronized public fun register(loop: Loop) {
+    @Synchronized public override fun register(loop: Loop) {
         synchronized(mLock) {
             mLoops.add(loop)
         }
