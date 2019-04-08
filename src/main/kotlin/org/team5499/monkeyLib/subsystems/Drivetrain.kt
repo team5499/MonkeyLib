@@ -7,7 +7,8 @@ import org.team5499.monkeyLib.math.Position
 
 import org.team5499.monkeyLib.input.DriveSignal
 
-public abstract class Drivetrain: Subsystem() {
+@Suppress("TooManyFunctions")
+public abstract class Drivetrain : Subsystem() {
 
     protected enum class DriveMode {
         PERCENT,
@@ -15,7 +16,7 @@ public abstract class Drivetrain: Subsystem() {
         POSITION,
         TURN
     }
-    
+
     public enum class TurnType {
         ABSOLUTE,
         RELATIVE
@@ -23,8 +24,8 @@ public abstract class Drivetrain: Subsystem() {
 
     protected var mDriveMode: DriveMode = DriveMode.PERCENT
         set(value) {
-            if(value == field) return
-            when(value) {
+            if (value == field) return
+            when (value) {
                 DriveMode.PERCENT -> configureForPercent()
                 DriveMode.VELOCITY -> configureForVelocity()
                 DriveMode.POSITION -> configureForPosition()
@@ -45,12 +46,12 @@ public abstract class Drivetrain: Subsystem() {
 
     public abstract val angularVelocity: Double
 
-    public val pose: Pose2d 
+    public val pose: Pose2d
         get() {
             return Pose2d(mPosition.positionVector, heading)
         }
-    
-    public abstract var leftDistance: Double    
+
+    public abstract var leftDistance: Double
     public abstract var rightDistance: Double
     public val averageDistance: Double
         get() = (leftDistance + rightDistance) / 2.0
@@ -109,6 +110,4 @@ public abstract class Drivetrain: Subsystem() {
     public override fun update() {
         mPosition.update(leftDistance, rightDistance, heading.degrees)
     }
-    
-
 }
