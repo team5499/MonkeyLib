@@ -1,4 +1,4 @@
-package org.team5499.monkeyLib.auto
+package org.team5499.monkeyLib.auto.actions
 
 import org.team5499.monkeyLib.path.Path
 import org.team5499.monkeyLib.path.PathFollower

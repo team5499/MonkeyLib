@@ -83,9 +83,9 @@ public abstract class Drivetrain : Subsystem() {
         setVelocity(signal.left, signal.right, signal.brakeMode)
     }
 
-    public abstract fun setPosition()
+    public abstract fun setPosition(distance: Double)
 
-    public abstract fun setTurn(type: TurnType = TurnType.RELATIVE)
+    public abstract fun setTurn(degrees: Double, type: TurnType = TurnType.RELATIVE)
 
     public abstract fun configureForPercent()
 

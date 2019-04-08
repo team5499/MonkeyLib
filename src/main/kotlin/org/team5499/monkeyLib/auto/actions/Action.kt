@@ -1,4 +1,4 @@
-package org.team5499.monkeyLib.auto
+package org.team5499.monkeyLib.auto.actions
 
 import org.team5499.monkeyLib.util.time.ITimer
 import org.team5499.monkeyLib.util.time.WPITimer
