@@ -4,8 +4,6 @@ import org.team5499.monkeyLib.util.CSVWritable
 
 import java.lang.StringBuilder
 
-import java.text.DecimalFormat
-
 // thanks 254!
 public class DifferentialDrive(
     mass: Double,
@@ -58,26 +56,10 @@ public class DifferentialDrive(
     }
 
     // Can refer to velocity or acceleration depending on context.
-    public class ChassisState(var linear: Double, var angular: Double) {
-
-        public constructor(): this(0.0, 0.0)
-
-        public override fun toString(): String {
-            val fmt = DecimalFormat("#0.000")
-            return "${fmt.format(linear)}, ${fmt.format(angular)}"
-        }
-    }
+    public data class ChassisState(var linear: Double = 0.0, var angular: Double = 0.0)
 
     // Can refer to velocity, acceleration, torque, voltage, etc., depending on context.
-    public class WheelState(var left: Double, var right: Double) {
-
-        public constructor(): this(0.0, 0.0)
-
-        public override fun toString(): String {
-            val fmt = DecimalFormat("#0.000")
-            return "${fmt.format(left)}, ${fmt.format(right)}"
-        }
-    }
+    public data class WheelState(var left: Double = 0.0, var right: Double = 0.0)
 
     public class DriveDynamics : CSVWritable {
         public var curvature = 0.0
