@@ -107,6 +107,10 @@ public abstract class Drivetrain : Subsystem() {
         brake = false
     }
 
+    public override fun registerLoops(looper: ILooper? = null) {
+        
+    }
+
     public override fun update() {
         mPosition.update(leftDistance, rightDistance, heading.degrees)
     }
