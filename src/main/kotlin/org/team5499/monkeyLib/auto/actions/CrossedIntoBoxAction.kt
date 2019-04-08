@@ -1,0 +1,30 @@
+package org.team5499.monkeyLib.auto.actions
+
+import org.team5499.monkeyLib.subsystems.Drivetrain
+
+import org.team5499.monkeyLib.math.geometry.Vector2
+
+/**
+ * An action that finishes when the robot crosses enters a given box
+ *
+ * @param timeoutseconds The number of seconds to wait before canceling the command
+ * @param lowerLeftCorner The lower left corner of the box
+ * @param upperRightCorner The upper right corner of the box
+ * @param drivetrain The drivetrain to act on
+ */
+class CrossedIntoBoxAction(
+    val lowerLeftCorner: Vector2,
+    val upperRightCorner: Vector2,
+    val drivetrain: Drivetrain
+
+) : Action(0.0) {
+
+    public override fun start() {
+    }
+
+    override fun next(): Boolean {
+        val driveTranslation = drivetrain.pose.translation
+        return (driveTranslation.x > lowerLeftCorner.x && driveTranslation.x < upperRightCorner.x &&
+            driveTranslation.y > lowerLeftCorner.y && driveTranslation.y < upperRightCorner.y)
+    }
+}
