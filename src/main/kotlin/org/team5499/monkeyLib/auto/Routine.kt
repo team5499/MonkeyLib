@@ -4,7 +4,13 @@ import org.team5499.monkeyLib.math.geometry.Rotation2d
 import org.team5499.monkeyLib.math.geometry.Vector2
 import org.team5499.monkeyLib.math.geometry.Pose2d
 
-class Routine(name: String, startPose: Pose2d, vararg actions: Action) {
+class Routine(
+    name: String,
+    startPose: Pose2d,
+    redStartAdjustment: Vector2 = Vector2(0, 0),
+    blueStartAdjustment: Vector2 = Vector2(0, 0),
+    vararg actions: Action
+) {
 
     private val actions: Array<out Action>
     var stepNumber: Int
@@ -13,17 +19,21 @@ class Routine(name: String, startPose: Pose2d, vararg actions: Action) {
         get() = field
     val startPose: Pose2d
         get() = field
+    val redStartPose: Pose2d
+    val blueStartPose: Pose2d
 
     init {
         this.stepNumber = 0
         this.name = name
         this.startPose = startPose
+        this.redStartPose = startPose.transformBy(redStartAdjustment)
+        this.blueStartPose = startPose.transformBy(blueStartAdjustment)
         this.actions = actions.copyOf()
     }
 
     @Suppress("SpreadOperator")
     public constructor(name: String, vararg actions: Action) :
-        this(name, Pose2d(Vector2(0, 0), Rotation2d.fromDegrees(0.0)), *actions)
+        this(name = name, startPose = Pose2d(Vector2(0, 0), Rotation2d.fromDegrees(0.0)), actions = *actions)
 
     public fun getCurrentAction(): Action {
         return actions.get(stepNumber)
