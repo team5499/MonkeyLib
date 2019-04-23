@@ -88,7 +88,6 @@ object SplineGenerator {
             getSegmentArc(s, rv, t0, (t0 + t1) / 2, maxDx, maxDy, maxDTheta)
             getSegmentArc(s, rv, (t0 + t1) / 2, t1, maxDx, maxDy, maxDTheta)
         } else {
-            // println(twist)
             rv.add(s.getPoseWithCurvature(t1))
         }
     }

@@ -26,6 +26,8 @@ class Pose2dWithCurvature(
         this.pose = Pose2d(translation, rotation)
     }
 
+    operator fun plus(other: Pose2d) = Pose2dWithCurvature(this.pose + other, this.curvature, this.dCurvature)
+
     constructor(pose: Pose2d, curvature: Double, dCurvature: Double = 0.0):
         this(pose.translation, pose.rotation, curvature, dCurvature)
     constructor(): this(Vector2(), Rotation2d(), 0.0, 0.0)
