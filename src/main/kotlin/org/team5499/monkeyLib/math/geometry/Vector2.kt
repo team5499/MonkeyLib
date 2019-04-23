@@ -1,7 +1,9 @@
 package org.team5499.monkeyLib.math.geometry
 
+import kotlin.math.hypot
+
 @Suppress("TooManyFunctions")
-class Vector2(val x: Double, val y: Double) : Geometric<Vector2> {
+class Vector2(val x: Double, val y: Double) : State<Vector2> {
 
     companion object {
         fun distanceBetween(a: Vector2, b: Vector2) = (a - b).magnitude
@@ -27,6 +29,11 @@ class Vector2(val x: Double, val y: Double) : Geometric<Vector2> {
     operator fun times(coef: Int) = Vector2(this * coef.toDouble())
 
     operator fun times(coef: Double) = Vector2(x * coef, y * coef)
+
+    operator fun times(other: Rotation2d) = Vector2(
+        x * other.cosAngle - y * other.sinAngle,
+        x * other.sinAngle + y * other.cosAngle
+    )
 
     operator fun div(coef: Double) = when (coef) {
         0.0 -> throw IllegalArgumentException("Division by 0")
@@ -60,9 +67,15 @@ class Vector2(val x: Double, val y: Double) : Geometric<Vector2> {
         return x == other.x && y == other.y
     }
 
-    override fun hashCode() = super.hashCode()
+    override fun distance(other: Vector2): Double {
+        val x = this.x - other.x
+        val y = this.y - other.y
+        return hypot(x, y)
+    }
 
     override fun toString(): String = "(X: %.3f, Y: %.3f)".format(x, y)
 
     override fun toCSV() = "$x,$y"
+
+    override fun hashCode() = super.hashCode()
 }

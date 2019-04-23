@@ -4,7 +4,7 @@ import java.text.DecimalFormat
 
 import org.team5499.monkeyLib.math.Epsilon
 
-class Twist2d(dx: Double, dy: Double, dTheta: Double) : Geometric<Twist2d> {
+class Twist2d(dx: Double, dy: Double, dTheta: Double) {
 
     companion object {
         val identity = Twist2d()
@@ -44,11 +44,6 @@ class Twist2d(dx: Double, dy: Double, dTheta: Double) : Geometric<Twist2d> {
         return dTheta / norm()
     }
 
-    override fun interpolate(other: Twist2d, x: Double): Twist2d {
-        println("Cant interpolate Twist2d")
-        return Twist2d()
-    }
-
     override fun equals(other: Any?): Boolean {
         if (other == null || other !is Twist2d) return false
         return dx == other.dx && dy == other.dy && dTheta == other.dTheta
@@ -58,8 +53,6 @@ class Twist2d(dx: Double, dy: Double, dTheta: Double) : Geometric<Twist2d> {
         val format = DecimalFormat("###0.000")
         return "(${format.format(dx)}, ${format.format(dy)}, ${format.format(Math.toDegrees(dTheta))} deg)"
     }
-
-    override fun toCSV() = "$dx,$dy,$dTheta"
 
     override fun hashCode() = super.hashCode()
 }
