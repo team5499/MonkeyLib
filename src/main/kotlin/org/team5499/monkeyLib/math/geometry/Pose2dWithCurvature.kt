@@ -7,7 +7,7 @@ class Pose2dWithCurvature(
     rotation: Rotation2d,
     curvature: Double,
     dCurvature: Double = 0.0
-) : Geometric<Pose2dWithCurvature> {
+) : State<Pose2dWithCurvature> {
 
     val curvature: Double
         get() = field
@@ -52,6 +52,8 @@ class Pose2dWithCurvature(
     }
 
     override fun toCSV() = "${pose.toCSV()},$curvature,$dCurvature"
+
+    override fun distance(other: Pose2dWithCurvature) = pose.distance(other.pose)
 
     override fun hashCode() = super.hashCode()
 }

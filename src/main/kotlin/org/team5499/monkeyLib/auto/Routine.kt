@@ -8,11 +8,8 @@ class Routine(name: String, startPose: Pose2d, vararg actions: Action) {
 
     private val actions: Array<out Action>
     var stepNumber: Int
-        get() = field
     val name: String
-        get() = field
     val startPose: Pose2d
-        get() = field
 
     init {
         this.stepNumber = 0

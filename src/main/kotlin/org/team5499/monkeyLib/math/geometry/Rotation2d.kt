@@ -5,11 +5,10 @@ import org.team5499.monkeyLib.math.Epsilon
 import java.text.DecimalFormat
 
 @Suppress("TooManyFunctions")
-class Rotation2d(x: Double, y: Double, normalize: Boolean) : Geometric<Rotation2d> {
+class Rotation2d(x: Double, y: Double, normalize: Boolean) : State<Rotation2d> {
 
     companion object {
         val identity = Rotation2d()
-            get() = field
 
         fun fromRadians(radians: Double): Rotation2d {
             return Rotation2d(Math.cos(radians), Math.sin(radians), false)
@@ -23,9 +22,7 @@ class Rotation2d(x: Double, y: Double, normalize: Boolean) : Geometric<Rotation2
     }
 
     val cosAngle: Double
-        get() = field
     val sinAngle: Double
-        get() = field
     val tan: Double
         get() {
             if (Math.abs(cosAngle) < Epsilon.EPSILON) {
@@ -68,6 +65,8 @@ class Rotation2d(x: Double, y: Double, normalize: Boolean) : Geometric<Rotation2
 
     operator fun plus(other: Rotation2d): Rotation2d = fromDegrees(degrees + other.degrees)
     operator fun minus(other: Rotation2d): Rotation2d = fromDegrees(degrees - other.degrees)
+
+    operator fun unaryMinus() = inverse()
 
     fun rotateBy(other: Rotation2d): Rotation2d {
         return Rotation2d(
@@ -114,6 +113,10 @@ class Rotation2d(x: Double, y: Double, normalize: Boolean) : Geometric<Rotation2
     override fun toString(): String {
         val format = DecimalFormat("#0.000")
         return "${format.format(degrees)} degrees"
+    }
+
+    override fun distance(other: Rotation2d): Double {
+        return inverse().rotateBy(other).radians
     }
 
     override fun hashCode() = super.hashCode()

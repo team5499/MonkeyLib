@@ -3,7 +3,7 @@ package org.team5499.monkeyLib.math.geometry
 import org.team5499.monkeyLib.math.Epsilon
 
 @Suppress("TooManyFunctions")
-class Pose2d(translation: Vector2, rotation: Rotation2d) : Geometric<Pose2d> {
+class Pose2d(translation: Vector2, rotation: Rotation2d) : State<Pose2d> {
 
     companion object {
 
@@ -48,6 +48,9 @@ class Pose2d(translation: Vector2, rotation: Rotation2d) : Geometric<Pose2d> {
         get() = field
     val rotation: Rotation2d
         get() = field
+    val twist by lazy {
+        log(this)
+    }
 
     init {
         this.translation = translation
@@ -56,6 +59,14 @@ class Pose2d(translation: Vector2, rotation: Rotation2d) : Geometric<Pose2d> {
 
     constructor(): this(Vector2(), Rotation2d())
     constructor(other: Pose2d): this(other.translation, other.rotation)
+
+    operator fun plus(other: Pose2d) = transformBy(other)
+    operator fun minus(other: Pose2d) = transformBy(-other)
+
+    operator fun unaryMinus(): Pose2d {
+        val invertedRotation = -rotation
+        return Pose2d((-translation) * invertedRotation, invertedRotation)
+    }
 
     fun inverse(): Pose2d {
         val rotationInverted = rotation.inverse()
@@ -105,6 +116,9 @@ class Pose2d(translation: Vector2, rotation: Rotation2d) : Geometric<Pose2d> {
         if (other == null || other !is Pose2d) return false
         return (other.translation.equals(translation) && other.rotation.equals(rotation))
     }
+
+    // this might be wrong
+    override fun distance(other: Pose2d) = (other - this).twist.norm()
 
     override fun hashCode() = super.hashCode()
 }
