@@ -4,6 +4,8 @@ import org.team5499.monkeyLib.math.geometry.Rotation2d
 import org.team5499.monkeyLib.math.geometry.Vector2
 import org.team5499.monkeyLib.math.geometry.Pose2d
 
+import org.team5499.monkeyLib.auto.actions.Action
+
 class Routine(name: String, startPose: Pose2d, vararg actions: Action) {
 
     private val actions: Array<out Action>

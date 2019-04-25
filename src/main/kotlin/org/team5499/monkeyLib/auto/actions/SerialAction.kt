@@ -1,5 +1,5 @@
 
-package org.team5499.monkeyLib.auto
+package org.team5499.monkeyLib.auto.actions
 
 public class SerialAction(vararg actions: Action) : Action(0.0) {
 

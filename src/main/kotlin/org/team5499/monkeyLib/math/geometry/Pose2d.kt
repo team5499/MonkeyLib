@@ -94,6 +94,8 @@ class Pose2d(translation: Vector2, rotation: Rotation2d) : State<Pose2d> {
         return transformBy(Pose2d.exp(twist.scaled(x)))
     }
 
+    infix fun inFrameOfReferenceOf(fieldRelativeOrigin: Pose2d) = (-fieldRelativeOrigin) + this
+
     fun transformBy(other: Pose2d): Pose2d {
         return Pose2d(translation.translateBy(other.translation.rotateBy(rotation)), rotation.rotateBy(other.rotation))
     }
