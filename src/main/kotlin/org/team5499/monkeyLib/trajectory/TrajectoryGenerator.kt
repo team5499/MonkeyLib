@@ -19,6 +19,12 @@ import org.team5499.monkeyLib.math.splines.SplineGenerator
 import kotlin.math.absoluteValue
 import kotlin.math.pow
 
+val DefaultTrajectoryGenerator = TrajectoryGenerator(
+    2.0,
+    0.25,
+    5.0
+)
+
 public class TrajectoryGenerator(
     val maxDx: Double,
     val maxDy: Double,
