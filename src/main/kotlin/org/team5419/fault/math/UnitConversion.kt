@@ -1,5 +1,14 @@
-package org.team5419.fault.math
+val CM: Double = 1.0
 
-// public object UnitConversion {
-//     // functions that convert between units
-// }
+val INCH: Double = 12.54
+
+
+data class Unit internal constructor(internal val value: Double) {
+	fun to(conversion : Double): Double {
+		return value /  conversion
+	}
+}
+
+fun Double.from(conversion : Double) : Unit {
+	return Unit(this * conversion)
+}
