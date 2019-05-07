@@ -7,7 +7,7 @@ import org.team5499.monkeyLib.trajectory.types.TimedEntry
 import org.team5499.monkeyLib.math.geometry.Pose2dWithCurvature
 import org.team5499.monkeyLib.trajectory.followers.TrajectoryFollower
 
-public class TrajectoryFollowingAction(
+public class DriveTrajectoryAction(
     timeout: Double,
     private val drivetrain: IDrivetrain,
     private val trajectoryFollower: TrajectoryFollower,
@@ -24,11 +24,12 @@ public class TrajectoryFollowingAction(
             output.differentialDriveVelocity,
             output.differentialDriveAcceleration
         )
+        // CONVERT TO INCHES/SEC??????/
         drivetrain.setVelocity(
             dynamics.wheelVelocity.left * drivetrain.model.wheelRadius,
             dynamics.wheelVelocity.right * drivetrain.model.wheelRadius,
-            dynamics.voltage.left / 12.0,
-            dynamics.voltage.right / 12.0
+            dynamics.voltage.left,
+            dynamics.voltage.right
         )
     }
 
