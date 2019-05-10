@@ -2,30 +2,47 @@ package org.team5419.fault.math.units
 
 /// UNIT CONVERSION ///
 
-public infix fun Double.from(conversion : Double) : UnitConverter {
+public infix fun Double.from(conversion: Double): UnitConverter {
 	return UnitConverter(this * conversion)
 }
 
 data class UnitConverter internal constructor(internal val value: Double) {
-	public infix fun to(conversion : Double): Double {
+	public infix fun to(conversion: Double): Double {
 		return value / conversion
 	}
 }
 
+/// GENERAL ///
+
+
+
 /// DISTANCS UNITS ///
 
-public const val CENTIMETERS: Double = 1.0
-public const val DECIMETERS: Double = 10.0
-public const val METERS: Double = 100.0
-public const val KILOMETERS: Double = 1000.0 * METERS
+public const val CENTIMETERS: Double = 0.01
+public const val DECIMETERS: Double = 0.1
+public const val METERS: Double = 1.0
+public const val KILOMETERS: Double = 1000.0
 
-public const val INCHS: Double = 2.54
+public const val INCHS: Double = 0.0254
 public const val FEET: Double = 12 * INCHS
 public const val YARDS: Double = 3 * FEET
 public const val MILES: Double = 5280 * FEET
 
-// TIME UNITS //
+/// TIME UNITS ///
 
+public const val MILLISECONDS: Double = 0.001
 public const val SECONDS: Double = 1.0
 public const val MINUTES: Double = 60.0
 public const val HOURS: Double = 60.0 * MINUTES
+
+/// CURRENT UNITS ///
+
+public const val MICROAMPERS: Double = 1 / 1e-6
+public const val MILLIAMPS: Double = 0.001
+public const val AMPS: Double = 1.0
+
+/// ELECTRIC POTENTAL UNITS ///
+
+public const val MICROVOLTS: Double = 1 / 1e-6
+public const val MILLIVOLTS: Double = 0.001
+public const val VOLTS: Double = 1.0

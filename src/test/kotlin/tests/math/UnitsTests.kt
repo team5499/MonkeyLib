@@ -12,8 +12,8 @@ public class UnitConversionTests {
     }
 
     @Test
-    fun testInchToCentimeter() {
-        assertTrue(124.0 from INCHS to CENTIMETERS == 314.96)
+    fun testCentimeterToInch() {
+        assertTrue(254.0 from CENTIMETERS to INCHS == 100.0)
     }
 
     @Test
