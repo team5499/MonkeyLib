@@ -30,6 +30,10 @@ public interface IDrivetrain {
     val position: Vector2
     val model: DifferentialDrive
 
+    val leftOutputVoltage: Double
+    val rightOutputVoltage: Double
+    val averageOutputVoltage get() = (leftOutputVoltage + rightOutputVoltage) / 2.0
+
     val leftDistance: Double
     val rightDistance: Double
 
