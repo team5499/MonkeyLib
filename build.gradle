@@ -8,6 +8,7 @@ plugins {
     id 'jacoco'
     id 'maven'
     id 'org.jetbrains.dokka' version '0.9.17'
+    id 'idea'
 }
 
 repositories {
