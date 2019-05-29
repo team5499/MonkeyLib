@@ -1,5 +1,7 @@
 package org.team5499.monkeyLib.math.geometry
 
+import org.team5499.monkeyLib.math.units.Length
+import org.team5499.monkeyLib.math.units.meter
 import kotlin.math.hypot
 
 @Suppress("TooManyFunctions")
@@ -22,6 +24,11 @@ class Vector2(val x: Double, val y: Double) : State<Vector2> {
     constructor(x: Int, y: Int): this(x.toDouble(), y.toDouble())
     constructor(start: Vector2, end: Vector2): this(end.x - start.x, end.y - start.y)
 
+    constructor(
+        x: Length = 0.meter,
+        y: Length = 0.meter
+    ) : this(x.value, y.value)
+
     operator fun plus(other: Vector2) = Vector2(x + other.x, y + other.y)
 
     operator fun minus(other: Vector2) = Vector2(x - other.x, y - other.y)
@@ -31,8 +38,8 @@ class Vector2(val x: Double, val y: Double) : State<Vector2> {
     operator fun times(coef: Double) = Vector2(x * coef, y * coef)
 
     operator fun times(other: Rotation2d) = Vector2(
-        x * other.cosAngle - y * other.sinAngle,
-        x * other.sinAngle + y * other.cosAngle
+        x * other.cos - y * other.sin,
+        x * other.sin + y * other.cos
     )
 
     operator fun div(coef: Double) = when (coef) {
@@ -49,7 +56,7 @@ class Vector2(val x: Double, val y: Double) : State<Vector2> {
     fun translateBy(other: Vector2) = Vector2(this + other)
     fun translateBy(x: Double, y: Double) = Vector2(this.x + x, this.y + y)
 
-    fun rotateBy(r: Rotation2d) = Vector2(x * r.cosAngle - y * r.sinAngle, x * r.sinAngle + y * r.cosAngle)
+    fun rotateBy(r: Rotation2d) = Vector2(x * r.cos - y * r.sin, x * r.sin + y * r.cos)
 
     fun extrapolate(other: Vector2, x: Double) = Vector2(
         x * (other.x - this.x) + this.x, x * (other.y - this.y) + this.y

@@ -3,11 +3,13 @@ package org.team5499.monkeyLib.trajectory.types
 import org.team5499.monkeyLib.math.geometry.State
 import org.team5499.monkeyLib.trajectory.TrajectoryIterator
 import org.team5499.monkeyLib.math.Epsilon
+import org.team5499.monkeyLib.math.units.Length
+import org.team5499.monkeyLib.math.units.meter
 
 // distance and state
 class DistanceTrajectory<S : State<S>>(
     override val points: List<S>
-) : Trajectory<Double, S> {
+) : Trajectory<Length, S> {
 
     private val distances: List<Double>
 
@@ -20,8 +22,10 @@ class DistanceTrajectory<S : State<S>>(
         distances = tempDistances
     }
 
-    override fun sample(interpolant: Double) = when {
-        interpolant >= lastInterpolant -> TrajectorySamplePoint(getPoint(points.size - 1))
+    override fun sample(interpolant: Length) = sample(interpolant.value)
+
+    fun sample(interpolant: Double) = when {
+        interpolant >= lastInterpolant.value -> TrajectorySamplePoint(getPoint(points.size - 1))
         interpolant <= 0.0 -> TrajectorySamplePoint(getPoint(0))
         else -> {
             val (index, entry) = points.asSequence()
@@ -46,14 +50,14 @@ class DistanceTrajectory<S : State<S>>(
     override val firstState get() = points.first()
     override val lastState get() = points.last()
 
-    override val firstInterpolant get() = 0.0
-    override val lastInterpolant get() = distances.last().toDouble()
+    override val firstInterpolant get() = 0.0.meter
+    override val lastInterpolant get() = distances.last().toDouble().meter
 
     override fun iterator() = DistanceIterator(this)
 }
 
 class DistanceIterator<S : State<S>>(
     trajectory: DistanceTrajectory<S>
-) : TrajectoryIterator<Double, S>(trajectory) {
-    override fun addition(a: Double, b: Double) = a + b
+) : TrajectoryIterator<Length, S>(trajectory) {
+    override fun addition(a: Length, b: Length) = a + b
 }

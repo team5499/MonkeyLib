@@ -1,10 +1,11 @@
 package org.team5499.monkeyLib.trajectory
 
-import org.team5499.monkeyLib.math.geometry.State
 import org.team5499.monkeyLib.math.geometry.Rotation2d
-import org.team5499.monkeyLib.math.geometry.Vector2
 import org.team5499.monkeyLib.math.geometry.Pose2d
 import org.team5499.monkeyLib.math.geometry.Pose2dWithCurvature
+import org.team5499.monkeyLib.math.geometry.Vector2
+import org.team5499.monkeyLib.math.geometry.degree
+import org.team5499.monkeyLib.math.geometry.State
 
 import org.team5499.monkeyLib.trajectory.constraints.TimingConstraint
 import org.team5499.monkeyLib.trajectory.types.TimedTrajectory
@@ -15,34 +16,38 @@ import org.team5499.monkeyLib.trajectory.types.DistanceTrajectory
 import org.team5499.monkeyLib.math.splines.QuinticHermiteSpline
 import org.team5499.monkeyLib.math.splines.Spline
 import org.team5499.monkeyLib.math.splines.SplineGenerator
+import org.team5499.monkeyLib.math.units.Length
+import org.team5499.monkeyLib.math.units.derived.LinearAcceleration
+import org.team5499.monkeyLib.math.units.derived.LinearVelocity
+import org.team5499.monkeyLib.math.units.inch
 
 import kotlin.math.absoluteValue
 import kotlin.math.pow
 
 val DefaultTrajectoryGenerator = TrajectoryGenerator(
-    2.0,
-    0.25,
-    5.0
+    2.0.inch,
+    0.25.inch,
+    5.0.degree
 )
 
 public class TrajectoryGenerator(
-    val maxDx: Double,
-    val maxDy: Double,
-    val maxDTheta: Double
+    val maxDx: Length,
+    val maxDy: Length,
+    val maxDTheta: Rotation2d // degrees
 ) {
 
     @Suppress("LongParameterList")
     fun generateTrajectory(
         waypoints: List<Pose2d>,
         constraints: List<TimingConstraint<Pose2dWithCurvature>>,
-        startVelocity: Double,
-        endVelocity: Double,
-        maxVelocity: Double,
-        maxAcceleration: Double,
-        reversed: Boolean,
+        startVelocity: LinearVelocity,
+        endVelocity: LinearVelocity,
+        maxVelocity: LinearVelocity,
+        maxAcceleration: LinearAcceleration,
+        reversed: Boolean = false,
         optimizeSplines: Boolean = true
     ): TimedTrajectory<Pose2dWithCurvature> {
-        val flippedPosition = Pose2d(Vector2(), Rotation2d.fromDegrees(180.0))
+        val flippedPosition = Pose2d(Vector2(), 180.0.degree)
         val newWaypoints = waypoints.asSequence().map { point ->
             if (reversed) point + flippedPosition else point
         }
@@ -60,11 +65,11 @@ public class TrajectoryGenerator(
         return timeParameterizeTrajectory(
             DistanceTrajectory(trajectory),
             constraints,
-            startVelocity,
-            endVelocity,
-            maxVelocity,
-            maxAcceleration.absoluteValue,
-            maxDx,
+            startVelocity.value,
+            endVelocity.value,
+            maxVelocity.value,
+            maxAcceleration.value.absoluteValue,
+            maxDx.value,
             reversed
         )
     }
@@ -85,8 +90,8 @@ public class TrajectoryGenerator(
     ) = IndexedTrajectory(
         SplineGenerator.parameterizeSplines(
             splines,
-            maxDx,
-            maxDy,
+            maxDx.value,
+            maxDy.value,
             maxDTheta
         )
     )
@@ -150,14 +155,14 @@ public class TrajectoryGenerator(
         }
 
         val distanceViewRange =
-            distanceTrajectory.firstInterpolant..distanceTrajectory.lastInterpolant
+            distanceTrajectory.firstInterpolant.value..distanceTrajectory.lastInterpolant.value
         val distanceViewSteps =
-            Math.ceil((distanceTrajectory.lastInterpolant - distanceTrajectory.firstInterpolant) / stepSize + 1)
-                .toInt()
+            Math.ceil((distanceTrajectory.lastInterpolant.value - distanceTrajectory.firstInterpolant.value) /
+                    stepSize + 1).toInt()
 
         val states = (0 until distanceViewSteps).map { step ->
             distanceTrajectory.sample(
-                (step * stepSize + distanceTrajectory.firstInterpolant).coerceIn(
+                (step * stepSize + distanceTrajectory.firstInterpolant.value).coerceIn(
                     distanceViewRange
                 )
             )
@@ -303,7 +308,7 @@ public class TrajectoryGenerator(
             var dt = 0.0
             if (i > 0) {
                 timedStates[i - 1] = timedStates[i - 1].copy(
-                    acceleration = if (reversed) -accel else accel
+                    _acceleration = if (reversed) -accel else accel
                 )
 
                 dt = when {

@@ -1,9 +1,10 @@
-package org.team5499.monkeyLib.math
+package org.team5499.monkeyLib.math.localization
 
+import org.team5499.monkeyLib.math.Epsilon
 import org.team5499.monkeyLib.math.geometry.Vector2
 import org.team5499.monkeyLib.util.CSVWritable
 
-class Position : CSVWritable {
+class PositionTracker : CSVWritable {
 
     private var x = 0.0
     private var y = 0.0

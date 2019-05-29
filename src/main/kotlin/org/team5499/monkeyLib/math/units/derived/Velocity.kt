@@ -1,5 +1,6 @@
 package org.team5499.monkeyLib.math.units.derived
 
+import org.team5499.monkeyLib.math.geometry.Rotation2d
 import org.team5499.monkeyLib.math.units.SIValue
 import org.team5499.monkeyLib.math.units.SIUnit
 import org.team5499.monkeyLib.math.units.Time
@@ -9,10 +10,10 @@ import org.team5499.monkeyLib.math.units.minute
 
 val <T : SIValue<T>> T.velocity: Velocity<T> get() = Velocity(value, this)
 val Length.velocity: LinearVelocity get() = Velocity(value, this)
-// val Rotation2d.velocity: AngularVelocity get() = Velocity(value, this) // fix
+val Rotation2d.velocity: AngularVelocity get() = Velocity(value, this) // fix
 
 typealias LinearVelocity = Velocity<Length>
-// typealias AngularVelocity = Velocity<Rotation2d> // fix this pls
+typealias AngularVelocity = Velocity<Rotation2d> // fix this pls
 
 private val meterToFeet = 1.meter.feet
 private val meterToInches = 1.meter.inch

@@ -6,17 +6,18 @@ import org.team5499.monkeyLib.math.geometry.Pose2dWithCurvature
 import org.team5499.monkeyLib.math.geometry.Pose2d
 
 import org.team5499.monkeyLib.math.Epsilon
+import org.team5499.monkeyLib.math.units.Time
 
 import kotlin.math.sqrt
 import kotlin.math.sin
 
-public class RamseteFollower(
+class RamseteFollower(
     private val kBeta: Double,
     private val kZeta: Double
 ) : TrajectoryFollower() {
 
     override fun calculateState(
-        iterator: TrajectoryIterator<Double, TimedEntry<Pose2dWithCurvature>>,
+        iterator: TrajectoryIterator<Time, TimedEntry<Pose2dWithCurvature>>,
         robotPose: Pose2d
     ): TrajectoryFollower.TrajectoryFollowerVelocityOutput {
         val referenceState = iterator.currentState.state
@@ -25,18 +26,18 @@ public class RamseteFollower(
         val error = referenceState.state.pose inFrameOfReferenceOf robotPose
 
         // Get reference linear and angular velocities
-        val vd = referenceState.velocity
+        val vd = referenceState._velocity
         val wd = vd * referenceState.state.curvature
 
         // Compute gain
         val k1 = 2 * kZeta * sqrt(wd * wd + kBeta * vd * vd)
 
         // Get angular error in bounded radians
-        val angleError = error.rotation.radians
+        val angleError = error.rotation.radian
 
         return TrajectoryFollower.TrajectoryFollowerVelocityOutput(
-            linearVelocity = vd * error.rotation.cosAngle + k1 * error.translation.x,
-            angularVelocity = wd + kBeta * vd * sinc(angleError) * error.translation.y + k1 * angleError
+            _linearVelocity = vd * error.rotation.cos + k1 * error.translation.x,
+            _angularVelocity = wd + kBeta * vd * sinc(angleError) * error.translation.y + k1 * angleError
         )
     }
 

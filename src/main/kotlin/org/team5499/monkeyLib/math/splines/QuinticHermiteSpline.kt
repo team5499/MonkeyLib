@@ -11,16 +11,16 @@ fun QuinticHermiteSpline(p0: Vector2, p1: Vector2, h0: Rotation2d, h1: Rotation2
 
     val x0 = p0.x
     val x1 = p1.x
-    val dx0 = h0.cosAngle * scale
-    val dx1 = h1.cosAngle * scale
+    val dx0 = h0.cos * scale
+    val dx1 = h1.cos * scale
     val ddx0 = 0.0
     val ddx1 = 0.0
 
     // y vars
     val y0 = p0.y
     val y1 = p1.y
-    val dy0 = h0.sinAngle * scale
-    val dy1 = h1.sinAngle * scale
+    val dy0 = h0.sin * scale
+    val dy1 = h1.sin * scale
     val ddy0 = 0.0
     val ddy1 = 0.0
 

@@ -1,10 +1,10 @@
 package org.team5499.monkeyLib.auto
 
-import org.team5499.monkeyLib.math.geometry.Rotation2d
 import org.team5499.monkeyLib.math.geometry.Vector2
 import org.team5499.monkeyLib.math.geometry.Pose2d
 
 import org.team5499.monkeyLib.auto.actions.Action
+import org.team5499.monkeyLib.math.geometry.degree
 
 class Routine(name: String, startPose: Pose2d, vararg actions: Action) {
 
@@ -22,7 +22,7 @@ class Routine(name: String, startPose: Pose2d, vararg actions: Action) {
 
     @Suppress("SpreadOperator")
     public constructor(name: String, vararg actions: Action) :
-        this(name, Pose2d(Vector2(0, 0), Rotation2d.fromDegrees(0.0)), *actions)
+        this(name, Pose2d(Vector2(0, 0), 0.0.degree), *actions)
 
     public fun getCurrentAction(): Action {
         return actions.get(stepNumber)

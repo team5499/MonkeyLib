@@ -1,126 +1,75 @@
 package org.team5499.monkeyLib.math.geometry
 
 import org.team5499.monkeyLib.math.Epsilon
+import org.team5499.monkeyLib.math.units.Length
+import org.team5499.monkeyLib.math.units.feet
 
-@Suppress("TooManyFunctions")
-class Pose2d(translation: Vector2, rotation: Rotation2d) : State<Pose2d> {
+import kotlin.math.absoluteValue
 
-    companion object {
+data class Pose2d(
+    val translation: Vector2 = Vector2(),
+    val rotation: Rotation2d = 0.degree
+) : State<Pose2d> {
 
-        @Suppress("MagicNumber")
-        fun log(transform: Pose2d): Twist2d {
-            val dTheta = transform.rotation.radians
-            val halfTheta = 0.5 * dTheta
-            val cosMinusOne = transform.rotation.cosAngle - 1.0
-            val halfThetaByTanOfHalfDtheta: Double
-            if (Math.abs(cosMinusOne) < Epsilon.EPSILON) {
-                halfThetaByTanOfHalfDtheta = 1.0 - ((1.0 / 12.0) * (dTheta * dTheta))
+    constructor(
+        x: Length,
+        y: Length,
+        rotation: Rotation2d = 0.degree
+    ) : this(Vector2(x, y), rotation)
+
+    val twist: Twist2d
+        get() {
+            val dtheta = rotation.radian
+            val halfDTheta = dtheta / 2.0
+            val cosMinusOne = rotation.cos - 1.0
+
+            val halfThetaByTanOfHalfDTheta = if (cosMinusOne.absoluteValue < Epsilon.EPSILON) {
+                1.0 - 1.0 / 12.0 * dtheta * dtheta
             } else {
-                halfThetaByTanOfHalfDtheta = -(halfTheta * transform.rotation.sinAngle) / cosMinusOne
+                -(halfDTheta * rotation.sin) / cosMinusOne
             }
-            val translationPart = transform.translation.rotateBy(
-                Rotation2d(halfThetaByTanOfHalfDtheta, -halfTheta, false)
-            )
-            return Twist2d(translationPart.x, translationPart.y, dTheta)
+            val translationPart = translation *
+                    Rotation2d(halfThetaByTanOfHalfDTheta, -halfDTheta, false)
+            return Twist2d(translationPart.x, translationPart.y, rotation)
         }
 
-        @Suppress("MagicNumber")
-        fun exp(delta: Twist2d): Pose2d {
-            val sinTheta = Math.sin(delta.dTheta)
-            val cosTheta = Math.cos(delta.dTheta)
-            val s: Double
-            val c: Double
-            if (Math.abs(delta.dTheta) < Epsilon.EPSILON) {
-                s = 1.0 - 1.0 / 6.0 * delta.dTheta * delta.dTheta
-                c = .5 * delta.dTheta
-            } else {
-                s = sinTheta / delta.dTheta
-                c = (1.0 - cosTheta) / delta.dTheta
-            }
-            return Pose2d(Vector2(delta.dx * s - delta.dy * c, delta.dx * c + delta.dy * s),
-                Rotation2d(cosTheta, sinTheta, false))
-        }
+    val mirror get() = Pose2d(Vector2(translation.x, 27.feet.value - translation.y), -rotation)
 
-        fun fromRotation(rotation: Rotation2d) = Pose2d(Vector2(), rotation)
-    }
-
-    val translation: Vector2
-        get() = field
-    val rotation: Rotation2d
-        get() = field
-    val twist by lazy {
-        log(this)
-    }
-
-    init {
-        this.translation = translation
-        this.rotation = rotation
-    }
-
-    constructor(): this(Vector2(), Rotation2d())
-    constructor(other: Pose2d): this(other.translation, other.rotation)
+    infix fun inFrameOfReferenceOf(fieldRelativeOrigin: Pose2d) = (-fieldRelativeOrigin) + this
 
     operator fun plus(other: Pose2d) = transformBy(other)
-    operator fun minus(other: Pose2d) = transformBy(-other)
+
+    operator fun minus(other: Pose2d) = this + -other
+
+    fun transformBy(other: Pose2d) =
+            Pose2d(
+                    translation + (other.translation * rotation),
+                    rotation + other.rotation
+            )
 
     operator fun unaryMinus(): Pose2d {
         val invertedRotation = -rotation
         return Pose2d((-translation) * invertedRotation, invertedRotation)
     }
 
-    fun inverse(): Pose2d {
-        val rotationInverted = rotation.inverse()
-        return Pose2d((-translation).rotateBy(rotationInverted), rotationInverted)
-    }
-
-    fun normal(): Pose2d {
-        return Pose2d(translation, rotation.normal())
-    }
-
     fun isColinear(other: Pose2d): Boolean {
-        if (other.rotation.isParallel(rotation)) return false
-        val twist = log(inverse().transformBy(other))
-        return Math.abs(twist.dx) < Epsilon.EPSILON && Math.abs(twist.dTheta) < Epsilon.EPSILON
+        if (!rotation.isParallel(other.rotation)) return false
+        val twist = (-this + other).twist
+        return Epsilon.epsilonEquals(twist.dy, 0.0) && Epsilon.epsilonEquals(twist.dTheta.value, 0.0)
     }
 
     @Suppress("ReturnCount")
-    override fun interpolate(other: Pose2d, x: Double): Pose2d {
-        if (x <= 0) {
-            return Pose2d(this)
-        } else if (x >= 1) {
-            return Pose2d(other)
+    override fun interpolate(endValue: Pose2d, t: Double): Pose2d {
+        if (t <= 0) {
+            return Pose2d(this.translation, this.rotation)
+        } else if (t >= 1) {
+            return Pose2d(endValue.translation, endValue.rotation)
         }
-        val twist = Pose2d.log(inverse().transformBy(other))
-        return transformBy(Pose2d.exp(twist.scaled(x)))
+        val twist = (-this + endValue).twist
+        return this + (twist * t).asPose
     }
 
-    infix fun inFrameOfReferenceOf(fieldRelativeOrigin: Pose2d) = (-fieldRelativeOrigin) + this
-
-    fun transformBy(other: Pose2d): Pose2d {
-        return Pose2d(translation.translateBy(other.translation.rotateBy(rotation)), rotation.rotateBy(other.rotation))
-    }
-
-    fun transformBy(other: Vector2): Pose2d {
-        return Pose2d(translation.translateBy(other), rotation)
-    }
-
-    fun mirror(): Pose2d {
-        return Pose2d(Vector2(translation.x, -translation.y), rotation.inverse())
-    }
-
-    override fun toString(): String {
-        return "Translation: $translation, Rotation: $rotation"
-    }
+    override fun distance(other: Pose2d) = (-this + other).twist.norm
 
     override fun toCSV() = "${translation.toCSV()},${rotation.toCSV()}"
-
-    override fun equals(other: Any?): Boolean {
-        if (other == null || other !is Pose2d) return false
-        return (other.translation.equals(translation) && other.rotation.equals(rotation))
-    }
-
-    // this might be wrong
-    override fun distance(other: Pose2d) = (other - this).twist.norm()
-
-    override fun hashCode() = super.hashCode()
 }
