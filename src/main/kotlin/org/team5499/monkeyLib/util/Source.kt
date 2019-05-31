@@ -19,12 +19,13 @@ fun <T, O> Source<T>.withEquals(other: Source<O>): BooleanSource = { this@withEq
 
 fun <T, O> Source<T>.map(block: (T) -> O): Source<O> = { block(this@map()) }
 
-@Suppress("FunctionNaming")
+@Suppress("FunctionName")
 fun <T> Source(value: T): Source<T> = { value }
-@Suppress("FunctionNaming")
+
+@Suppress("FunctionName")
+@Deprecated("Redundant", ReplaceWith("value"))
 fun <T> Source(value: () -> T): Source<T> = value
 
-// Double sources
 fun DoubleSource.withThreshold(threshold: Double = 0.5): BooleanSource = map { this@withThreshold() >= threshold }
 
 fun DoubleSource.withDeadband(
@@ -33,12 +34,15 @@ fun DoubleSource.withDeadband(
     maxMagnitude: Double = 1.0
 ): DoubleSource = map {
     val currentValue = this@withDeadband()
-    if (currentValue in (-deadband)..deadband) return@map 0.0
+    if (currentValue in (-deadband)..deadband) return@map 0.0 // in deadband
+    // outside deadband
     if (!scaleDeadband) return@map currentValue
+    // scale so deadband is effective 0
     ((currentValue.absoluteValue - deadband) / (maxMagnitude - deadband)) * currentValue.sign
 }
 
-// boolean srouces
+// Boolean Sources
+
 fun <T> BooleanSource.map(trueMap: T, falseMap: T) = map(
         Source(
                 trueMap
@@ -58,7 +62,8 @@ infix fun BooleanSource.and(other: BooleanSource) = withMerge(other) { one, two 
 infix fun BooleanSource.or(other: BooleanSource) = withMerge(other) { one, two -> one or two }
 infix fun BooleanSource.xor(other: BooleanSource) = withMerge(other) { one, two -> one or two }
 
-// comparable stuff
+// Comparable Sources
+
 fun <T> Source<Comparable<T>>.compareTo(other: T) = map { it.compareTo(other) }
 fun <T> Source<Comparable<T>>.compareTo(other: Source<T>) = withMerge(other) { one, two -> one.compareTo(two) }
 
