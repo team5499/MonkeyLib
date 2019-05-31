@@ -4,13 +4,12 @@ import org.team5499.monkeyLib.math.units.Length
 import org.team5499.monkeyLib.math.units.derived.LinearVelocity
 import org.team5499.monkeyLib.math.units.derived.velocity
 import org.team5499.monkeyLib.math.units.inch
-import org.team5499.monkeyLib.subsystems.drivetrain.IDrivetrain
-
+import org.team5499.monkeyLib.subsystems.drivetrain.AbstractTankDrive
 import kotlin.math.absoluteValue
 
 class DriveStraightAction(
     timeout: Double,
-    private val drivetrain: IDrivetrain,
+    private val drivetrain: AbstractTankDrive,
     private val distance: Length,
     private val acceptableDistanceError: Length = 2.inch, // inches
     private val acceptableVelocityError: LinearVelocity = 2.inch.velocity // inches / s
@@ -26,8 +25,8 @@ class DriveStraightAction(
         (
             drivetrain.leftDistanceError.absoluteValue < acceptableDistanceError &&
             drivetrain.rightDistanceError.absoluteValue < acceptableDistanceError &&
-            drivetrain.leftVelocity.absoluteValue < acceptableVelocityError &&
-            drivetrain.rightVelocity.absoluteValue < acceptableVelocityError
+            drivetrain.leftMasterMotor.encoder.velocity.absoluteValue < acceptableVelocityError.value &&
+            drivetrain.rightMasterMotor.encoder.velocity.absoluteValue < acceptableVelocityError.value
         )
     }
 }

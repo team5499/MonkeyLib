@@ -1,14 +1,14 @@
 package org.team5499.monkeyLib.auto.actions
 
-import org.team5499.monkeyLib.subsystems.drivetrain.IDrivetrain
 import org.team5499.monkeyLib.subsystems.drivetrain.CharacterizationData
 import org.team5499.monkeyLib.math.physics.DifferentialDrive
 import org.team5499.monkeyLib.math.units.Length
 import org.team5499.monkeyLib.math.units.millisecond
+import org.team5499.monkeyLib.subsystems.drivetrain.AbstractTankDrive
 import org.team5499.monkeyLib.util.time.DeltaTime
 
 class QuasistaticCharacterizationAction(
-    private val drivetrain: IDrivetrain,
+    private val drivetrain: AbstractTankDrive,
     private val wheelRadius: Length,
     private val effectiveWheelbaseRadius: Length, // meters,
     private val turnInPlace: Boolean = false
@@ -33,11 +33,12 @@ class QuasistaticCharacterizationAction(
         val dt = dtController.updateTime(System.currentTimeMillis().millisecond)
         drivetrain.setPercent(commandedVoltage / 12.0, commandedVoltage / 12.0 * if (turnInPlace) -1.0 else 1.0)
 
-        val avgOutputVoltage = drivetrain.averageOutputVoltage
+        val avgOutputVoltage =
+                (drivetrain.leftMasterMotor.voltageOutput + drivetrain.rightMasterMotor.voltageOutput) / 2.0
 
         val wheelMotion = DifferentialDrive.WheelState(
-            drivetrain.leftVelocity.value,
-            drivetrain.rightVelocity.value // m / s
+            drivetrain.leftMasterMotor.encoder.velocity,
+            drivetrain.rightMasterMotor.encoder.velocity // m / s
         )
 
         val avgSpeed = if (turnInPlace) {
@@ -46,7 +47,7 @@ class QuasistaticCharacterizationAction(
             (wheelMotion.right + wheelMotion.left) / 2.0
         }
 
-        charData.add(CharacterizationData(avgOutputVoltage.value, avgSpeed, dt.second))
+        charData.add(CharacterizationData(avgOutputVoltage, avgSpeed, dt.second))
     }
 
     override fun next(): Boolean {
