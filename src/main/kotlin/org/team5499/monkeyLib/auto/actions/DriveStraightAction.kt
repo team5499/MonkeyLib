@@ -1,15 +1,19 @@
 package org.team5499.monkeyLib.auto.actions
 
+import org.team5499.monkeyLib.math.units.Length
+import org.team5499.monkeyLib.math.units.derived.LinearVelocity
+import org.team5499.monkeyLib.math.units.derived.velocity
+import org.team5499.monkeyLib.math.units.inch
 import org.team5499.monkeyLib.subsystems.drivetrain.IDrivetrain
 
-import kotlin.math.abs
+import kotlin.math.absoluteValue
 
 class DriveStraightAction(
     timeout: Double,
     private val drivetrain: IDrivetrain,
-    private val distance: Double,
-    private val acceptableDistanceError: Double = 2.0, // inches
-    private val acceptableVelocityError: Double = 2.0 // inches / s
+    private val distance: Length,
+    private val acceptableDistanceError: Length = 2.inch, // inches
+    private val acceptableVelocityError: LinearVelocity = 2.inch.velocity // inches / s
 ) : Action(timeout) {
 
     override fun start() {
@@ -20,10 +24,10 @@ class DriveStraightAction(
     override fun next(): Boolean {
         return super.next() ||
         (
-            abs(drivetrain.leftDistanceError) < acceptableDistanceError &&
-            abs(drivetrain.rightDistanceError) < acceptableDistanceError &&
-            abs(drivetrain.leftVelocity) < acceptableVelocityError &&
-            abs(drivetrain.rightVelocity) < acceptableVelocityError
+            drivetrain.leftDistanceError.absoluteValue < acceptableDistanceError &&
+            drivetrain.rightDistanceError.absoluteValue < acceptableDistanceError &&
+            drivetrain.leftVelocity.absoluteValue < acceptableVelocityError &&
+            drivetrain.rightVelocity.absoluteValue < acceptableVelocityError
         )
     }
 }

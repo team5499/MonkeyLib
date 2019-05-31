@@ -6,6 +6,9 @@ import org.team5499.monkeyLib.trajectory.types.Trajectory
 import org.team5499.monkeyLib.trajectory.types.TimedEntry
 import org.team5499.monkeyLib.math.geometry.Pose2dWithCurvature
 import org.team5499.monkeyLib.math.units.Time
+import org.team5499.monkeyLib.math.units.derived.velocity
+import org.team5499.monkeyLib.math.units.derived.volt
+import org.team5499.monkeyLib.math.units.meter
 import org.team5499.monkeyLib.trajectory.followers.TrajectoryFollower
 
 public class DriveTrajectoryAction(
@@ -25,12 +28,12 @@ public class DriveTrajectoryAction(
             output.differentialDriveVelocity,
             output.differentialDriveAcceleration
         )
-        // CONVERT TO INCHES/SEC??????/
+
         drivetrain.setVelocity(
-            dynamics.wheelVelocity.left * drivetrain.model.wheelRadius,
-            dynamics.wheelVelocity.right * drivetrain.model.wheelRadius,
-            dynamics.voltage.left,
-            dynamics.voltage.right
+                (dynamics.wheelVelocity.left * drivetrain.model.wheelRadius).meter.velocity,
+                (dynamics.wheelVelocity.right * drivetrain.model.wheelRadius).meter.velocity,
+            dynamics.voltage.left.volt,
+            dynamics.voltage.right.volt
         )
     }
 

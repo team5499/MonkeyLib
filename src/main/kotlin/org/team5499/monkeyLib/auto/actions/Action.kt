@@ -1,9 +1,12 @@
 package org.team5499.monkeyLib.auto.actions
 
+import org.team5499.monkeyLib.math.units.Time
 import org.team5499.monkeyLib.util.time.ITimer
 import org.team5499.monkeyLib.util.time.WPITimer
 
 public open class Action(timeoutSeconds: Double, timer: ITimer = WPITimer()) {
+
+    constructor(time: Time): this(time.second)
 
     private val mTimer: ITimer
     private val mTimeoutSeconds: Double
