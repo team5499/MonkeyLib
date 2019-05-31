@@ -93,4 +93,15 @@ class Path(
         }
         return buffer.toString()
     }
+
+    fun timeEstimate(): Double {
+        var time: Double = 0.0
+        for (i in 0..pathLength) {
+            val deltaY: Double = points.get(i).translation.y - points.get(i + 1).translation.y
+            val theta: Double = points.get(i).rotation.radians - points.get(i + 1).rotation.radians
+
+            time += Math.abs(deltaY * theta / Math.sin(theta) / velocities.get(i))
+        }
+        return time
+    }
 }
