@@ -44,3 +44,5 @@ abstract class Subsystem(name: String? = null) {
 
     open fun registerLoops(looper: ILooper) {}
 }
+
+operator fun Subsystem.unaryPlus() = SubsystemManager.addSubsystem(this)
