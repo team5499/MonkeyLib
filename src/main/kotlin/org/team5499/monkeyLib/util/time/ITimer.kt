@@ -1,15 +1,17 @@
 package org.team5499.monkeyLib.util.time
 
+import org.team5499.monkeyLib.math.units.Time
+
 /**
 * Timer abstraction layer to allow unit testing
 */
-public interface ITimer {
+interface ITimer {
 
     /**
     * Function to get time since timer started
     * @return number of ellapsed seconds
     */
-    public fun get(): Double
+    public fun get(): Time
 
     /**
     * Starts the timer

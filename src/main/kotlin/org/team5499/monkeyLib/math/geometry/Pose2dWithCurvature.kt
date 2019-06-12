@@ -1,6 +1,6 @@
 package org.team5499.monkeyLib.math.geometry
 
-import org.team5499.monkeyLib.util.Utils
+import org.team5499.monkeyLib.math.interpolate
 
 class Pose2dWithCurvature(
     translation: Vector2,
@@ -10,11 +10,8 @@ class Pose2dWithCurvature(
 ) : State<Pose2dWithCurvature> {
 
     val curvature: Double
-        get() = field
     val dCurvature: Double
-        get() = field
     val pose: Pose2d
-        get() = field
     val translation: Vector2
         get() = pose.translation
     val rotation: Rotation2d
@@ -39,8 +36,8 @@ class Pose2dWithCurvature(
 
     override fun interpolate(other: Pose2dWithCurvature, x: Double): Pose2dWithCurvature {
         return Pose2dWithCurvature(pose.interpolate(other.pose, x),
-            Utils.interpolate(curvature, other.curvature, x),
-            Utils.interpolate(dCurvature, other.dCurvature, x)
+            interpolate(curvature, other.curvature, x),
+            interpolate(dCurvature, other.dCurvature, x)
         )
     }
 

@@ -1,19 +1,10 @@
 package org.team5499.monkeyLib
 
-import org.team5499.monkeyLib.util.time.ITimer
-import org.team5499.monkeyLib.util.time.WPITimer
+interface Controller {
 
-public abstract class Controller(timer: ITimer = WPITimer()) {
+    fun start()
 
-    protected val timer: ITimer
+    fun update()
 
-    init {
-        this.timer = timer
-    }
-
-    abstract fun start()
-
-    abstract fun update()
-
-    abstract fun reset()
+    fun reset()
 }

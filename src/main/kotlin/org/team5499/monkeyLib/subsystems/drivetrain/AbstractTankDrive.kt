@@ -1,6 +1,5 @@
 package org.team5499.monkeyLib.subsystems.drivetrain
 
-import edu.wpi.first.wpilibj.Notifier
 import org.team5499.monkeyLib.math.geometry.Pose2d
 import org.team5499.monkeyLib.math.geometry.Rotation2d
 import org.team5499.monkeyLib.math.localization.PositionTracker
@@ -31,13 +30,6 @@ abstract class AbstractTankDrive : IDifferentialFollowerDrive, Subsystem() {
 
     abstract val angularVelocity: AngularVelocity
     abstract val turnError: Rotation2d
-
-    init {
-        localization.reset()
-        Notifier {
-            localization.update()
-        }.startPeriodic(1.0 / 100.0)
-    }
 
     override fun zeroOutputs() {
         setPercent(0.0, 0.0)

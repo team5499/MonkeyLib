@@ -1,4 +1,4 @@
-package org.team5499.monkeyLib.auto.actions
+package org.team5499.monkeyLib.auto
 
 import org.team5499.monkeyLib.math.physics.DifferentialDrive
 import org.team5499.monkeyLib.math.units.Length
@@ -14,10 +14,14 @@ class StepVoltageCharacterizationAction(
     private val effectiveWheelBaseRadius: Length,
     private val turnInPlace: Boolean
 
-) : Action(0.0) {
+) : Action() {
 
     private val data = ArrayList<CharacterizationData>()
     private val dtController = DeltaTime()
+
+    init {
+        withTimeout(kTimeout)
+    }
 
     override fun start() {
         super.start()

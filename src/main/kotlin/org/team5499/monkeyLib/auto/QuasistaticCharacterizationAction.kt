@@ -1,4 +1,4 @@
-package org.team5499.monkeyLib.auto.actions
+package org.team5499.monkeyLib.auto
 
 import org.team5499.monkeyLib.subsystems.drivetrain.CharacterizationData
 import org.team5499.monkeyLib.math.physics.DifferentialDrive
@@ -12,7 +12,7 @@ class QuasistaticCharacterizationAction(
     private val wheelRadius: Length,
     private val effectiveWheelbaseRadius: Length, // meters,
     private val turnInPlace: Boolean = false
-) : Action(0.0) {
+) : Action() {
 
     private val charData: MutableList<CharacterizationData> = mutableListOf()
 
@@ -20,6 +20,10 @@ class QuasistaticCharacterizationAction(
 
     private var startTime = 0.millisecond
     private var commandedVoltage = 0.0
+
+    init {
+        finishCondition += { commandedVoltage >= kMaxVoltage }
+    }
 
     override fun start() {
         commandedVoltage = 0.0
@@ -48,10 +52,6 @@ class QuasistaticCharacterizationAction(
         }
 
         charData.add(CharacterizationData(avgOutputVoltage, avgSpeed, dt.second))
-    }
-
-    override fun next(): Boolean {
-        return commandedVoltage > kMaxVoltage
     }
 
     override fun finish() {

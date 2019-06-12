@@ -1,4 +1,4 @@
-package org.team5499.monkeyLib.auto.actions
+package org.team5499.monkeyLib.auto
 
 import org.team5499.monkeyLib.trajectory.types.Trajectory
 import org.team5499.monkeyLib.trajectory.types.TimedEntry
@@ -8,11 +8,15 @@ import org.team5499.monkeyLib.subsystems.drivetrain.AbstractTankDrive
 import org.team5499.monkeyLib.trajectory.followers.TrajectoryFollower
 
 public class DriveTrajectoryAction(
-    timeout: Double,
     private val drivetrain: AbstractTankDrive,
     private val trajectoryFollower: TrajectoryFollower,
     private val trajectory: Trajectory<Time, TimedEntry<Pose2dWithCurvature>>
-) : Action(timeout) {
+) : Action() {
+
+    init {
+        finishCondition += { timedOut() }
+        finishCondition += { trajectoryFollower.isFinished }
+    }
 
     override fun start() {
         trajectoryFollower.reset(trajectory)
@@ -24,10 +28,6 @@ public class DriveTrajectoryAction(
         if (referencePoint != null) {
             val referencePose = referencePoint.state.state.pose
         }
-    }
-
-    override fun next(): Boolean {
-        return trajectoryFollower.isFinished
     }
 
     override fun finish() {
