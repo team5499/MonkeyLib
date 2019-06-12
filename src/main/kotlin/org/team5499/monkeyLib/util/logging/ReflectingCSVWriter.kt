@@ -1,4 +1,4 @@
-package org.team5499.monkeyLib.logging
+package org.team5499.monkeyLib.util.logging
 
 import java.io.FileNotFoundException
 import java.io.PrintWriter
