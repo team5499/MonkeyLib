@@ -24,6 +24,3 @@ fun parallel(block: ActionGroupBuilder.() -> Unit) = commandGroup(GroupType.Para
 
 private fun commandGroup(type: GroupType, block: ActionGroupBuilder.() -> Unit) =
         ActionGroupBuilder(type).apply(block).build()
-
-@Suppress("FunctionNaming")
-infix fun ActionGroup.SEND(other: String) = this.start()
