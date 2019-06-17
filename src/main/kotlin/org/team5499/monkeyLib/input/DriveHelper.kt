@@ -2,16 +2,7 @@ package org.team5499.monkeyLib.input
 
 import org.team5499.monkeyLib.util.BooleanSource
 import org.team5499.monkeyLib.util.DoubleSource
-import org.team5499.monkeyLib.util.Source
 import kotlin.math.absoluteValue
-
-typealias DriveSignalSource = Source<DriveSignal>
-data class DriveSignal(val left: Double = 0.0, val right: Double = 0.0, val brake: Boolean = false) {
-    companion object {
-        val kBrake = DriveSignal(0.0, 0.0, true)
-        val kNeutral = DriveSignal()
-    }
-}
 
 abstract class DriveHelper : DriveSignalSource {
 
