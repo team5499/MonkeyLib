@@ -8,6 +8,8 @@ typealias Source<T> = () -> T
 
 typealias DoubleSource = Source<Double>
 typealias BooleanSource = Source<Boolean>
+typealias IntSource = Source<Int>
+typealias StringSource = Source<String>
 
 fun <T, O, P> Source<T>.withMerge(
     other: Source<O>,
