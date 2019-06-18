@@ -1,8 +1,8 @@
 package org.team5499.monkeyLib.trajectory.types
 
+import org.team5499.monkeyLib.math.epsilonEquals
 import org.team5499.monkeyLib.math.geometry.State
 import org.team5499.monkeyLib.trajectory.TrajectoryIterator
-import org.team5499.monkeyLib.math.Epsilon
 import org.team5499.monkeyLib.math.units.Length
 import org.team5499.monkeyLib.math.units.meter
 
@@ -32,7 +32,7 @@ class DistanceTrajectory<S : State<S>>(
                 .withIndex()
                 .first { (index, _) -> index != 0 && distances[index] >= interpolant }
             val prevEntry = points[index - 1]
-            if (Epsilon.epsilonEquals(distances[index], distances[index - 1])) {
+            if (distances[index] epsilonEquals distances[index - 1]) {
                 TrajectorySamplePoint(entry, index, index)
             } else {
                 TrajectorySamplePoint(

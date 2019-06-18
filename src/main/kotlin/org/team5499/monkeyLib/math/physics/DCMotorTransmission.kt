@@ -1,6 +1,6 @@
 package org.team5499.monkeyLib.math.physics
 
-import org.team5499.monkeyLib.math.Epsilon
+import org.team5499.monkeyLib.math.kEpsilon
 
 /*
  * Implementation from:
@@ -25,8 +25,8 @@ class DCMotorTransmission(
      */
     fun getFreeSpeedAtVoltage(voltage: Double): Double {
         return when {
-            voltage > Epsilon.EPSILON -> Math.max(0.0, voltage - frictionVoltage) * speedPerVolt
-            voltage < -Epsilon.EPSILON -> Math.min(0.0, voltage + frictionVoltage) * speedPerVolt
+            voltage > kEpsilon -> Math.max(0.0, voltage - frictionVoltage) * speedPerVolt
+            voltage < kEpsilon -> Math.min(0.0, voltage + frictionVoltage) * speedPerVolt
             else -> 0.0
         }
     }
@@ -40,13 +40,13 @@ class DCMotorTransmission(
     fun getTorqueForVoltage(outputSpeed: Double, voltage: Double): Double {
         var effectiveVoltage = voltage
         when {
-            outputSpeed > Epsilon.EPSILON -> // Forward motion, rolling friction.
+            outputSpeed > kEpsilon -> // Forward motion, rolling friction.
                 effectiveVoltage -= frictionVoltage
-            outputSpeed < -Epsilon.EPSILON -> // Reverse motion, rolling friction.
+            outputSpeed < kEpsilon -> // Reverse motion, rolling friction.
                 effectiveVoltage += frictionVoltage
-            voltage > Epsilon.EPSILON -> // System is static, forward torque.
+            voltage > kEpsilon -> // System is static, forward torque.
                 effectiveVoltage = Math.max(0.0, voltage - frictionVoltage)
-            voltage < -Epsilon.EPSILON -> // System is static, reverse torque.
+            voltage < kEpsilon -> // System is static, reverse torque.
                 effectiveVoltage = Math.min(0.0, voltage + frictionVoltage)
             else -> // System is idle.
                 return 0.0
@@ -62,13 +62,13 @@ class DCMotorTransmission(
      */
     fun getVoltageForTorque(outputSpeed: Double, torque: Double): Double {
         val fv: Double = when {
-            outputSpeed > Epsilon.EPSILON -> // Forward motion, rolling friction.
+            outputSpeed > kEpsilon -> // Forward motion, rolling friction.
                 frictionVoltage
-            outputSpeed < -Epsilon.EPSILON -> // Reverse motion, rolling friction.
+            outputSpeed < kEpsilon -> // Reverse motion, rolling friction.
                 -frictionVoltage
-            torque > Epsilon.EPSILON -> // System is static, forward torque.
+            torque > kEpsilon -> // System is static, forward torque.
                 frictionVoltage
-            torque < -Epsilon.EPSILON -> // System is static, reverse torque.
+            torque < kEpsilon -> // System is static, reverse torque.
                 -frictionVoltage
             else -> // System is idle.
                 return 0.0

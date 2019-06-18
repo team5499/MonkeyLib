@@ -1,10 +1,10 @@
 @file:Suppress("ConstructorParameterNaming")
 package org.team5499.monkeyLib.trajectory.types
 
+import org.team5499.monkeyLib.math.epsilonEquals
 import org.team5499.monkeyLib.trajectory.TrajectoryIterator
 import org.team5499.monkeyLib.math.geometry.State
 import org.team5499.monkeyLib.math.lerp
-import org.team5499.monkeyLib.math.Epsilon
 import org.team5499.monkeyLib.math.geometry.Pose2dWithCurvature
 import org.team5499.monkeyLib.math.geometry.Pose2d
 import org.team5499.monkeyLib.math.units.Time
@@ -30,7 +30,7 @@ class TimedTrajectory<S : State<S>>(
                 .withIndex()
                 .first { (index, entry) -> index != 0 && entry.t.value >= interpolant }
             val prevEntry = points[ index - 1 ]
-            if (Epsilon.epsilonEquals(entry.t.value, prevEntry.t.value)) {
+            if (entry.t epsilonEquals prevEntry.t) {
                 TrajectorySamplePoint(entry, index, index)
             } else {
                 TrajectorySamplePoint(
@@ -77,7 +77,7 @@ data class TimedEntry<S : State<S>> internal constructor(
         val dt = newT - this.t.value
         if (dt < 0.0) return endValue.interpolate(this, 1.0 - t)
 
-        val reversing = _velocity < 0.0 || Epsilon.epsilonEquals(_velocity) && _acceleration < 0.0
+        val reversing = _velocity < 0.0 || _velocity epsilonEquals 0.0 && _acceleration < 0.0
 
         val newV = _velocity + _acceleration * dt
         val newS = (if (reversing) -1.0 else 1.0) * (_velocity * dt + 0.5 * _acceleration * dt * dt)

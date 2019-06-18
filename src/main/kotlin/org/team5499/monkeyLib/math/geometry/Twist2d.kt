@@ -1,6 +1,6 @@
 package org.team5499.monkeyLib.math.geometry
 
-import org.team5499.monkeyLib.math.Epsilon
+import org.team5499.monkeyLib.math.epsilonEquals
 import org.team5499.monkeyLib.math.units.Length
 
 import kotlin.math.absoluteValue
@@ -25,7 +25,7 @@ class Twist2d constructor(
             val sinTheta = Math.sin(dTheta)
             val cosTheta = Math.cos(dTheta)
 
-            val (s, c) = if (Math.abs(dTheta) < Epsilon.EPSILON) {
+            val (s, c) = if (dTheta epsilonEquals 0.0) {
                 1.0 - 1.0 / 6.0 * dTheta * dTheta to .5 * dTheta
             } else {
                 sinTheta / dTheta to (1.0 - cosTheta) / dTheta

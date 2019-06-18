@@ -1,6 +1,11 @@
 package org.team5499.monkeyLib.math
 
+import kotlin.math.PI
+
 fun Double.lerp(endValue: Double, t: Double) = this + (endValue - this) * t.coerceIn(0.0, 1.0)
+
+infix fun Double.cos(other: Double) = times(Math.cos(other))
+infix fun Double.sin(other: Double) = times(Math.sin(other))
 
 fun limit(value: Double, limit: Double): Double {
     return limit(value, -limit, limit)
@@ -27,4 +32,11 @@ fun limit(value: Double, min: Double, max: Double): Double {
 fun interpolate(a: Double, b: Double, x: Double): Double {
     val newX = limit(x, 0.0, 1.0)
     return a + (b - a) * newX
+}
+
+fun Double.boundRadians(): Double {
+    var x = this
+    while (x >= PI) x -= (2 * PI)
+    while (x < -PI) x += (2 * PI)
+    return x
 }

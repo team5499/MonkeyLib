@@ -2,7 +2,8 @@
 
 package org.team5499.monkeyLib.math.physics
 
-import org.team5499.monkeyLib.math.Epsilon
+import org.team5499.monkeyLib.math.epsilonEquals
+import org.team5499.monkeyLib.math.kEpsilon
 import org.team5499.monkeyLib.util.CSVWritable
 import java.text.DecimalFormat
 import java.util.Arrays
@@ -123,10 +124,10 @@ class DifferentialDrive(
         val wheelAcceleration: WheelState
         val dcurvature: Double
 
-        val leftStationary = Epsilon.epsilonEquals(wheelVelocity.left) && Math.abs(
+        val leftStationary = wheelVelocity.left epsilonEquals 0.0 && Math.abs(
             voltage.left
         ) < leftTransmission.frictionVoltage
-        val rightStationary = Epsilon.epsilonEquals(wheelVelocity.right) && Math.abs(
+        val rightStationary = wheelVelocity.right epsilonEquals 0.0 && Math.abs(
             voltage.right
         ) < rightTransmission.frictionVoltage
 
@@ -287,7 +288,7 @@ class DifferentialDrive(
         val leftSpeedAtMaxVoltage = leftTransmission.getFreeSpeedAtVoltage(maxAbsVoltage)
         val rightSpeedAtMaxVoltage = rightTransmission.getFreeSpeedAtVoltage(maxAbsVoltage)
 
-        if (Epsilon.epsilonEquals(curvature)) {
+        if (curvature epsilonEquals 0.0) {
             return wheelRadius * Math.min(leftSpeedAtMaxVoltage, rightSpeedAtMaxVoltage)
         }
         if (curvature.isInfinite()) {
@@ -300,7 +301,7 @@ class DifferentialDrive(
             leftSpeedAtMaxVoltage * (effectiveWheelBaseRadius * curvature + 1.0) /
             (1.0 - effectiveWheelBaseRadius * curvature)
 
-        if (Math.abs(rightSpeedIfLeftMax) <= rightSpeedAtMaxVoltage + Epsilon.EPSILON) {
+        if (Math.abs(rightSpeedIfLeftMax) <= rightSpeedAtMaxVoltage + kEpsilon) {
             // Left max is active constraint.
             return wheelRadius * (leftSpeedAtMaxVoltage + rightSpeedIfLeftMax) / 2.0
         }
@@ -360,7 +361,7 @@ class DifferentialDrive(
                         (linearTerm + angularTerm)
                 }
                 val variableVoltage = variableTransmission.getVoltageForTorque(wheelVelocities[!left], variableTorque)
-                if (Math.abs(variableVoltage) <= maxAbsVoltage + Epsilon.EPSILON) {
+                if (Math.abs(variableVoltage) <= maxAbsVoltage + kEpsilon) {
                     val accel = if (java.lang.Double.isInfinite(curvature)) {
                         (if (left) -1.0 else 1.0) * (fixedTorque - variableTorque) *
                             effectiveWheelBaseRadius / (moi * wheelRadius) - dragTorque / moi

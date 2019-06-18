@@ -5,7 +5,7 @@ import org.team5499.monkeyLib.trajectory.types.TimedEntry
 import org.team5499.monkeyLib.math.geometry.Pose2dWithCurvature
 import org.team5499.monkeyLib.math.geometry.Pose2d
 
-import org.team5499.monkeyLib.math.Epsilon
+import org.team5499.monkeyLib.math.epsilonEquals
 import org.team5499.monkeyLib.math.units.Time
 
 import kotlin.math.sqrt
@@ -43,7 +43,7 @@ class RamseteFollower(
 
     companion object {
         private fun sinc(theta: Double) =
-            if (Epsilon.epsilonEquals(theta)) {
+            if (theta epsilonEquals 0.0) {
                 1.0 - 1.0 / 6.0 * theta * theta
             } else sin(theta) / theta
     }

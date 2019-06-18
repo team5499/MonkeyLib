@@ -1,6 +1,6 @@
 package org.team5499.monkeyLib.math.pid
 
-import org.team5499.monkeyLib.math.Epsilon
+import org.team5499.monkeyLib.math.kEpsilon
 import org.team5499.monkeyLib.util.DoubleSource
 import kotlin.math.absoluteValue
 
@@ -64,7 +64,7 @@ class PIDF(
     @Suppress("ComplexMethod")
     fun calculate(dt: Double): Double {
         var newDt = dt
-        if (newDt < Epsilon.EPSILON) newDt = Epsilon.EPSILON
+        if (newDt < kEpsilon) newDt = kEpsilon
         val input = feedbackVariable()
         lastInput = input
         error = setpoint - input

@@ -1,10 +1,8 @@
 package org.team5499.monkeyLib.math.geometry
 
-import org.team5499.monkeyLib.math.Epsilon
+import org.team5499.monkeyLib.math.epsilonEquals
 import org.team5499.monkeyLib.math.units.Length
 import org.team5499.monkeyLib.math.units.feet
-
-import kotlin.math.absoluteValue
 
 data class Pose2d(
     val translation: Vector2 = Vector2(),
@@ -23,7 +21,7 @@ data class Pose2d(
             val halfDTheta = dtheta / 2.0
             val cosMinusOne = rotation.cos - 1.0
 
-            val halfThetaByTanOfHalfDTheta = if (cosMinusOne.absoluteValue < Epsilon.EPSILON) {
+            val halfThetaByTanOfHalfDTheta = if (cosMinusOne epsilonEquals 0.0) {
                 1.0 - 1.0 / 12.0 * dtheta * dtheta
             } else {
                 -(halfDTheta * rotation.sin) / cosMinusOne
@@ -55,7 +53,7 @@ data class Pose2d(
     fun isColinear(other: Pose2d): Boolean {
         if (!rotation.isParallel(other.rotation)) return false
         val twist = (-this + other).twist
-        return Epsilon.epsilonEquals(twist.dy, 0.0) && Epsilon.epsilonEquals(twist.dTheta.value, 0.0)
+        return twist.dy epsilonEquals 0.0 && twist.dTheta.value epsilonEquals 0.0
     }
 
     @Suppress("ReturnCount")

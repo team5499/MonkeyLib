@@ -2,7 +2,7 @@ package org.team5499.monkeyLib.math.units
 
 import org.team5499.monkeyLib.math.lerp
 import kotlin.math.absoluteValue
-import org.team5499.monkeyLib.math.Epsilon.EPSILON
+import org.team5499.monkeyLib.math.epsilonEquals
 
 @Suppress("TooManyFunctions")
 interface SIValue<T : SIValue<T>> : Comparable<T> {
@@ -27,5 +27,5 @@ interface SIValue<T : SIValue<T>> : Comparable<T> {
     override operator fun compareTo(other: T) = value.compareTo(other.value)
 
     fun lerp(endValue: T, t: Double) = createNew(value.lerp(endValue.value, t))
-    infix fun epsilonEquals(other: T) = (this.value - other.value).absoluteValue < EPSILON
+    infix fun epsilonEquals(other: T) = this.value epsilonEquals other.value
 }

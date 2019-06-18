@@ -1,6 +1,6 @@
 package org.team5499.monkeyLib.math.geometry
 
-import org.team5499.monkeyLib.math.Epsilon
+import org.team5499.monkeyLib.math.epsilonEquals
 import org.team5499.monkeyLib.math.units.SIUnit
 import org.team5499.monkeyLib.util.CSVWritable
 
@@ -18,7 +18,7 @@ class Rotation2d : SIUnit<Rotation2d>, CSVWritable {
     constructor(x: Double, y: Double, normalize: Boolean) {
         if (normalize) {
             val magnitude = Math.hypot(x, y)
-            if (magnitude > Epsilon.EPSILON) {
+            if (!(magnitude epsilonEquals 0.0)) {
                 sin = y / magnitude
                 cos = x / magnitude
             } else {
@@ -35,7 +35,7 @@ class Rotation2d : SIUnit<Rotation2d>, CSVWritable {
     val radian get() = value // should be between -PI and PI already. // % (Math.PI * 2)
     val degree get() = Math.toDegrees(value)
 
-    fun isParallel(rotation: Rotation2d) = Epsilon.epsilonEquals((this - rotation).radian, 0.0)
+    fun isParallel(rotation: Rotation2d) = this.radian epsilonEquals rotation.radian
 
     override fun plus(other: Rotation2d): Rotation2d {
         return Rotation2d(
@@ -49,7 +49,7 @@ class Rotation2d : SIUnit<Rotation2d>, CSVWritable {
 
     override fun createNew(newValue: Double) = Rotation2d(newValue)
 
-    override fun equals(other: Any?) = other is Rotation2d && Epsilon.epsilonEquals(this.value, other.value)
+    override fun equals(other: Any?) = other is Rotation2d && this.value epsilonEquals other.value
 
     override fun hashCode() = this.value.hashCode()
 
