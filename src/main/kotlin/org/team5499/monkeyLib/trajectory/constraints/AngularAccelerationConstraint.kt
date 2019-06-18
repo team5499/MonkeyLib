@@ -1,6 +1,7 @@
 package org.team5499.monkeyLib.trajectory.constraints
 
 import org.team5499.monkeyLib.math.geometry.Pose2dWithCurvature
+import org.team5499.monkeyLib.math.units.derived.AngularAcceleration
 
 import kotlin.math.absoluteValue
 import kotlin.math.sqrt
@@ -9,6 +10,8 @@ import kotlin.math.abs
 class AngularAccelerationConstraint internal constructor(
     val maxAngularAcceleration: Double
 ) : TimingConstraint<Pose2dWithCurvature> {
+
+    constructor(maxAngularAcceleration: AngularAcceleration): this(maxAngularAcceleration.value)
 
     init {
         require(maxAngularAcceleration > 0.0) {

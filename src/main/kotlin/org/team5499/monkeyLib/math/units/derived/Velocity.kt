@@ -13,7 +13,7 @@ val Length.velocity: LinearVelocity get() = Velocity(value, this)
 val Rotation2d.velocity: AngularVelocity get() = Velocity(value, this) // fix
 
 typealias LinearVelocity = Velocity<Length>
-typealias AngularVelocity = Velocity<Rotation2d> // fix this pls
+typealias AngularVelocity = Velocity<Rotation2d>
 
 private val meterToFeet = 1.meter.feet
 private val meterToInches = 1.meter.inch

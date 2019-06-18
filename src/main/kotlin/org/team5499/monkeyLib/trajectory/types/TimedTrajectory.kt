@@ -73,7 +73,7 @@ data class TimedEntry<S : State<S>> internal constructor(
     ) : this(state, t.value, velocity.value, acceleration.value)
 
     override fun interpolate(endValue: TimedEntry<S>, t: Double): TimedEntry<S> {
-        val newT = t.lerp(endValue._t, t)
+        val newT = _t.lerp(endValue._t, t)
         val dt = newT - this.t.value
         if (dt < 0.0) return endValue.interpolate(this, 1.0 - t)
 
