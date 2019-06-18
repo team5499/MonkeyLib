@@ -46,7 +46,7 @@ abstract class PositionTracker(
         buffer[Timer.getFPGATimestamp()] = robotPosition
     }
 
-    protected abstract fun update(heading: Rotation2d): Pose2d
+    protected abstract fun update(deltaHeading: Rotation2d): Pose2d
 
     operator fun get(timestamp: Time) = get(timestamp.second)
     operator fun get(timestamp: Double) = buffer[timestamp] ?: Pose2d()

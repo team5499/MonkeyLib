@@ -57,14 +57,14 @@ data class Pose2d(
     }
 
     @Suppress("ReturnCount")
-    override fun interpolate(endValue: Pose2d, t: Double): Pose2d {
-        if (t <= 0) {
+    override fun interpolate(other: Pose2d, x: Double): Pose2d {
+        if (x <= 0) {
             return Pose2d(this.translation, this.rotation)
-        } else if (t >= 1) {
-            return Pose2d(endValue.translation, endValue.rotation)
+        } else if (x >= 1) {
+            return Pose2d(other.translation, other.rotation)
         }
-        val twist = (-this + endValue).twist
-        return this + (twist * t).asPose
+        val twist = (-this + other).twist
+        return this + (twist * x).asPose
     }
 
     override fun distance(other: Pose2d) = (-this + other).twist.norm
