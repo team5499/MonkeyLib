@@ -7,6 +7,11 @@ val Number.meter get() = Length(toDouble())
 val Number.centimeter get() = Length(toDouble() * SIConstants.kCenti)
 val Number.millimeter get() = Length(toDouble() * SIConstants.kMilli)
 
+object SILengthConstants {
+    const val kInchToMeter = 0.0254
+    const val kFeetToMeter = kInchToMeter * 12
+}
+
 class Length(
     override val value: Double
 ) : SIUnit<Length> {

@@ -72,10 +72,10 @@ data class TimedEntry<S : State<S>> internal constructor(
         acceleration: LinearAcceleration
     ) : this(state, t.value, velocity.value, acceleration.value)
 
-    override fun interpolate(endValue: TimedEntry<S>, t: Double): TimedEntry<S> {
-        val newT = _t.lerp(endValue._t, t)
+    override fun interpolate(other: TimedEntry<S>, x: Double): TimedEntry<S> {
+        val newT = _t.lerp(other._t, x)
         val dt = newT - this.t.value
-        if (dt < 0.0) return endValue.interpolate(this, 1.0 - t)
+        if (dt < 0.0) return other.interpolate(this, 1.0 - x)
 
         val reversing = _velocity < 0.0 || _velocity epsilonEquals 0.0 && _acceleration < 0.0
 
@@ -83,7 +83,7 @@ data class TimedEntry<S : State<S>> internal constructor(
         val newS = (if (reversing) -1.0 else 1.0) * (_velocity * dt + 0.5 * _acceleration * dt * dt)
 
         return TimedEntry(
-            state.interpolate(endValue.state, newS / state.distance(endValue.state)),
+            state.interpolate(other.state, newS / state.distance(other.state)),
             newT,
             newV,
             _acceleration

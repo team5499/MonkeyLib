@@ -24,10 +24,10 @@ public class DriveTrajectoryAction(
 
     override fun update() {
         drivetrain.setOutput(trajectoryFollower.nextState(drivetrain.robotPosition))
-        val referencePoint = trajectoryFollower.referencePoint
-        if (referencePoint != null) {
-            val referencePose = referencePoint.state.state.pose
-        }
+//        val referencePoint = trajectoryFollower.referencePoint
+//        if (referencePoint != null) {
+//            val referencePose = referencePoint.state.state.pose
+//        }
     }
 
     override fun finish() {

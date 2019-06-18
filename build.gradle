@@ -33,6 +33,8 @@ dependencies {
     testCompile 'org.powermock:powermock-module-junit4:1.6.6'
     testCompile 'org.powermock:powermock-api-mockito2:1.6.6'
 
+    testCompile group: 'org.knowm.xchart', name: 'xchart', version: '3.5.4'
+
 }
 
 group = 'org.team5499'

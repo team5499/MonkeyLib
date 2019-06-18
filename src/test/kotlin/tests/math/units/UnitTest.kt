@@ -2,8 +2,6 @@ package tests.math.units
 
 import org.junit.Test
 import org.team5499.monkeyLib.math.epsilonEquals
-import org.team5499.monkeyLib.math.units.derived.acceleration
-import org.team5499.monkeyLib.math.units.derived.velocity
 import org.team5499.monkeyLib.math.units.feet
 import org.team5499.monkeyLib.math.units.inch
 import org.team5499.monkeyLib.math.units.kilogram
@@ -14,6 +12,7 @@ import org.team5499.monkeyLib.math.units.native.nativeUnitsPer100ms
 import org.team5499.monkeyLib.math.units.native.nativeUnitsPer100msPerSecond
 import org.team5499.monkeyLib.math.units.native.toNativeUnitAcceleration
 import org.team5499.monkeyLib.math.units.native.toNativeUnitVelocity
+import org.team5499.monkeyLib.math.units.second
 
 class UnitTest {
 
@@ -24,7 +23,7 @@ class UnitTest {
 
     @Test
     fun testVelocitySTU() {
-        val one = 1.meter.velocity
+        val one = 1.meter / 1.second
 
         val two = one.toNativeUnitVelocity(settings)
 
@@ -35,7 +34,7 @@ class UnitTest {
 
     @Test
     fun testAccelerationSTU() {
-        val one = 1.meter.acceleration
+        val one = 1.meter / 1.second / 1.second
 
         val two = one.toNativeUnitAcceleration(settings)
 

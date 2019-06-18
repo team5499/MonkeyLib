@@ -1,11 +1,13 @@
 package org.team5499.monkeyLib.math.units
 
+import org.team5499.monkeyLib.math.units.derived.Velocity
+
 interface SIUnit<T : SIUnit<T>> : SIValue<T> {
 
     override val value: Double
 
-//    @Suppress("UNCHECKED_CAST")
-//    operator fun div(other: Time) = Velocity(value / other.value, this as T)
+    @Suppress("UNCHECKED_CAST")
+    operator fun div(other: Time) = Velocity(value / other.value, this as T)
 }
 
 object SIConstants {

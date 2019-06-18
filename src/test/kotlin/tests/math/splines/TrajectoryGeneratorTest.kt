@@ -1,22 +1,28 @@
 package tests.math.splines
 
 import org.junit.Test
+import org.knowm.xchart.XYChartBuilder
 import org.team5499.monkeyLib.math.geometry.Pose2d
+import org.team5499.monkeyLib.math.geometry.Vector2
 import org.team5499.monkeyLib.math.geometry.degree
 import org.team5499.monkeyLib.math.geometry.radian
 import org.team5499.monkeyLib.math.physics.DCMotorTransmission
 import org.team5499.monkeyLib.math.physics.DifferentialDrive
+import org.team5499.monkeyLib.math.units.feet
+import org.team5499.monkeyLib.math.units.inch
+import org.team5499.monkeyLib.math.units.second
+import org.team5499.monkeyLib.math.units.millisecond
+import org.team5499.monkeyLib.math.units.SILengthConstants
 import org.team5499.monkeyLib.math.units.derived.acceleration
 import org.team5499.monkeyLib.math.units.derived.velocity
 import org.team5499.monkeyLib.math.units.derived.volt
-import org.team5499.monkeyLib.math.units.feet
-import org.team5499.monkeyLib.math.units.inch
-import org.team5499.monkeyLib.math.units.millisecond
-import org.team5499.monkeyLib.math.units.second
 import org.team5499.monkeyLib.trajectory.DefaultTrajectoryGenerator
 import org.team5499.monkeyLib.trajectory.constraints.AngularAccelerationConstraint
 import org.team5499.monkeyLib.trajectory.constraints.CentripetalAccelerationConstraint
 import org.team5499.monkeyLib.trajectory.constraints.DifferentialDriveDynamicsConstraint
+import java.awt.Color
+import java.awt.Font
+import java.text.DecimalFormat
 import kotlin.math.absoluteValue
 import kotlin.math.pow
 
@@ -80,15 +86,19 @@ class TrajectoryGeneratorTest {
         )
     }
 
+    @Suppress("LongMethod")
     @Test
     fun testTrajectoryGenerationAndConstraints() {
         val iterator = trajectory.iterator()
         var time = 0.second
         var dt = 20.millisecond
+        val refList = mutableListOf<Vector2>()
         while (!iterator.isDone) {
             val pt = iterator.advance(dt)
             time += dt
             val ac = pt.state.velocity.value.pow(2) * pt.state.state.curvature
+
+            refList.add(pt.state.state.pose.translation)
 
             assert(ac <= kMaxCentripetalAcceleration.value + kTolerance)
             assert(pt.state.velocity.value.absoluteValue < kMaxVelocity.value + kTolerance)
@@ -100,5 +110,40 @@ class TrajectoryGeneratorTest {
                             < kMaxAngularAcceleration.value + kTolerance
             )
         }
+
+        val fm = DecimalFormat("#.###").format(TrajectoryGeneratorTest.trajectory.lastInterpolant.second)
+        val chart = XYChartBuilder().width(1800).height(1520).title("$fm seconds.")
+                .xAxisTitle("X").yAxisTitle("Y").build()
+        chart.styler.markerSize = 8
+        chart.styler.seriesColors = arrayOf(Color.ORANGE, Color(151, 60, 67))
+
+        chart.styler.chartTitleFont = Font("Kanit", 1, 40)
+        chart.styler.chartTitlePadding = 15
+
+        chart.styler.xAxisMin = 1.0
+        chart.styler.xAxisMax = 26.0
+        chart.styler.yAxisMin = 1.0
+        chart.styler.yAxisMax = 26.0
+
+        chart.styler.chartFontColor = Color.WHITE
+        chart.styler.axisTickLabelsColor = Color.WHITE
+
+        chart.styler.legendBackgroundColor = Color.GRAY
+
+        chart.styler.isPlotGridLinesVisible = true
+        chart.styler.isLegendVisible = true
+
+        chart.styler.plotGridLinesColor = Color.GRAY
+        chart.styler.chartBackgroundColor = Color.DARK_GRAY
+        chart.styler.plotBackgroundColor = Color.DARK_GRAY
+
+        chart.addSeries(
+                "Trajectory",
+                refList.map { it.x / SILengthConstants.kFeetToMeter }.toDoubleArray(),
+                refList.map { it.y / SILengthConstants.kFeetToMeter }.toDoubleArray()
+        )
+        // Uncomment these to see generation
+//        SwingWrapper(chart).displayChart()
+//        Thread.sleep(1000000)
     }
 }

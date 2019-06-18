@@ -2,7 +2,6 @@ package org.team5499.monkeyLib.math.units.derived
 
 import org.team5499.monkeyLib.math.geometry.Rotation2d
 import org.team5499.monkeyLib.math.units.SIValue
-import org.team5499.monkeyLib.math.units.SIUnit
 import org.team5499.monkeyLib.math.units.Time
 import org.team5499.monkeyLib.math.units.Length
 import org.team5499.monkeyLib.math.units.meter
@@ -26,7 +25,7 @@ val LinearVelocity.inchesPerSecond get() = value * meterToInches
 class Velocity<T : SIValue<T>>(
     override val value: Double,
     internal val type: T
-) : SIUnit<Velocity<T>> {
+) : SIValue<Velocity<T>> {
 
     override fun createNew(newValue: Double) = Velocity(newValue, type)
 
