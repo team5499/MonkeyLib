@@ -4,8 +4,6 @@ import org.junit.Test
 
 public class TimerTest {
 
-    private val kEpsilon = 1E6
-
     @Test
     fun timerSystemTest() {
 //        val timer: ITimer = SystemTimer()

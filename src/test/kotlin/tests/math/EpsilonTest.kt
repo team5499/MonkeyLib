@@ -8,8 +8,8 @@ class EpsilonTest {
 
     @Test
     fun testEpsilon() {
-        var temp = 3.3333333
-        assertTrue(temp epsilonEquals 3.3333333334)
+        var temp = 3.3333333333
+        assertTrue(temp epsilonEquals 3.3333333333)
         temp = 1E-10
         assertTrue(temp epsilonEquals 0.0)
     }
