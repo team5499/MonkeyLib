@@ -8,6 +8,7 @@ object SubsystemManager {
     private val subsystems = mutableListOf<Subsystem>()
 
     fun addSubsystem(subsystem: Subsystem) {
+        print("Adding ${subsystem.name} subsystem to subsystem manager.")
         subsystems.add(subsystem)
     }
 
@@ -28,9 +29,7 @@ abstract class Subsystem(name: String? = null) {
         private val subsystemId = AtomicLong()
     }
 
-    // add a subsystem command queue here in the future
-
-    val name = name ?: "Falcon Subsystem ${subsystemId.incrementAndGet()}"
+    val name = name ?: "Subsystem ${subsystemId.incrementAndGet()}"
 
     open fun periodic() {}
 
