@@ -7,27 +7,48 @@ abstract class ActionGroup internal constructor() : Action() {
 
 open class ParallelAction(actions: MutableList<Action>) : ActionGroup() {
 
-    override val actions: MutableList<Action>
+    override val actions: MutableList<Action> = actions
+
+    protected val actionMap = mutableMapOf<Action, Boolean>()
 
     constructor(vararg actions: Action) : this(actions.toMutableList())
 
     init {
-        this.actions = actions
-        actions.forEach { finishCondition += { it.next() } }
-        finishCondition += { timedOut() }
+        finishCondition += {
+            var allDone = true
+            actions.forEach { allDone = allDone && it.next() }
+            allDone
+        }
+
+        actions.forEach { actionMap.put(it, false) }
     }
 
     override fun start() {
         super.start()
-        actions.forEach { it.start() }
+        actionMap.keys.forEach {
+            actionMap.set(it, false)
+            it.start()
+        }
     }
 
     override fun update() {
-        actions.forEach { it.update() }
+        val iterator = actionMap.iterator()
+        while (iterator.hasNext()) {
+            val (action, finished) = iterator.next()
+            if (finished) continue
+            if (!finished && action.next()) {
+                action.finish()
+                actionMap.set(action, true)
+            } else {
+                action.update()
+            }
+        }
     }
 
     override fun finish() {
-        actions.forEach { it.finish() }
+        actionMap.forEach {
+            if (!it.value) it.key.finish()
+        }
     }
 }
 
