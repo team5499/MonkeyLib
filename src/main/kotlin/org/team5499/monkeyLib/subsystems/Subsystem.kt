@@ -8,7 +8,7 @@ object SubsystemManager {
     private val subsystems = mutableListOf<Subsystem>()
 
     fun addSubsystem(subsystem: Subsystem) {
-        print("Adding ${subsystem.name} subsystem to subsystem manager.")
+        print("Adding ${subsystem.name} to subsystem manager.")
         subsystems.add(subsystem)
     }
 
