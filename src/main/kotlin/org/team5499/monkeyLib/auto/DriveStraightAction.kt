@@ -25,7 +25,6 @@ class DriveStraightAction(
     }
 
     init {
-        finishCondition += { timedOut() }
         finishCondition += distanceErrorAcceptable
         finishCondition += velocityErrorAcceptable
     }

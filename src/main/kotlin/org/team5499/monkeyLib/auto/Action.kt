@@ -13,7 +13,7 @@ open class Action(
     private val timer: ITimer = WPITimer()
 ) {
 
-    protected var timeout = Time(0.0)
+    protected var mTimeout = Time(0.0)
 
     protected var finishCondition = FinishCondition(Source(false))
 
@@ -25,10 +25,7 @@ open class Action(
 
     open fun update() {}
 
-    protected fun timedOut(): Boolean {
-        val t = timer.get()
-        return (t >= timeout)
-    }
+    protected fun timedOut() = (timer.get() >= mTimeout)
 
     open fun next(): Boolean {
         return finishCondition()
@@ -54,7 +51,10 @@ open class Action(
 
     fun overrideExit(condition: BooleanSource) = also { finishCondition.set(condition) }
 
-    fun withTimeout(time: Time) = also { this.timeout = time }
+    fun withTimeout(time: Time) = also {
+        this.mTimeout = time
+        finishCondition += { timedOut() }
+    }
 }
 
 open class ConditionalAction(

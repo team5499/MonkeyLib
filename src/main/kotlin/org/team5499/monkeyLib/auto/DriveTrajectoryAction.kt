@@ -14,7 +14,6 @@ public class DriveTrajectoryAction(
 ) : Action() {
 
     init {
-        finishCondition += { timedOut() }
         finishCondition += { trajectoryFollower.isFinished }
     }
 

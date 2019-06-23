@@ -42,7 +42,6 @@ open class SerialAction(actions: MutableList<Action>) : ActionGroup() {
     override val actions: MutableList<Action>
 
     init {
-        finishCondition += { timedOut() }
         finishCondition += { isLastAction() }
         finishCondition += { isLastActionDone() }
         this.actions = actions.toMutableList()

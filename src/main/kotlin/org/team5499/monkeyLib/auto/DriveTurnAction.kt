@@ -24,7 +24,6 @@ class DriveTurnAction(
 
         finishCondition += { turnErrorAcceptable() }
         finishCondition += { angularVelocityAcceptable() }
-        finishCondition += { timedOut() }
     }
 
     override fun finish() {
