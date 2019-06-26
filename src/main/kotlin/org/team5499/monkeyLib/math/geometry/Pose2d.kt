@@ -2,7 +2,6 @@ package org.team5499.monkeyLib.math.geometry
 
 import org.team5499.monkeyLib.math.epsilonEquals
 import org.team5499.monkeyLib.math.units.Length
-import org.team5499.monkeyLib.math.units.feet
 
 data class Pose2d(
     val translation: Vector2 = Vector2(),
@@ -31,7 +30,7 @@ data class Pose2d(
             return Twist2d(translationPart.x, translationPart.y, rotation)
         }
 
-    val mirror get() = Pose2d(Vector2(translation.x, 27.feet.value - translation.y), -rotation)
+    val mirror get() = Pose2d(Vector2(translation.x, -translation.y), -rotation)
 
     infix fun inFrameOfReferenceOf(fieldRelativeOrigin: Pose2d) = (-fieldRelativeOrigin) + this
 

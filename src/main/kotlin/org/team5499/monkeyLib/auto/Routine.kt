@@ -24,8 +24,8 @@ class Routine(
     }
 }
 
-fun SerialAction.toRoutine(name: String? = null, startPose: Pose2d) = Routine(
+fun <T : ActionGroup> T.toRoutine(name: String? = null, startPose: Pose2d = Pose2d()) = Routine(
         name,
         startPose,
-        this.actions
+        this.actions.toMutableList()
 )
