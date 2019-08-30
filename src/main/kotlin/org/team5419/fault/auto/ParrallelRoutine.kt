@@ -27,7 +27,7 @@ public class ParrallelRoutine(name: String, startPose: Pose2d, vararg routines: 
   override public fun getCurrentAction(): Array<out Action> {
     val actions: MutableList<out Action> = MutableList()
     for(r: Routine in this.actions){
-     actioins.add(r.getCurrentAction())
+     actions.add(r.getCurrentAction())
     }
     return r
   }
@@ -48,6 +48,13 @@ public class ParrallelRoutine(name: String, startPose: Pose2d, vararg routines: 
       }
     }
     return true
+  }
+
+  override public fun rest() {
+    this.stepNumber = 0
+    for(r: Routine in this.routines){
+      r.reset()
+    }
   }
 
 }
