@@ -3,15 +3,15 @@ package tests.math.splines
 import org.junit.Test
 import org.junit.Assert.assertEquals
 
-import org.team5499.monkeyLib.math.Epsilon
+import org.team5419.fault.math.Epsilon
 
-import org.team5499.monkeyLib.math.geometry.Vector2
-import org.team5499.monkeyLib.math.geometry.Rotation2d
-import org.team5499.monkeyLib.math.geometry.Pose2d
-import org.team5499.monkeyLib.math.geometry.Pose2dWithCurvature
+import org.team5419.fault.math.geometry.Vector2
+import org.team5419.fault.math.geometry.Rotation2d
+import org.team5419.fault.math.geometry.Pose2d
+import org.team5419.fault.math.geometry.Pose2dWithCurvature
 
-import org.team5499.monkeyLib.math.splines.SplineGenerator
-import org.team5499.monkeyLib.math.splines.QuinticHermiteSpline
+import org.team5419.fault.math.splines.SplineGenerator
+import org.team5419.fault.math.splines.QuinticHermiteSpline
 
 class SplineGeneratorTest {
 

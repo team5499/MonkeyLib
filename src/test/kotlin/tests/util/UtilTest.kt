@@ -1,6 +1,6 @@
 package tests.utils
 
-import org.team5499.monkeyLib.util.Utils
+import org.team5419.fault.util.Utils
 
 import org.junit.Test
 import org.junit.Assert.assertTrue

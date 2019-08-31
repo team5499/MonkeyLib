@@ -1,6 +1,6 @@
 package tests.math
 
-import org.team5499.monkeyLib.math.Epsilon
+import org.team5419.fault.math.Epsilon
 
 import org.junit.Test
 import org.junit.Assert.assertTrue

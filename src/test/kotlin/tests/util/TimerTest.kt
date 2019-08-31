@@ -3,8 +3,8 @@ package tests.utils
 import org.junit.Test
 import org.junit.Assert.assertEquals
 
-import org.team5499.monkeyLib.util.time.ITimer
-import org.team5499.monkeyLib.util.time.SystemTimer
+import org.team5419.fault.util.time.ITimer
+import org.team5419.fault.util.time.SystemTimer
 
 public class TimerTest {
 

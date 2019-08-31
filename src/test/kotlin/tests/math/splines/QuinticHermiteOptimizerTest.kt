@@ -4,11 +4,11 @@ import org.junit.Test
 import org.junit.Assert.assertTrue
 import org.junit.Assert.assertEquals
 
-import org.team5499.monkeyLib.math.geometry.Vector2
-import org.team5499.monkeyLib.math.geometry.Rotation2d
-import org.team5499.monkeyLib.math.geometry.Pose2d
+import org.team5419.fault.math.geometry.Vector2
+import org.team5419.fault.math.geometry.Rotation2d
+import org.team5419.fault.math.geometry.Pose2d
 
-import org.team5499.monkeyLib.math.splines.QuinticHermiteSpline
+import org.team5419.fault.math.splines.QuinticHermiteSpline
 
 class QuinticHermiteOptimizerTest {
 
