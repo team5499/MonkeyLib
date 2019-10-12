@@ -2,12 +2,12 @@ package tests.math
 
 import org.junit.Assert
 import org.junit.Test
-import org.team5499.monkeyLib.math.geometry.Pose2d
-import org.team5499.monkeyLib.math.geometry.Rectangle2d
-import org.team5499.monkeyLib.math.geometry.Vector2
-import org.team5499.monkeyLib.math.geometry.degree
-import org.team5499.monkeyLib.math.kEpsilon
-import org.team5499.monkeyLib.math.units.meter
+import org.team5419.fault.math.geometry.Pose2d
+import org.team5419.fault.math.geometry.Rectangle2d
+import org.team5419.fault.math.geometry.Vector2
+import org.team5419.fault.math.geometry.degree
+import org.team5419.fault.math.kEpsilon
+import org.team5419.fault.math.units.meter
 
 @Suppress("LargeClass")
 class GeometryTests {

@@ -1,9 +1,9 @@
 package tests.math.units
 
 import org.junit.Test
-import org.team5499.monkeyLib.math.epsilonEquals
-import org.team5499.monkeyLib.math.units.minute
-import org.team5499.monkeyLib.math.units.second
+import org.team5419.fault.math.epsilonEquals
+import org.team5419.fault.math.units.minute
+import org.team5419.fault.math.units.second
 
 class TimeTest {
 

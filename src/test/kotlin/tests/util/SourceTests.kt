@@ -1,10 +1,10 @@
 package tests.util
 
 import org.junit.Test
-import org.team5499.monkeyLib.util.BooleanSource
-import org.team5499.monkeyLib.util.Source
-import org.team5499.monkeyLib.util.map
-import org.team5499.monkeyLib.util.withEquals
+import org.team5419.fault.util.BooleanSource
+import org.team5419.fault.util.Source
+import org.team5419.fault.util.map
+import org.team5419.fault.util.withEquals
 
 class SourceTests {
 
