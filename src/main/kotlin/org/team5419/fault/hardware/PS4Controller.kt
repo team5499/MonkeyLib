@@ -3,7 +3,8 @@ package org.team5419.fault.hardware
 import edu.wpi.first.wpilibj.XboxController
 import edu.wpi.first.wpilibj.GenericHID.Hand
 
-public class PS4Controller(portNumber: Int): XboxController(portNumber) {
+@SuppressWarnings("TooManyFunctions")
+public class PS4Controller(portNumber: Int) : XboxController(portNumber) {
     public override fun getBackButtonPressed(): Boolean {
         return getRawButtonPressed(14)
     }
@@ -26,7 +27,7 @@ public class PS4Controller(portNumber: Int): XboxController(portNumber) {
         when (hand) {
             Hand.kLeft -> return getRawButton(11)
             Hand.kRight -> return getRawButton(12)
-        } 
+        }
     }
 
     public override fun getTriggerAxis(hand: Hand): Double {
