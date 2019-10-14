@@ -33,7 +33,7 @@ public class PIDF {
         lastError = 0.0
         setpoint = 0.0
         processVariable = 0.0
-        totalMax = 1.0
+        totalMax = 0.0
         integralZoneBuffer = mutableListOf<Double>()
         integralZone = 0
     }
@@ -44,7 +44,7 @@ public class PIDF {
         kD: Double,
         kF: Double,
         inverted: Boolean = false,
-        totalMax: Double = 1.0
+        totalMax: Double = 0.0
     ) {
         this.kP = kP
         this.kI = kI
