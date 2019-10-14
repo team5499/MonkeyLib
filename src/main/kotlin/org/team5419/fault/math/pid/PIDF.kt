@@ -8,6 +8,7 @@ public class PIDF {
     public var kI: Double
     public var kD: Double
     public var kF: Double
+    public var totalMax: Double
     public var setpoint: Double
     public var processVariable: Double
 
@@ -26,27 +27,36 @@ public class PIDF {
         get() = (setpoint - processVariable)
 
     init {
-        this.timer = Timer()
-        this.timer.reset()
-        this.accumulator = 0.0
-        this.lastError = 0.0
-        this.setpoint = 0.0
-        this.processVariable = 0.0
-        this.integralZoneBuffer = mutableListOf<Double>()
-        this.integralZone = 0
+        timer = Timer()
+        timer.reset()
+        accumulator = 0.0
+        lastError = 0.0
+        setpoint = 0.0
+        processVariable = 0.0
+        totalMax = 0.0
+        integralZoneBuffer = mutableListOf<Double>()
+        integralZone = 0
     }
 
-    public constructor(kP: Double, kI: Double, kD: Double, kF: Double, inverted: Boolean = false) {
+    public constructor(
+        kP: Double,
+        kI: Double,
+        kD: Double,
+        kF: Double,
+        inverted: Boolean = false,
+        totalMax: Double = 0.0
+    ) {
         this.kP = kP
         this.kI = kI
         this.kD = kD
         this.kF = kF
+        this.totalMax = totalMax
         this.inverted = inverted
     }
 
     public constructor(): this(0.0, 0.0, 0.0, 0.0, false)
 
-    public fun calculate(): Double {
+    public fun updateAccumulator() {
         if (integralZone == 0) {
             accumulator += error * timer.get()
         } else {
@@ -59,16 +69,45 @@ public class PIDF {
                 accumulator += value
             }
         }
+    }
 
-        val pt = kP * error
-        val it = kI * accumulator
-        val dt = kD * (error - lastError) / timer.get()
-        val ft = kF * setpoint
-        timer.stop()
-        timer.reset()
-        timer.start()
+    public fun calculate(): Double {
+        var total = 0.0
+
+        if (kP != 0.0) {
+            total += kP * error
+        }
+
+        if (kI != 0.0) {
+            updateAccumulator()
+
+            total += kI * accumulator
+        }
+
+        if (kD != 0.0) {
+            total += kD * (error - lastError) / timer.get()
+
+            timer.stop()
+            timer.reset()
+            timer.start()
+        }
+
+        if (kF != 0.0) {
+            total += kF * setpoint
+        }
+
         lastError = error
-        val total = pt + it + dt + ft
+
+        if (totalMax != 0.0) {
+            if (total > totalMax) {
+                total = totalMax
+            }
+
+            if (total < -totalMax) {
+                total = -totalMax
+            }
+        }
+
         return total
     }
 
