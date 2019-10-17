@@ -92,9 +92,9 @@ public class PS4Controller(portNumber: Int) : Joystick(portNumber) {
     public fun getShareButton(): Boolean { return getRawButton(SHARE_BUTTON_PORT) }
 
     // Options Button
-    public fun getOptionsButtonPressed(): Boolean { return getRawButtonPressed(HOME_BUTTON_PORT) }
-    public fun getOptionsButtonReleased(): Boolean { return getRawButtonReleased(HOME_BUTTON_PORT) }
-    public fun getOptionsButton(): Boolean { return getRawButton(HOME_BUTTON_PORT) }
+    public fun getOptionsButtonPressed(): Boolean { return getRawButtonPressed(OPTIONS_BUTTON_PORT) }
+    public fun getOptionsButtonReleased(): Boolean { return getRawButtonReleased(OPTIONS_BUTTON_PORT) }
+    public fun getOptionsButton(): Boolean { return getRawButton(OPTIONS_BUTTON_PORT) }
 
     // Left & Right Sticks
     public fun getStickButtonPressed(hand: Hand): Boolean {
@@ -119,9 +119,9 @@ public class PS4Controller(portNumber: Int) : Joystick(portNumber) {
     }
 
     // Home Button
-    public fun getHomeButtonPressed(): Boolean { return getRawButtonPressed(TOUCHPAD_BUTTON_PORT) }
-    public fun getHomeButtonReleased(): Boolean { return getRawButtonReleased(TOUCHPAD_BUTTON_PORT) }
-    public fun getHomeButton(): Boolean { return getRawButton(TOUCHPAD_BUTTON_PORT) }
+    public fun getHomeButtonPressed(): Boolean { return getRawButtonPressed(HOME_BUTTON_PORT) }
+    public fun getHomeButtonReleased(): Boolean { return getRawButtonReleased(HOME_BUTTON_PORT) }
+    public fun getHomeButton(): Boolean { return getRawButton(HOME_BUTTON_PORT) }
 
     // Touch Pad
     public fun getTouchPadPressed(): Boolean { return getRawButtonPressed(TOUCHPAD_BUTTON_PORT) }
