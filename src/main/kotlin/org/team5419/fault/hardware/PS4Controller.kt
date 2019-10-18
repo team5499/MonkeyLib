@@ -129,7 +129,7 @@ public class PS4Controller(portNumber: Int) : Joystick(portNumber) {
     public fun getTouchPad(): Boolean { return getRawButton(TOUCHPAD_BUTTON_PORT) }
 
     // POV
-    public fun getPOVUp(error: Int): Boolean { return getPOV() <= 0 + error && getPOV() >= 360 - error }
+    public fun getPOVUp(error: Int): Boolean { return getPOV() <= 1 + error && getPOV() >= 360 - error }
     public fun getPOVLeft(error: Int): Boolean { return getPOV() <= 270 + error && getPOV() >= 270 - error }
     public fun getPOVDown(error: Int): Boolean { return getPOV() <= 180 + error && getPOV() >= 180 - error }
     public fun getPOVRight(error: Int): Boolean { return getPOV() <= 90 + error && getPOV() >= 90 - error }
