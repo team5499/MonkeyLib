@@ -35,7 +35,7 @@ dependencies {
 }
 
 group = 'org.team5419'
-version = '2.11.0'
+version = '2.11.1'
 
 
 task sourcesJar(type: Jar) {
