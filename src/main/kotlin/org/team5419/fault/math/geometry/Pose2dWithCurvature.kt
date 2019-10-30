@@ -1,20 +1,17 @@
 package org.team5419.fault.math.geometry
 
-import org.team5419.fault.util.Utils
+import org.team5419.fault.math.interpolate
 
 class Pose2dWithCurvature(
     translation: Vector2,
     rotation: Rotation2d,
     curvature: Double,
     dCurvature: Double = 0.0
-) : Geometric<Pose2dWithCurvature> {
+) : State<Pose2dWithCurvature> {
 
     val curvature: Double
-        get() = field
     val dCurvature: Double
-        get() = field
     val pose: Pose2d
-        get() = field
     val translation: Vector2
         get() = pose.translation
     val rotation: Rotation2d
@@ -26,19 +23,21 @@ class Pose2dWithCurvature(
         this.pose = Pose2d(translation, rotation)
     }
 
+    operator fun plus(other: Pose2d) = Pose2dWithCurvature(this.pose + other, this.curvature, this.dCurvature)
+
     constructor(pose: Pose2d, curvature: Double, dCurvature: Double = 0.0):
         this(pose.translation, pose.rotation, curvature, dCurvature)
-    constructor(): this(Vector2(), Rotation2d(), 0.0, 0.0)
+    constructor(): this(Vector2(), 0.degree, 0.0, 0.0)
     constructor(other: Pose2dWithCurvature): this(other.translation, other.rotation, other.curvature, other.dCurvature)
 
     public fun mirror(): Pose2dWithCurvature {
-        return Pose2dWithCurvature(pose.mirror(), -curvature, -dCurvature)
+        return Pose2dWithCurvature(pose.mirror, -curvature, -dCurvature)
     }
 
     override fun interpolate(other: Pose2dWithCurvature, x: Double): Pose2dWithCurvature {
         return Pose2dWithCurvature(pose.interpolate(other.pose, x),
-            Utils.interpolate(curvature, other.curvature, x),
-            Utils.interpolate(dCurvature, other.dCurvature, x)
+            interpolate(curvature, other.curvature, x),
+            interpolate(dCurvature, other.dCurvature, x)
         )
     }
 
@@ -52,6 +51,8 @@ class Pose2dWithCurvature(
     }
 
     override fun toCSV() = "${pose.toCSV()},$curvature,$dCurvature"
+
+    override fun distance(other: Pose2dWithCurvature) = pose.distance(other.pose)
 
     override fun hashCode() = super.hashCode()
 }

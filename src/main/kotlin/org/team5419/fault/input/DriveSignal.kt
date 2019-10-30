@@ -1,20 +1,12 @@
 package org.team5419.fault.input
 
-import org.team5419.fault.util.CSVWritable
+import org.team5419.fault.util.Source
 
-data class DriveSignal(val left: Double, val right: Double, val brakeMode: Boolean) : CSVWritable {
+typealias DriveSignalSource = Source<DriveSignal>
 
-    constructor(): this(0.0, 0.0)
-    constructor(left: Double, right: Double) : this(left, right, false)
-
+data class DriveSignal(val left: Double = 0.0, val right: Double = 0.0, val brake: Boolean = false) {
     companion object {
-        val NEUTRAL = DriveSignal(0.0, 0.0, false)
-        val BRAKE = DriveSignal(0.0, 0.0, true)
+        val kBrake = DriveSignal(0.0, 0.0, true)
+        val kNeutral = DriveSignal()
     }
-
-    override fun toString(): String {
-        return "L: $left - R: $right - Brake Mode: $brakeMode "
-    }
-
-    override fun toCSV() = "$left,$right,$brakeMode"
 }

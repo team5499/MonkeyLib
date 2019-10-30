@@ -1,17 +1,16 @@
 package tests.math
 
-import org.team5419.fault.math.Epsilon
-
 import org.junit.Test
 import org.junit.Assert.assertTrue
+import org.team5419.fault.math.epsilonEquals
 
 class EpsilonTest {
 
     @Test
-    public fun testEpsilon() {
-        var temp = 3.3333333
-        assertTrue(Epsilon.epsilonEquals(temp, 3.333333334))
+    fun testEpsilon() {
+        var temp = 3.3333333333
+        assertTrue(temp epsilonEquals 3.3333333333)
         temp = 1E-10
-        assertTrue(Epsilon.epsilonEquals(temp))
+        assertTrue(temp epsilonEquals 0.0)
     }
 }
