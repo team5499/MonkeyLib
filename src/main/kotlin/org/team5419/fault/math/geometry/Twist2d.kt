@@ -1,65 +1,41 @@
 package org.team5419.fault.math.geometry
 
-import java.text.DecimalFormat
+import org.team5419.fault.math.epsilonEquals
+import org.team5419.fault.math.units.Length
 
-import org.team5419.fault.math.Epsilon
+import kotlin.math.absoluteValue
 
-class Twist2d(dx: Double, dy: Double, dTheta: Double) : Geometric<Twist2d> {
+class Twist2d constructor(
+    val dx: Double,
+    val dy: Double,
+    val dTheta: Rotation2d
+) {
 
-    companion object {
-        val identity = Twist2d()
-    }
+    constructor(
+        dx: Length,
+        dy: Length,
+        dTheta: Rotation2d
+    ) : this(dx.value, dy.value, dTheta)
 
-    val dx: Double
-        get() = field
-    val dy: Double
-        get() = field
-    val dTheta: Double
-        get() = field
+    val norm get() = if (dy == 0.0) dx.absoluteValue else Math.hypot(dx, dy)
 
-    init {
-        this.dx = dx
-        this.dy = dy
-        this.dTheta = dTheta
-    }
+    val asPose: Pose2d
+        get() {
+            val dTheta = this.dTheta.radian
+            val sinTheta = Math.sin(dTheta)
+            val cosTheta = Math.cos(dTheta)
 
-    constructor(): this(0.0, 0.0, 0.0)
-
-    operator fun times(other: Double) = Twist2d(dx * other, dy * other, dTheta * other)
-
-    fun scaled(scale: Double): Twist2d {
-        return Twist2d(dx * scale, dy * scale, dTheta * scale)
-    }
-
-    fun norm(): Double {
-        if (dy == 0.0)
-            return Math.abs(dx)
-        return Math.hypot(dx, dy)
-    }
-
-    fun curvature(): Double {
-        if (Math.abs(dTheta) < Epsilon.EPSILON && norm() < Epsilon.EPSILON) {
-            return 0.0
+            val (s, c) = if (dTheta epsilonEquals 0.0) {
+                1.0 - 1.0 / 6.0 * dTheta * dTheta to .5 * dTheta
+            } else {
+                sinTheta / dTheta to (1.0 - cosTheta) / dTheta
+            }
+            return Pose2d(
+                    Vector2(dx * s - dy * c, dx * c + dy * s),
+                    Rotation2d(cosTheta, sinTheta, false)
+            )
         }
-        return dTheta / norm()
-    }
 
-    override fun interpolate(other: Twist2d, x: Double): Twist2d {
-        println("Cant interpolate Twist2d")
-        return Twist2d()
-    }
-
-    override fun equals(other: Any?): Boolean {
-        if (other == null || other !is Twist2d) return false
-        return dx == other.dx && dy == other.dy && dTheta == other.dTheta
-    }
-
-    override fun toString(): String {
-        val format = DecimalFormat("###0.000")
-        return "(${format.format(dx)}, ${format.format(dy)}, ${format.format(Math.toDegrees(dTheta))} deg)"
-    }
-
-    override fun toCSV() = "$dx,$dy,$dTheta"
-
-    override fun hashCode() = super.hashCode()
+    operator fun times(scale: Double) =
+            Twist2d(dx * scale, dy * scale, dTheta * scale)
 }

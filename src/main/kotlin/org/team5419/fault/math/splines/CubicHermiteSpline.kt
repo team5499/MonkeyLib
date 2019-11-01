@@ -22,13 +22,13 @@ class CubicHermiteSpline(p0: Vector2, h0: Rotation2d, p1: Vector2, h1: Rotation2
 
         val x0 = p0.x
         val x1 = p1.x
-        val dx0 = h0.cosAngle * scale
-        val dx1 = h1.cosAngle * scale
+        val dx0 = h0.cos * scale
+        val dx1 = h1.cos * scale
 
         val y0 = p0.y
         val y1 = p1.y
-        val dy0 = h0.sinAngle * scale
-        val dy1 = h1.sinAngle * scale
+        val dy0 = h0.sin * scale
+        val dy1 = h1.sin * scale
 
         ax = dx0 + dx1 + 2.0 * x0 - 2.0 * x1
         bx = -2.0 * dx0 - dx1 - 3.0 * x0 + 3.0 * x1

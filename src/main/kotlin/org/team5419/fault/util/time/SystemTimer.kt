@@ -1,5 +1,8 @@
 package org.team5419.fault.util.time
 
+import org.team5419.fault.math.units.Time
+import org.team5419.fault.math.units.millisecond
+
 public class SystemTimer : ITimer {
 
     private var mStartTime: Long
@@ -15,9 +18,9 @@ public class SystemTimer : ITimer {
         mPaused = false
     }
 
-    public override fun get(): Double {
+    public override fun get(): Time {
         @Suppress("MagicNumber")
-        return (mStartTime - System.currentTimeMillis() - mTotalPauseTime) / 1000.0
+        return (mStartTime - System.currentTimeMillis() - mTotalPauseTime).millisecond
     }
 
     public override fun start() {

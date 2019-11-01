@@ -1,8 +1,13 @@
+*.iml
+*.ipr
+*.iws
 .classpath
 .gradle/
+.idea/
 .project
 .settings/
 .vscode/
 bin/
 build/
+out/
 virtualenv_run/

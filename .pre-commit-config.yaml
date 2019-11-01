@@ -13,8 +13,8 @@ repos:
     -   id: pretty-format-json
         args: [--autofix]
     - id: trailing-whitespace
--   repo: https://github.com/team5419/pre-commit-hooks
-    rev: v1.0.0
+-   repo: https://github.com/team5499/pre-commit-hooks
+    rev: v0.3.2
     hooks:
     -   id: ktlint-wrapper
         args: [--color, --format, --relative, --verbose]

@@ -5,8 +5,8 @@ import org.junit.Assert.assertTrue
 import org.junit.Assert.assertEquals
 
 import org.team5419.fault.math.geometry.Vector2
-import org.team5419.fault.math.geometry.Rotation2d
 import org.team5419.fault.math.geometry.Pose2d
+import org.team5419.fault.math.geometry.degree
 
 import org.team5419.fault.math.splines.QuinticHermiteSpline
 
@@ -19,20 +19,20 @@ class QuinticHermiteOptimizerTest {
         val t = QuinticHermiteSpline.fitParabola(Vector2(-1.0, 0.015), Vector2(0.0, 0.015), Vector2(1.0, 0.016))
         assertEquals(t, -0.5, 0.1)
 
-        val a = Pose2d(Vector2(0, 100), Rotation2d.fromDegrees(270))
-        val b = Pose2d(Vector2(50, 0), Rotation2d.fromDegrees(0))
-        val c = Pose2d(Vector2(100, 100), Rotation2d.fromDegrees(90))
+        val a = Pose2d(Vector2(0, 100), 270.degree)
+        val b = Pose2d(Vector2(50, 0), 0.degree)
+        val c = Pose2d(Vector2(100, 100), 90.degree)
 
-        val d = Pose2d(Vector2(0, 0), Rotation2d.fromDegrees(90))
-        val e = Pose2d(Vector2(0, 50), Rotation2d.fromDegrees(0))
-        val f = Pose2d(Vector2(100, 0), Rotation2d.fromDegrees(90))
-        val g = Pose2d(Vector2(100, 100), Rotation2d.fromDegrees(0))
+        val d = Pose2d(Vector2(0, 0), 90.degree)
+        val e = Pose2d(Vector2(0, 50), 0.degree)
+        val f = Pose2d(Vector2(100, 0), 90.degree)
+        val g = Pose2d(Vector2(100, 100), 0.degree)
 
-        val h = Pose2d(Vector2(0, 0), Rotation2d.fromDegrees(0))
-        val i = Pose2d(Vector2(50, 0), Rotation2d.fromDegrees(0))
-        val j = Pose2d(Vector2(100, 50), Rotation2d.fromDegrees(45))
-        val k = Pose2d(Vector2(150, 0), Rotation2d.fromDegrees(270))
-        val l = Pose2d(Vector2(150, -50), Rotation2d.fromDegrees(270))
+        val h = Pose2d(Vector2(0, 0), 0.degree)
+        val i = Pose2d(Vector2(50, 0), 0.degree)
+        val j = Pose2d(Vector2(100, 50), 45.degree)
+        val k = Pose2d(Vector2(150, 0), 270.degree)
+        val l = Pose2d(Vector2(150, -50), 270.degree)
 
         var startTime = System.currentTimeMillis()
 

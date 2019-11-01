@@ -1,13 +1,8 @@
 package org.team5419.fault.math
 
-object Epsilon {
+import kotlin.math.absoluteValue
 
-    public const val EPSILON = 1E-5
+@Suppress("TopLevelPropertyNaming")
+const val kEpsilon = 1E-9
 
-    public fun epsilonEquals(value: Double, other: Double, epsilon: Double = EPSILON): Boolean {
-        return (Math.abs(value - other) < epsilon)
-    }
-
-    public fun epsilonEquals(value: Double, epsilon: Double = EPSILON) =
-        epsilonEquals(value, 0.0, epsilon)
-}
+infix fun Double.epsilonEquals(other: Double) = minus(other).absoluteValue < kEpsilon

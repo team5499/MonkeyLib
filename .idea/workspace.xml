@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="d9b5d613-e916-43ad-8b2e-715c35222a4b" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/BerkeliumRobot.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/auto/ActionGroup.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/auto/ActionUtil.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/auto/DriveStraightAction.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/auto/DriveTrajectoryAction.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/auto/DriveTurnAction.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/auto/QuasistaticCharacterizationAction.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/auto/StepVoltageCharacterizationAction.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/hardware/AbstractBerkeliumEncoder.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/hardware/AbstractBerkeliumMotor.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/hardware/BerkeliumEncoder.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/hardware/BerkeliumMotor.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/hardware/Limelight.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/hardware/ctre/BerkeliumSPX.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/hardware/ctre/BerkeliumSRX.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/hardware/ctre/CTREBerkeliumEncoder.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/hardware/ctre/CTREBerkeliumMotor.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/hardware/ctre/MonkeyIMU.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/input/BerkeliumHID.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/input/BerkeliumPS4.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/input/BerkeliumXbox.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/input/HIDControl.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/input/HIDSource.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/math/MathMisc.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/math/geometry/Rectangle2d.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/math/localization/PositionTracker.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/math/localization/TankPositionTracker.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/math/localization/TimeInterpolatableBuffer.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/math/physics/DifferentialDrive.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/math/units/ElectricCurrent.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/math/units/Length.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/math/units/Mass.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/math/units/SIUnit.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/math/units/SIValue.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/math/units/Time.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/math/units/derived/Acceleration.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/math/units/derived/InverseUnit.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/math/units/derived/Ohm.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/math/units/derived/Velocity.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/math/units/derived/Volt.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/math/units/derived/Watt.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/math/units/native/NativeUnit.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/math/units/native/NativeUnitAcceleration.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/math/units/native/NativeUnitLengthModel.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/math/units/native/NativeUnitModel.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/math/units/native/NativeUnitRotationModel.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/math/units/native/NativeUnitVelocity.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/math/units/native/SlopeNativeUnitModel.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/simulation/SimulatedBerkeliumMotor.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/simulation/SimulatedDifferentialDrive.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/subsystems/Subsystem.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/subsystems/drivetrain/AbstractTankDrive.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/subsystems/drivetrain/CharacterizationData.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/subsystems/drivetrain/IDifferentialFollowerDrive.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/subsystems/drivetrain/ITrajectoryFollowingDrive.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/trajectory/TrajectoryGenerator.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/trajectory/TrajectoryIterator.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/trajectory/constraints/AngularAccelerationConstraint.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/trajectory/constraints/CentripetalAccelerationConstraint.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/trajectory/constraints/DifferentialDriveDynamicsConstraint.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/trajectory/constraints/TimingConstraint.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/trajectory/constraints/VelocityLimitRadiusConstraint.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/trajectory/constraints/VelocityLimitRegionConstraint.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/trajectory/followers/PurePursuitFollower.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/trajectory/followers/RamseteFollower.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/trajectory/followers/TrajectoryFollower.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/trajectory/types/DistanceTrajectory.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/trajectory/types/IndexedTrajectory.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/trajectory/types/TimedTrajectory.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/trajectory/types/Trajectory.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/util/MovingAverageFilter.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/util/Source.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/util/SourceMonitor.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/util/time/DeltaTime.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/kotlin/tests/math/splines/TrajectoryGeneratorTest.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/kotlin/tests/math/units/DerivedTests.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/kotlin/tests/math/units/LengthTest.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/kotlin/tests/math/units/TimeTest.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/kotlin/tests/math/units/UnitTest.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/kotlin/tests/util/SourceTests.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.pre-commit-config.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/.pre-commit-config.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.travis.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.travis.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/Controller.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/Controller.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/Subsystem.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/auto/Action.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/auto/Action.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/auto/NothingAction.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/auto/ParallelAction.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/auto/Routine.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/auto/Routine.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/auto/SerialAction.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/hardware/LazyTalonSRX.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/hardware/LazyVictorSPX.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/hardware/PS4Controller.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/hardware/XboxControllerPlus.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/input/ButtonState.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/input/CheesyDriveHelper.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/input/DriveHelper.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/input/DriveHelper.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/input/DriveSignal.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/input/DriveSignal.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/input/SpaceDriveHelper.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/input/TankDriveHelper.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/logging/Logger.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/logging/ReflectingCSVWriter.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/util/logging/ReflectingCSVWriter.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/math/Epsilon.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/math/Epsilon.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/math/Position.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/math/UnitConverter.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/math/geometry/Geometric.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/math/geometry/State.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/math/geometry/Pose2d.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/math/geometry/Pose2d.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/math/geometry/Pose2dWithCurvature.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/math/geometry/Pose2dWithCurvature.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/math/geometry/Rotation2d.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/math/geometry/Rotation2d.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/math/geometry/Twist2d.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/math/geometry/Twist2d.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/math/geometry/Vector2.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/math/geometry/Vector2.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/math/physics/DCMotorTransmission.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/math/physics/DCMotorTransmission.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/math/pid/PIDF.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/math/pid/PIDF.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/math/splines/CubicHermiteSpline.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/math/splines/CubicHermiteSpline.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/math/splines/QuinticHermiteSpline.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/math/splines/QuinticHermiteSpline.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/math/splines/SplineGenerator.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/math/splines/SplineGenerator.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/path/MirroredPath.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/path/Path.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/path/PathFollower.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/path/PathGenerator.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/path/PathUtils.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/util/Utils.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/util/time/ITimer.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/util/time/ITimer.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/util/time/SystemTimer.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/util/time/SystemTimer.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/util/time/WPITimer.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/util/time/WPITimer.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/tests/input/DriveHelperTest.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/tests/math/EpsilonTest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/tests/math/EpsilonTest.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/tests/math/GeometryTests.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/tests/math/GeometryTests.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/tests/math/UnitConverterTests.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/tests/math/physics/DCMotorTransmissionTest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/tests/math/physics/DCMotorTransmissionTest.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/tests/math/splines/QuinticHermiteOptimizerTest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/tests/math/splines/QuinticHermiteOptimizerTest.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/tests/math/splines/SplineGeneratorTest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/tests/math/splines/SplineGeneratorTest.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/tests/util/TimerTest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/tests/util/TimerTest.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/tests/util/UtilTest.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tox.ini" beforeDir="false" afterPath="$PROJECT_DIR$/tox.ini" afterDir="false" />
+    </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1Sw2QZEArZtvVDjeCLLZCoP5Gqo" />
+  <component name="PropertiesComponent">
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>
