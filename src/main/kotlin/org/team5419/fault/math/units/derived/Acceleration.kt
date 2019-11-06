@@ -1,24 +1,9 @@
 package org.team5419.fault.math.units.derived
 
-import org.team5419.fault.math.geometry.Rotation2d
-import org.team5419.fault.math.units.Length
-import org.team5419.fault.math.units.SIUnit
-import org.team5419.fault.math.units.SIValue
-import org.team5419.fault.math.units.Time
+import org.team5419.fault.math.units.*
 
-val <T : SIValue<T>> T.acceleration: Acceleration<T> get() = Acceleration(value, this)
-val Length.acceleration: LinearAcceleration get() = Acceleration(value, this)
-val Rotation2d.acceleration: AngularAcceleration get() = Acceleration(value, this)
+typealias Acceleration<T> = Frac<T, Mult<Second, Second>>
+typealias LinearAcceleration = Acceleration<Meter>
+typealias AngularAcceleration = Acceleration<Radian>
 
-typealias LinearAcceleration = Acceleration<Length>
-typealias AngularAcceleration = Acceleration<Rotation2d>
-
-class Acceleration<T : SIValue<T>>(
-    override val value: Double,
-    internal val type: T
-) : SIUnit<Acceleration<T>> {
-
-    override fun createNew(newValue: Double) = Acceleration(newValue, type)
-
-    operator fun times(other: Time) = Velocity(value * other.value, type)
-}
+val <K : SIKey> SIUnit<K>.acceleration get() = SIUnit<Acceleration<K>>(value)

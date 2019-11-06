@@ -1,22 +1,11 @@
 package org.team5419.fault.math.units.derived
 
-import org.team5419.fault.math.units.ElectricCurrent
-import org.team5419.fault.math.units.SIValue
-import org.team5419.fault.math.units.SIConstants
+import com.sun.jdi.event.MethodEntryEvent
+import org.team5419.fault.math.units.*
 
-val Number.volt get() = Volt(toDouble())
-val Number.millivolt get() = Volt(toDouble() * SIConstants.kMilli)
-val Number.microvolt get() = Volt(toDouble() * SIConstants.kMicro)
+typealias Volt = Frac<Mult<Kilogram, Mult<Meter, Meter>>,
+        Mult<Ampere, Mult<Second, Mult<Second, Second>>>>
 
-class Volt(
-    override val value: Double
-) : SIValue<Volt> {
-    override fun createNew(newValue: Double) = Volt(value)
+val Double.volts get() = SIUnit<Volt>(this)
 
-    operator fun times(other: ElectricCurrent) = Watt(value * other.value)
-    operator fun div(other: ElectricCurrent) = Ohm(value / other.value)
-
-    companion object {
-        val kZero = Volt(0.0)
-    }
-}
+val Number.volts get() = toDouble().volts

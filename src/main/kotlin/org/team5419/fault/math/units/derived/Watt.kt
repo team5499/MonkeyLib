@@ -1,20 +1,8 @@
 package org.team5419.fault.math.units.derived
 
-import org.team5419.fault.math.units.SIValue
-import org.team5419.fault.math.units.SIConstants
+import org.team5419.fault.math.units.*
 
-val Number.watt get() = Watt(toDouble())
+typealias Watt = Frac<Mult<Kilogram, Mult<Meter, Meter>>, Mult<Second, Mult<Second, Second>>>
 
-val Number.gigawatt get() = Watt(toDouble() * SIConstants.kGiga)
-val Number.megawatt get() = Watt(toDouble() * SIConstants.kMega)
-val Number.kilowatt get() = Watt(toDouble() * SIConstants.kKilo)
-
-class Watt(
-    override val value: Double
-) : SIValue<Watt> {
-    override fun createNew(newValue: Double) = Watt(value)
-
-    companion object {
-        val kZero = Watt(0.0)
-    }
-}
+val Double.watts get() = SIUnit<Watt>(this)
+val Number.watts get() = toDouble().watts

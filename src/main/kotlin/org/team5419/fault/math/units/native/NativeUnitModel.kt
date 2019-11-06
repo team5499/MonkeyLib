@@ -1,38 +1,72 @@
 package org.team5419.fault.math.units.native
 
+import org.team5419.fault.math.units.Frac
+import org.team5419.fault.math.units.Meter
+import org.team5419.fault.math.units.SIKey
 import org.team5419.fault.math.units.SIUnit
 import org.team5419.fault.math.units.derived.Acceleration
+import org.team5419.fault.math.units.derived.Radian
 import org.team5419.fault.math.units.derived.Velocity
 
-@Suppress("TooManyFunctions")
-abstract class NativeUnitModel<T : SIUnit<T>>(
-    internal val zero: T
-) {
+abstract class NativeUnitModel<K : SIKey> {
 
-    abstract fun fromNativeUnitPosition(nativeUnits: Double): Double
-    abstract fun toNativeUnitPosition(modelledUnits: Double): Double
+    abstract fun fromNativeUnitPosition(nativeUnits: SIUnit<NativeUnit>): SIUnit<K>
+    abstract fun toNativeUnitPosition(modelledUnit: SIUnit<K>): SIUnit<NativeUnit>
 
-    open fun toNativeUnitError(modelledUnit: Double): Double =
-            toNativeUnitPosition(modelledUnit) - toNativeUnitPosition(0.0)
+    open fun toNativeUnitError(modelledUnit: SIUnit<K>): SIUnit<NativeUnit> =
+            toNativeUnitPosition(modelledUnit) - toNativeUnitPosition(SIUnit(0.0))
 
-    open fun fromNativeUnitVelocity(nativeUnitVelocity: Double) = fromNativeUnitPosition(nativeUnitVelocity)
-    open fun toNativeUnitVelocity(nativeUnitVelocity: Double) = toNativeUnitPosition(nativeUnitVelocity)
+    open fun fromNativeUnitVelocity(nativeUnitVelocity: SIUnit<NativeUnitVelocity>): SIUnit<Velocity<K>> =
+            SIUnit(fromNativeUnitPosition(SIUnit(nativeUnitVelocity.value)).value)
 
-    open fun fromNativeUnitAcceleration(nativeUnitAcceleration: Double) = fromNativeUnitPosition(nativeUnitAcceleration)
-    open fun toNativeUnitAcceleration(nativeUnitAcceleration: Double) = toNativeUnitPosition(nativeUnitAcceleration)
+    open fun toNativeUnitVelocity(modelledUnitVelocity: SIUnit<Velocity<K>>): SIUnit<NativeUnitVelocity> =
+            SIUnit(toNativeUnitPosition(SIUnit(modelledUnitVelocity.value)).value)
 
-    fun fromNativeUnitPosition(nativeUnits: NativeUnit) = zero.createNew(fromNativeUnitPosition(nativeUnits.value))
-    fun toNativeUnitPosition(modelledUnit: T) = NativeUnit(toNativeUnitPosition(modelledUnit.value))
+    open fun fromNativeUnitAcceleration(nativeUnitAcceleration: SIUnit<NativeUnitAcceleration>): SIUnit<Acceleration<K>> =
+            SIUnit(fromNativeUnitVelocity(SIUnit(nativeUnitAcceleration.value)).value)
 
-    fun toNativeUnitError(modelledUnit: T) = NativeUnit(toNativeUnitError(modelledUnit.value))
-
-    fun fromNativeUnitVelocity(nativeUnitVelocity: NativeUnitVelocity) =
-            Velocity(fromNativeUnitVelocity(nativeUnitVelocity.value), zero)
-    fun toNativeUnitVelocity(modelledUnitVelocity: Velocity<T>) =
-            NativeUnitVelocity(toNativeUnitVelocity(modelledUnitVelocity.value), NativeUnit.kZero)
-
-    fun fromNativeUnitAcceleration(nativeUnitAcceleration: NativeUnitAcceleration) =
-            Acceleration(fromNativeUnitAcceleration(nativeUnitAcceleration.value), zero)
-    fun toNativeUnitAcceleration(modelledUnitAcceleration: Acceleration<T>) =
-            NativeUnitAcceleration(toNativeUnitAcceleration(modelledUnitAcceleration.value), NativeUnit.kZero)
+    open fun toNativeUnitAcceleration(modelledUnitAcceleration: SIUnit<Acceleration<K>>): SIUnit<NativeUnitAcceleration> =
+            SIUnit(toNativeUnitVelocity(SIUnit(modelledUnitAcceleration.value)).value)
 }
+
+object DefaultNativeUnitModel : NativeUnitModel<NativeUnit>() {
+    override fun fromNativeUnitPosition(nativeUnits: SIUnit<NativeUnit>): SIUnit<NativeUnit> = nativeUnits
+    override fun toNativeUnitPosition(modelledUnit: SIUnit<NativeUnit>): SIUnit<NativeUnit> = modelledUnit
+}
+
+class NativeUnitLengthModel(
+        val nativeUnitsPerRotation: SIUnit<NativeUnit>,
+        val wheelRadius: SIUnit<Meter>
+) : NativeUnitModel<Meter>() {
+    override fun fromNativeUnitPosition(nativeUnits: SIUnit<NativeUnit>): SIUnit<Meter> =
+            wheelRadius * ((nativeUnits / nativeUnitsPerRotation) * (2.0 * Math.PI))
+
+    override fun toNativeUnitPosition(modelledUnit: SIUnit<Meter>): SIUnit<NativeUnit> =
+            nativeUnitsPerRotation * (modelledUnit / (wheelRadius * (2.0 * Math.PI)))
+}
+
+class NativeUnitRotationModel(
+        val nativeUnitsPerRotation: SIUnit<NativeUnit>
+) : NativeUnitModel<Radian>() {
+    override fun toNativeUnitPosition(modelledUnit: SIUnit<Radian>): SIUnit<NativeUnit> =
+            (modelledUnit / (2.0 * Math.PI)) * nativeUnitsPerRotation
+
+    override fun fromNativeUnitPosition(nativeUnits: SIUnit<NativeUnit>): SIUnit<Radian> =
+            2.0 * Math.PI * (nativeUnits / nativeUnitsPerRotation)
+}
+
+class SlopeNativeUnitModel<K : SIKey>(
+        val modelledSample: SIUnit<K>,
+        val nativeUnitSample: SIUnit<NativeUnit>
+) : NativeUnitModel<K>() {
+    private val slope: SIUnit<Frac<K, NativeUnit>> = modelledSample / nativeUnitSample
+
+    override fun fromNativeUnitPosition(nativeUnits: SIUnit<NativeUnit>): SIUnit<K> =
+            nativeUnits * slope
+
+    override fun toNativeUnitPosition(modelledUnit: SIUnit<K>): SIUnit<NativeUnit> =
+            modelledUnit / slope
+}
+
+fun SlopeNativeUnitModel<Meter>.wheelRadius(sensorUnitsPerRotation: SIUnit<NativeUnit>): SIUnit<Meter> =
+        modelledSample / (nativeUnitSample / sensorUnitsPerRotation) / 2.0 / Math.PI
