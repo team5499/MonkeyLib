@@ -3,6 +3,7 @@ package org.team5419.fault.math.splines
 import org.team5419.fault.math.geometry.Vector2
 import org.team5419.fault.math.geometry.Rotation2d
 import org.team5419.fault.math.geometry.Pose2d
+import org.team5419.fault.math.units.meters
 
 @SuppressWarnings("MagicNumber")
 class CubicHermiteSpline(p0: Vector2, h0: Rotation2d, p1: Vector2, h1: Rotation2d) : Spline() {
@@ -18,15 +19,15 @@ class CubicHermiteSpline(p0: Vector2, h0: Rotation2d, p1: Vector2, h1: Rotation2
     private val dy: Double
 
     init {
-        val scale = 2.0 * p0.distanceTo(p1)
+        val scale = 2.0 * p0.distance(p1)
 
-        val x0 = p0.x
-        val x1 = p1.x
+        val x0 = p0.x.value
+        val x1 = p1.x.value
         val dx0 = h0.cos * scale
         val dx1 = h1.cos * scale
 
-        val y0 = p0.y
-        val y1 = p1.y
+        val y0 = p0.y.value
+        val y1 = p1.y.value
         val dy0 = h0.sin * scale
         val dy1 = h1.sin * scale
 
@@ -47,7 +48,7 @@ class CubicHermiteSpline(p0: Vector2, h0: Rotation2d, p1: Vector2, h1: Rotation2
     override fun getPoint(t: Double): Vector2 {
         val x = t * t * t * ax + t * t * bx + t * cx + dx
         val y = t * t * t * ay + t * t * by + t * cy + dy
-        return Vector2(x, y)
+        return Vector2(x.meters, y.meters)
     }
 
     override fun getHeading(t: Double): Rotation2d {

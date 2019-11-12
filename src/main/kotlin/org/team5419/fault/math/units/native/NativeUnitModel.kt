@@ -7,6 +7,8 @@ import org.team5419.fault.math.units.SIUnit
 import org.team5419.fault.math.units.derived.Acceleration
 import org.team5419.fault.math.units.derived.Radian
 import org.team5419.fault.math.units.derived.Velocity
+import org.team5419.fault.math.units.operations.times
+import org.team5419.fault.math.units.operations.div
 
 abstract class NativeUnitModel<K : SIKey> {
 
@@ -35,8 +37,8 @@ object DefaultNativeUnitModel : NativeUnitModel<NativeUnit>() {
 }
 
 class NativeUnitLengthModel(
-        val nativeUnitsPerRotation: SIUnit<NativeUnit>,
-        val wheelRadius: SIUnit<Meter>
+    val nativeUnitsPerRotation: SIUnit<NativeUnit>,
+    val wheelRadius: SIUnit<Meter>
 ) : NativeUnitModel<Meter>() {
     override fun fromNativeUnitPosition(nativeUnits: SIUnit<NativeUnit>): SIUnit<Meter> =
             wheelRadius * ((nativeUnits / nativeUnitsPerRotation) * (2.0 * Math.PI))
@@ -46,7 +48,7 @@ class NativeUnitLengthModel(
 }
 
 class NativeUnitRotationModel(
-        val nativeUnitsPerRotation: SIUnit<NativeUnit>
+    val nativeUnitsPerRotation: SIUnit<NativeUnit>
 ) : NativeUnitModel<Radian>() {
     override fun toNativeUnitPosition(modelledUnit: SIUnit<Radian>): SIUnit<NativeUnit> =
             (modelledUnit / (2.0 * Math.PI)) * nativeUnitsPerRotation
@@ -56,8 +58,8 @@ class NativeUnitRotationModel(
 }
 
 class SlopeNativeUnitModel<K : SIKey>(
-        val modelledSample: SIUnit<K>,
-        val nativeUnitSample: SIUnit<NativeUnit>
+    val modelledSample: SIUnit<K>,
+    val nativeUnitSample: SIUnit<NativeUnit>
 ) : NativeUnitModel<K>() {
     private val slope: SIUnit<Frac<K, NativeUnit>> = modelledSample / nativeUnitSample
 

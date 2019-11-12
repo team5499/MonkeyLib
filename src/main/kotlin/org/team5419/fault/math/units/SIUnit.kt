@@ -30,11 +30,29 @@ inline class SIUnit<T : SIKey>(val value: Double) : Comparable<SIUnit<T>> {
     operator fun times(other: Number) = times(other.toDouble())
     operator fun div(other: Number) = div(other.toDouble())
 
-    override fun compareTo(other: SIUnit<T>) = value.compareTo(other.value)
+    override operator fun compareTo(other: SIUnit<T>) = value.compareTo(other.value)
+    operator fun compareTo(other: Double) = value.compareTo(other)
+    operator fun compareTo(other: Number) = compareTo(other.toDouble())
 
     fun lerp(endValue: SIUnit<T>, t: Double) = SIUnit<T>(value.lerp(endValue.value, t))
     infix fun epsilonEquals(other: SIUnit<T>) = value.epsilonEquals(other.value)
 }
+
+val Double.kilo get() = SIUnitBuilder(times(kKilo))
+val Double.deca get() = SIUnitBuilder(times(kDeca))
+val Double.base get() = SIUnitBuilder(this)
+val Double.deci get() = SIUnitBuilder(times(kDeci))
+val Double.centi get() = SIUnitBuilder(times(kCenti))
+val Double.milli get() = SIUnitBuilder(times(kMilli))
+val Double.micro get() = SIUnitBuilder(times(kMicro))
+
+val Number.kilo get() = toDouble().kilo
+val Number.deca get() = toDouble().deca
+val Number.base get() = toDouble().base
+val Number.deci get() = toDouble().deci
+val Number.centi get() = toDouble().centi
+val Number.milli get() = toDouble().milli
+val Number.micro get() = toDouble().micro
 
 inline class SIUnitBuilder(private val value: Double) {
     val seconds get() = SIUnit<Second>(value)
@@ -48,8 +66,8 @@ inline class SIUnitBuilder(private val value: Double) {
 
 interface SIKey
 
-class Mult<T: SIKey, S: SIKey> : SIKey
-class Frac<N: SIKey, D: SIKey> : SIKey
+class Mult<T : SIKey, S : SIKey> : SIKey
+class Frac<N : SIKey, D : SIKey> : SIKey
 
 object Unitless : SIKey
 

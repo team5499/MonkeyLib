@@ -2,28 +2,30 @@ package tests.math.units
 
 import org.junit.Test
 import org.team5419.fault.math.epsilonEquals
-import org.team5419.fault.math.units.feet
-import org.team5419.fault.math.units.inch
-import org.team5419.fault.math.units.kilogram
-import org.team5419.fault.math.units.meter
-import org.team5419.fault.math.units.native.NativeUnitLengthModel
-import org.team5419.fault.math.units.native.nativeUnits
-import org.team5419.fault.math.units.native.nativeUnitsPer100ms
-import org.team5419.fault.math.units.native.nativeUnitsPer100msPerSecond
-import org.team5419.fault.math.units.native.toNativeUnitAcceleration
-import org.team5419.fault.math.units.native.toNativeUnitVelocity
-import org.team5419.fault.math.units.second
+import org.team5419.fault.math.units.*
+import org.team5419.fault.math.units.derived.radians
+import org.team5419.fault.math.units.derived.velocity
+import org.team5419.fault.math.units.native.*
+import org.team5419.fault.math.units.operations.times
+import org.team5419.fault.math.units.operations.div
 
 class UnitTest {
 
     private val settings = NativeUnitLengthModel(
             1440.nativeUnits,
-            3.0.inch
+            3.0.inches
     )
 
     @Test
+    fun testNativeUnits() {
+        val nativeUnits = 360.nativeUnits.fromNativeUnitPosition(settings)
+
+        assert(nativeUnits.inInches() epsilonEquals 4.71238898038469)
+    }
+
+    @Test
     fun testVelocitySTU() {
-        val one = 1.meter / 1.second
+        val one = 1.meters / 1.seconds
 
         val two = one.toNativeUnitVelocity(settings)
 
@@ -34,7 +36,7 @@ class UnitTest {
 
     @Test
     fun testAccelerationSTU() {
-        val one = 1.meter / 1.second / 1.second
+        val one = 1.meters / 1.seconds / 1.seconds
 
         val two = one.toNativeUnitAcceleration(settings)
 
@@ -45,18 +47,18 @@ class UnitTest {
     fun testFeetToMeter() {
         val one = 1.feet
 
-        assert(one.meter epsilonEquals 0.3048)
+        assert(one.inMeters() epsilonEquals 0.3048)
     }
 
     @Test
     fun testKgToPound() {
-        val kg = 2.kilogram
-        assert(kg.lb epsilonEquals 4.409248840367555)
+        val kg = SIUnit<Kilogram>(2.0)
+        assert(kg.inLbs() epsilonEquals 4.409248840367555)
     }
 
     @Test
-    fun testNativeUnits() {
-        val nativeUnits = 360.nativeUnits.fromNativeUnit(settings)
-        assert(nativeUnits.inch epsilonEquals 4.71238898038469)
+    fun testUnboundedRotationUnits() {
+        val speed = 250.radians.velocity
+        assert(speed.value epsilonEquals 250.0)
     }
 }

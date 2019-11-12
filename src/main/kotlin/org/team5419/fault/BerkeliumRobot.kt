@@ -4,16 +4,15 @@ import edu.wpi.first.hal.FRCNetComm
 import edu.wpi.first.hal.HAL
 import edu.wpi.first.wpilibj.RobotBase
 import edu.wpi.first.wpilibj.TimedRobot
-import org.team5419.fault.math.units.Time
+import org.team5419.fault.math.units.SIUnit
+import org.team5419.fault.math.units.Second
 import org.team5419.fault.subsystems.Subsystem
 import org.team5419.fault.subsystems.SubsystemManager
 
 @Suppress("TooManyFunctions")
-abstract class BerkeliumRobot(period: Double) {
+abstract class BerkeliumRobot(period: SIUnit<Second>) {
 
-    constructor(period: Time): this(period.value)
-
-    protected val wrappedValue = WpiTimedRobot(period)
+    protected val wrappedValue = WpiTimedRobot(period.value)
 
     protected inner class WpiTimedRobot(period: Double = 0.05) : TimedRobot(period) {
 

@@ -1,6 +1,5 @@
 package org.team5419.fault.trajectory
 
-import org.team5419.fault.math.geometry.Rotation2d
 import org.team5419.fault.math.geometry.Pose2d
 import org.team5419.fault.math.geometry.Pose2dWithCurvature
 import org.team5419.fault.math.geometry.Vector2
@@ -16,35 +15,36 @@ import org.team5419.fault.trajectory.types.DistanceTrajectory
 import org.team5419.fault.math.splines.QuinticHermiteSpline
 import org.team5419.fault.math.splines.Spline
 import org.team5419.fault.math.splines.SplineGenerator
-import org.team5419.fault.math.units.Length
+import org.team5419.fault.math.units.*
 import org.team5419.fault.math.units.derived.LinearAcceleration
 import org.team5419.fault.math.units.derived.LinearVelocity
-import org.team5419.fault.math.units.inch
+import org.team5419.fault.math.units.derived.Radian
+import org.team5419.fault.math.units.derived.degrees
 
 import kotlin.math.absoluteValue
 import kotlin.math.pow
 
 val DefaultTrajectoryGenerator = TrajectoryGenerator(
-    2.0.inch,
-    0.25.inch,
-    5.0.degree
+    2.0.inches,
+    0.25.inches,
+    5.0.degrees
 )
 
 public class TrajectoryGenerator(
-    val maxDx: Length,
-    val maxDy: Length,
-    val maxDTheta: Rotation2d // degrees
+    val maxDx: SIUnit<Meter>,
+    val maxDy: SIUnit<Meter>,
+    val maxDTheta: SIUnit<Radian> // degrees
 ) {
 
     @Suppress("LongParameterList")
     fun generateTrajectory(
         waypoints: List<Pose2d>,
         constraints: List<TimingConstraint<Pose2dWithCurvature>>,
-        startVelocity: LinearVelocity,
-        endVelocity: LinearVelocity,
-        maxVelocity: LinearVelocity,
-        maxAcceleration: LinearAcceleration,
-        reversed: Boolean = false,
+        startVelocity: SIUnit<LinearVelocity>,
+        endVelocity: SIUnit<LinearVelocity>,
+        maxVelocity: SIUnit<LinearVelocity>,
+        maxAcceleration: SIUnit<LinearAcceleration>,
+        reversed: Boolean,
         optimizeSplines: Boolean = true
     ): TimedTrajectory<Pose2dWithCurvature> {
         val flippedPosition = Pose2d(Vector2(), 180.0.degree)
@@ -57,7 +57,7 @@ public class TrajectoryGenerator(
                 Pose2dWithCurvature(
                     pose = state.pose + flippedPosition,
                     curvature = -state.curvature,
-                    dCurvature = state.dCurvature
+                    dkds = state.dkds
                 )
             }
         }
@@ -90,8 +90,8 @@ public class TrajectoryGenerator(
     ) = IndexedTrajectory(
         SplineGenerator.parameterizeSplines(
             splines,
-            maxDx.value,
-            maxDy.value,
+            maxDx,
+            maxDy,
             maxDTheta
         )
     )
@@ -308,7 +308,7 @@ public class TrajectoryGenerator(
             var dt = 0.0
             if (i > 0) {
                 timedStates[i - 1] = timedStates[i - 1].copy(
-                    _acceleration = if (reversed) -accel else accel
+                    acceleration = SIUnit(if (reversed) -accel else accel)
                 )
 
                 dt = when {
@@ -327,9 +327,9 @@ public class TrajectoryGenerator(
             timedStates.add(
                 TimedEntry(
                     constrainedState.state,
-                    t,
-                    if (reversed) -v else v,
-                    if (reversed) -accel else accel
+                    SIUnit(t),
+                    SIUnit(if (reversed) -v else v),
+                    SIUnit(if (reversed) -accel else accel)
                 )
             )
         }

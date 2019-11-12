@@ -6,11 +6,10 @@
  * Copyright 2019, Green Hope Falcons
  */
 
-package org.ghrobotics.lib.mathematics.units.operations
+package org.team5419.fault.math.units.operations
 
 import org.team5419.fault.math.units.Mult
 import org.team5419.fault.math.units.SIKey
 import org.team5419.fault.math.units.SIUnit
-import org.team5419.fault.math.units.Unitless
 
 operator fun <A : SIKey, B : SIKey> SIUnit<A>.times(other: SIUnit<B>) = SIUnit<Mult<A, B>>(value.times(other.value))

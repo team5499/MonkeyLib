@@ -3,14 +3,15 @@ package org.team5419.fault.auto
 import org.team5419.fault.trajectory.types.Trajectory
 import org.team5419.fault.trajectory.types.TimedEntry
 import org.team5419.fault.math.geometry.Pose2dWithCurvature
-import org.team5419.fault.math.units.Time
+import org.team5419.fault.math.units.SIUnit
+import org.team5419.fault.math.units.Second
 import org.team5419.fault.subsystems.drivetrain.AbstractTankDrive
 import org.team5419.fault.trajectory.followers.TrajectoryFollower
 
 public class DriveTrajectoryAction(
     private val drivetrain: AbstractTankDrive,
     private val trajectoryFollower: TrajectoryFollower,
-    private val trajectory: Trajectory<Time, TimedEntry<Pose2dWithCurvature>>
+    private val trajectory: Trajectory<SIUnit<Second>, TimedEntry<Pose2dWithCurvature>>
 ) : Action() {
 
     init {

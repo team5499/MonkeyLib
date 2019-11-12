@@ -1,7 +1,10 @@
 package org.team5419.fault.subsystems.drivetrain
 
 import org.team5419.fault.math.physics.DifferentialDrive
-import org.team5419.fault.trajectory.followers.TrajectoryFollower.TrajectoryFollowerOutput
+import org.team5419.fault.math.units.derived.velocity
+import org.team5419.fault.math.units.derived.volts
+import org.team5419.fault.math.units.meters
+import org.team5419.fault.trajectory.followers.TrajectoryFollowerOutput
 
 interface IDifferentialFollowerDrive : ITrajectoryFollowingDrive {
 
@@ -35,12 +38,12 @@ interface IDifferentialFollowerDrive : ITrajectoryFollowingDrive {
         wheelVoltages: DifferentialDrive.WheelState
     ) {
         leftMasterMotor.setVelocity(
-                wheelVelocities.left * differentialDrive.wheelRadius,
-                wheelVoltages.left
+                (wheelVelocities.left * differentialDrive.wheelRadius).meters.velocity,
+                wheelVoltages.left.volts
         )
         rightMasterMotor.setVelocity(
-                wheelVelocities.right * differentialDrive.wheelRadius,
-                wheelVoltages.right
+                (wheelVelocities.right * differentialDrive.wheelRadius).meters.velocity,
+                wheelVoltages.right.volts
         )
     }
 }

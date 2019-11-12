@@ -7,12 +7,24 @@ import com.ctre.phoenix.motorcontrol.NeutralMode
 
 import org.team5419.fault.hardware.AbstractBerkeliumMotor
 import org.team5419.fault.hardware.BerkeliumMotor
+import org.team5419.fault.math.units.SIKey
 import org.team5419.fault.math.units.SIUnit
+import org.team5419.fault.math.units.derived.Acceleration
+import org.team5419.fault.math.units.derived.Velocity
+import org.team5419.fault.math.units.derived.Volt
+import org.team5419.fault.math.units.derived.volts
 import org.team5419.fault.math.units.native.NativeUnitModel
+import org.team5419.fault.math.units.native.inNativeUnitsPer100msPerSecond
+import org.team5419.fault.math.units.native.nativeUnitsPer100ms
+import org.team5419.fault.math.units.native.toNativeUnitVelocity
+import org.team5419.fault.math.units.operations.times
+import org.team5419.fault.math.units.operations.div
+import org.team5419.fault.math.units.unitlessValue
+import kotlin.math.roundToInt
 
 import kotlin.properties.Delegates
 
-abstract class CTREBerkeliumMotor<T : SIUnit<T>> internal constructor(
+abstract class CTREBerkeliumMotor<T : SIKey> internal constructor(
     val motorController: IMotorController,
     val model: NativeUnitModel<T>
 ) : AbstractBerkeliumMotor<T>() {
@@ -21,8 +33,8 @@ abstract class CTREBerkeliumMotor<T : SIUnit<T>> internal constructor(
 
     override val encoder = CTREBerkeliumEncoder(motorController, 0, model)
 
-    override val voltageOutput: Double
-        get() = motorController.motorOutputVoltage
+    override val voltageOutput: SIUnit<Volt>
+        get() = motorController.motorOutputVoltage.volts
 
     override var outputInverted: Boolean by Delegates.observable(false) { _, _, newValue ->
         motorController.inverted = newValue
@@ -32,50 +44,50 @@ abstract class CTREBerkeliumMotor<T : SIUnit<T>> internal constructor(
         motorController.setNeutralMode(if (newValue) NeutralMode.Brake else NeutralMode.Coast)
     }
 
-    override var voltageCompSaturation: Double by Delegates.observable(kCompVoltage) { _, _, newValue ->
-            motorController.configVoltageCompSaturation(newValue, 0)
+    override var voltageCompSaturation: SIUnit<Volt> by Delegates.observable(12.0.volts) { _, _, newValue ->
+            motorController.configVoltageCompSaturation(newValue.value, 0)
             motorController.enableVoltageCompensation(true)
     }
 
-    override var motionProfileCruiseVelocity: Double by Delegates.observable(0.0) { _, _, newValue ->
-        motorController.configMotionCruiseVelocity((model.toNativeUnitVelocity(newValue) / 10.0).toInt(), 0)
+    override var motionProfileCruiseVelocity: SIUnit<Velocity<T>> by Delegates.observable(SIUnit(0.0)) { _, _, newValue ->
+        motorController.configMotionCruiseVelocity(model.toNativeUnitVelocity(newValue).nativeUnitsPer100ms.roundToInt(), 0)
     }
 
-    override var motionProfileAcceleration: Double by Delegates.observable(0.0) { _, _, newValue ->
-        motorController.configMotionAcceleration((model.toNativeUnitAcceleration(newValue) / 10.0).toInt(), 0)
+    override var motionProfileAcceleration: SIUnit<Acceleration<T>> by Delegates.observable(SIUnit(0.0)) { _, _, newValue ->
+        motorController.configMotionAcceleration(model.toNativeUnitAcceleration(newValue).inNativeUnitsPer100msPerSecond().roundToInt(), 0)
     }
 
     init {
-        motorController.configVoltageCompSaturation(kCompVoltage, 0)
+        motorController.configVoltageCompSaturation(kCompVoltage.value, 0)
         motorController.enableVoltageCompensation(true)
     }
 
-    override fun setVoltage(voltage: Double, arbitraryFeedForward: Double) = sendDemand(
+    override fun setVoltage(voltage: SIUnit<Volt>, arbitraryFeedForward: SIUnit<Volt>) = sendDemand(
             Demand(
-                    ControlMode.PercentOutput, voltage / kCompVoltage,
-                    DemandType.ArbitraryFeedForward, arbitraryFeedForward / kCompVoltage
+                    ControlMode.PercentOutput, (voltage / kCompVoltage).unitlessValue,
+                    DemandType.ArbitraryFeedForward, (arbitraryFeedForward / kCompVoltage).unitlessValue
             )
     )
 
-    override fun setPercent(percent: Double, arbitraryFeedForward: Double) = sendDemand(
+    override fun setPercent(percent: Double, arbitraryFeedForward: SIUnit<Volt>) = sendDemand(
             Demand(
                     ControlMode.PercentOutput, percent,
-                    DemandType.ArbitraryFeedForward, arbitraryFeedForward / kCompVoltage
+                    DemandType.ArbitraryFeedForward, (arbitraryFeedForward / kCompVoltage).unitlessValue
             )
     )
 
-    override fun setVelocity(velocity: Double, arbitraryFeedForward: Double) = sendDemand(
+    override fun setVelocity(velocity: SIUnit<Velocity<T>>, arbitraryFeedForward: SIUnit<Volt>) = sendDemand(
             Demand(
-                    ControlMode.Velocity, model.toNativeUnitVelocity(velocity) / 10.0,
-                    DemandType.ArbitraryFeedForward, arbitraryFeedForward / kCompVoltage
+                    ControlMode.Velocity, model.toNativeUnitVelocity(velocity).nativeUnitsPer100ms,
+                    DemandType.ArbitraryFeedForward, (arbitraryFeedForward / kCompVoltage).unitlessValue
             )
     )
 
-    override fun setPosition(position: Double, arbitraryFeedForward: Double) = sendDemand(
+    override fun setPosition(position: SIUnit<T>, arbitraryFeedForward: SIUnit<Volt>) = sendDemand(
             Demand(
                     if (useMotionProfileForPosition) ControlMode.MotionMagic else ControlMode.Position,
-                    model.toNativeUnitPosition(position),
-                    DemandType.ArbitraryFeedForward, arbitraryFeedForward / kCompVoltage
+                    model.toNativeUnitPosition(position).value,
+                    DemandType.ArbitraryFeedForward, (arbitraryFeedForward / kCompVoltage).unitlessValue
             )
     )
 
@@ -111,6 +123,6 @@ abstract class CTREBerkeliumMotor<T : SIUnit<T>> internal constructor(
     )
 
     companion object {
-        private const val kCompVoltage = 12.0
+        private val kCompVoltage = SIUnit<Volt>(12.0)
     }
 }

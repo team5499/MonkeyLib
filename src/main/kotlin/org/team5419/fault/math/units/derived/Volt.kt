@@ -1,6 +1,5 @@
 package org.team5419.fault.math.units.derived
 
-import com.sun.jdi.event.MethodEntryEvent
 import org.team5419.fault.math.units.*
 
 typealias Volt = Frac<Mult<Kilogram, Mult<Meter, Meter>>,

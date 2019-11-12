@@ -7,8 +7,10 @@ import org.junit.Assert.assertEquals
 import org.team5419.fault.math.geometry.Vector2
 import org.team5419.fault.math.geometry.Pose2d
 import org.team5419.fault.math.geometry.degree
+import org.team5419.fault.math.splines.FunctionalQuadraticSpline
 
 import org.team5419.fault.math.splines.QuinticHermiteSpline
+import org.team5419.fault.math.units.meters
 
 class QuinticHermiteOptimizerTest {
 
@@ -16,23 +18,23 @@ class QuinticHermiteOptimizerTest {
     @Test
     fun testOptimizer() {
         // test porabola thing
-        val t = QuinticHermiteSpline.fitParabola(Vector2(-1.0, 0.015), Vector2(0.0, 0.015), Vector2(1.0, 0.016))
-        assertEquals(t, -0.5, 0.1)
+        val t = FunctionalQuadraticSpline(Vector2(-1.0.meters, 0.015.meters), Vector2(0.0.meters, 0.015.meters), Vector2(1.0.meters, 0.016.meters)).vertexXCoordinate
+        assertEquals(t.value, -0.5, 0.1)
 
-        val a = Pose2d(Vector2(0, 100), 270.degree)
-        val b = Pose2d(Vector2(50, 0), 0.degree)
-        val c = Pose2d(Vector2(100, 100), 90.degree)
+        val a = Pose2d(Vector2(0.meters, 100.meters), 270.degree)
+        val b = Pose2d(Vector2(50.meters, 0.meters), 0.degree)
+        val c = Pose2d(Vector2(100.meters, 100.meters), 90.degree)
 
-        val d = Pose2d(Vector2(0, 0), 90.degree)
-        val e = Pose2d(Vector2(0, 50), 0.degree)
-        val f = Pose2d(Vector2(100, 0), 90.degree)
-        val g = Pose2d(Vector2(100, 100), 0.degree)
+        val d = Pose2d(Vector2(0.meters, 0.meters), 90.degree)
+        val e = Pose2d(Vector2(0.meters, 50.meters), 0.degree)
+        val f = Pose2d(Vector2(100.meters, 0.meters), 90.degree)
+        val g = Pose2d(Vector2(100.meters, 100.meters), 0.degree)
 
-        val h = Pose2d(Vector2(0, 0), 0.degree)
-        val i = Pose2d(Vector2(50, 0), 0.degree)
-        val j = Pose2d(Vector2(100, 50), 45.degree)
-        val k = Pose2d(Vector2(150, 0), 270.degree)
-        val l = Pose2d(Vector2(150, -50), 270.degree)
+        val h = Pose2d(Vector2(0.meters, 0.meters), 0.degree)
+        val i = Pose2d(Vector2(50.meters, 0.meters), 0.degree)
+        val j = Pose2d(Vector2(100.meters, 50.meters), 45.degree)
+        val k = Pose2d(Vector2(150.meters, 0.meters), 270.degree)
+        val l = Pose2d(Vector2(150.meters, -50.meters), 270.degree)
 
         var startTime = System.currentTimeMillis()
 

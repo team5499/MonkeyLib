@@ -1,7 +1,7 @@
 package org.team5419.fault.util.time
 
 import edu.wpi.first.wpilibj.Timer
-import org.team5419.fault.math.units.second
+import org.team5419.fault.math.units.seconds
 
 public class WPITimer(timer: Timer = Timer()) : ITimer {
 
@@ -11,7 +11,7 @@ public class WPITimer(timer: Timer = Timer()) : ITimer {
         mTimer = timer
     }
 
-    public override fun get() = mTimer.get().second
+    public override fun get() = mTimer.get().seconds
 
     public override fun start() = mTimer.start()
 

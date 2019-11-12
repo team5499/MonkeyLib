@@ -6,12 +6,11 @@
  * Copyright 2019, Green Hope Falcons
  */
 
-package org.ghrobotics.lib.mathematics.units.operations
+package org.team5419.fault.math.units.operations
 
 import org.team5419.fault.math.units.Mult
 import org.team5419.fault.math.units.SIKey
 import org.team5419.fault.math.units.SIUnit
-import org.team5419.fault.math.units.Unitless
 
 // m^3 / m^2 = m
 

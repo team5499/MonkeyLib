@@ -1,27 +1,23 @@
 package org.team5419.fault.math.localization
 
 import edu.wpi.first.wpilibj.Timer
-import org.team5419.fault.math.units.Time
+import org.team5419.fault.math.units.*
 import org.team5419.fault.util.Interpolable
 import org.team5419.fault.util.Source
-import org.team5419.fault.util.map
+import org.team5419.fault.math.units.unitlessValue
+import org.team5419.fault.math.units.operations.times
+import org.team5419.fault.math.units.operations.div
+
 import java.util.TreeMap
 
 class TimeInterpolatableBuffer<T : Interpolable<T>>(
-    private val historySpan: Double = 1.0,
-    private val timeSource: Source<Double> = Timer::getFPGATimestamp
+    private val historySpan: SIUnit<Second> = SIUnit(1.0),
+    private val timeSource: Source<SIUnit<Second>> = { Timer.getFPGATimestamp().seconds }
 ) {
 
-    constructor(
-        historySpan: Time,
-        timeSource: Source<Time>
-    ) : this(historySpan.value, timeSource.map { it.value })
+    private val bufferMap = TreeMap<SIUnit<Second>, T>()
 
-    private val bufferMap = TreeMap<Double, T>()
-
-    operator fun set(time: Time, value: T) = set(time.second, value)
-
-    operator fun set(time: Double, value: T): T? {
+    operator fun set(time: SIUnit<Second>, value: T): T? {
         cleanUp()
         return bufferMap.put(time, value)
     }
@@ -43,10 +39,8 @@ class TimeInterpolatableBuffer<T : Interpolable<T>>(
         bufferMap.clear()
     }
 
-    operator fun get(time: Time) = get(time.second)
-
     @Suppress("ReturnCount")
-    operator fun get(time: Double): T? {
+    operator fun get(time: SIUnit<Second>): T? {
         if (bufferMap.isEmpty()) return null
 
         bufferMap[time]?.let { return it }
@@ -59,7 +53,7 @@ class TimeInterpolatableBuffer<T : Interpolable<T>>(
             bottomBound == null -> topBound.value
             else -> bottomBound.value.interpolate(
                     topBound.value,
-                    (time - bottomBound.key) / (topBound.key - bottomBound.key)
+                    ((time - bottomBound.key) / (topBound.key - bottomBound.key)).unitlessValue
             )
         }
     }

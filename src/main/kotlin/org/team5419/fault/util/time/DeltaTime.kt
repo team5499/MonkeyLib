@@ -1,26 +1,22 @@
 package org.team5419.fault.util.time
 
-import org.team5419.fault.math.units.Time
-import org.team5419.fault.math.units.second
+import org.team5419.fault.math.units.*
 
-class DeltaTime internal constructor(startTime: Double) {
-    constructor(startTime: Time = (-1).second) : this(startTime.value)
+class DeltaTime internal constructor(startTime: SIUnit<Second> = SIUnit(0.0)) {
 
     @Suppress("VariableNaming")
     internal var _currentTime = startTime
         private set
     @Suppress("VariableNaming")
-    internal var _deltaTime = 0.0
+    internal var _deltaTime = SIUnitBuilder(0.0).seconds
         private set
 
-    val deltaTime get() = _deltaTime.second
-    val currentTime get() = _currentTime.second
+    val deltaTime get() = _deltaTime
+    val currentTime get() = _currentTime
 
-    fun updateTime(newTime: Time) = updateTime(newTime.value).second
-
-    fun updateTime(newTime: Double): Double {
+    fun updateTime(newTime: SIUnit<Second>): SIUnit<Second> {
         _deltaTime = if (_currentTime < 0.0) {
-            0.0
+            SIUnit<Second>(0.0)
         } else {
             newTime - _currentTime
         }
@@ -29,6 +25,6 @@ class DeltaTime internal constructor(startTime: Double) {
     }
 
     fun reset() {
-        _currentTime = -1.0
+        _currentTime = SIUnit<Second>(-1.0)
     }
 }

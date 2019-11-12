@@ -1,6 +1,6 @@
 package org.team5419.fault.math.units
 
-object Second: SIKey
+object Second : SIKey
 
 const val kMinuteToSecond = 60.0
 const val kHourToSecond = kMinuteToSecond * 60.0
@@ -8,10 +8,12 @@ const val kHourToSecond = kMinuteToSecond * 60.0
 val Double.seconds get() = SIUnit<Second>(this)
 val Double.minutes get() = SIUnit<Second>(times(kMinuteToSecond))
 val Double.hours get() = SIUnit<Second>(times(kHourToSecond))
+val Double.milliseconds get() = SIUnit<Second>(div(1000.0))
 
 val Number.seconds get() = toDouble().seconds
 val Number.minutes get() = toDouble().minutes
 val Number.hours get() = toDouble().hours
+val Number.milliseconds get() = toDouble().milliseconds
 
 fun SIUnit<Second>.inMinutes() = value.div(kMinuteToSecond)
 fun SIUnit<Second>.inHours() = value.div(kHourToSecond)

@@ -7,20 +7,17 @@ import org.team5419.fault.math.geometry.State
 import org.team5419.fault.math.lerp
 import org.team5419.fault.math.geometry.Pose2dWithCurvature
 import org.team5419.fault.math.geometry.Pose2d
-import org.team5419.fault.math.units.Time
+import org.team5419.fault.math.units.*
 import org.team5419.fault.math.units.derived.LinearAcceleration
 import org.team5419.fault.math.units.derived.LinearVelocity
-import org.team5419.fault.math.units.derived.acceleration
-import org.team5419.fault.math.units.derived.velocity
-import org.team5419.fault.math.units.meter
-import org.team5419.fault.math.units.second
+import org.team5419.fault.math.units.operations.times
 
 class TimedTrajectory<S : State<S>>(
     override val points: List<TimedEntry<S>>,
     override val reversed: Boolean
-) : Trajectory<Time, TimedEntry<S>> {
+) : Trajectory<SIUnit<Second>, TimedEntry<S>> {
 
-    override fun sample(interpolant: Time) = sample(interpolant.value)
+    override fun sample(interpolant: SIUnit<Second>) = sample(interpolant.value)
 
     fun sample(interpolant: Double) = when {
         interpolant >= lastInterpolant.value -> TrajectorySamplePoint(getPoint(points.size - 1))
@@ -56,37 +53,27 @@ class TimedTrajectory<S : State<S>>(
 
 data class TimedEntry<S : State<S>> internal constructor(
     val state: S,
-    internal val _t: Double = 0.0,
-    internal val _velocity: Double = 0.0,
-    internal val _acceleration: Double = 0.0
+    val t: SIUnit<Second> = SIUnit(0.0),
+    val velocity: SIUnit<LinearVelocity> = SIUnit(0.0),
+    val acceleration: SIUnit<LinearAcceleration> = SIUnit(0.0)
 ) : State<TimedEntry<S>> {
 
-    val t get() = _t.second
-    val velocity get() = _velocity.meter.velocity
-    val acceleration get() = _acceleration.meter.acceleration
+    override fun interpolate(other: TimedEntry<S>, t: Double): TimedEntry<S> {
+        val newT = this.t.lerp(other.t, t)
+        val deltaT = newT - this.t
+        if (deltaT.value < 0.0) return other.interpolate(this, 1.0 - t)
 
-    constructor(
-        state: S,
-        t: Time,
-        velocity: LinearVelocity,
-        acceleration: LinearAcceleration
-    ) : this(state, t.value, velocity.value, acceleration.value)
+        val reversing =
+                this.velocity.value < 0.0 || this.velocity.value epsilonEquals 0.0 && this.acceleration.value < 0.0
 
-    override fun interpolate(other: TimedEntry<S>, x: Double): TimedEntry<S> {
-        val newT = _t.lerp(other._t, x)
-        val dt = newT - this.t.value
-        if (dt < 0.0) return other.interpolate(this, 1.0 - x)
-
-        val reversing = _velocity < 0.0 || _velocity epsilonEquals 0.0 && _acceleration < 0.0
-
-        val newV = _velocity + _acceleration * dt
-        val newS = (if (reversing) -1.0 else 1.0) * (_velocity * dt + 0.5 * _acceleration * dt * dt)
+        val newV = this.velocity + this.acceleration * deltaT
+        val newS = (if (reversing) -1.0 else 1.0) * (this.velocity * deltaT + 0.5 * this.acceleration * deltaT * deltaT)
 
         return TimedEntry(
-            state.interpolate(other.state, newS / state.distance(other.state)),
-            newT,
-            newV,
-            _acceleration
+                state.interpolate(other.state, (newS / state.distance(other.state)).value),
+                newT,
+                newV,
+                this.acceleration
         )
     }
 
@@ -97,17 +84,17 @@ data class TimedEntry<S : State<S>> internal constructor(
 
 class TimedIterator<S : State<S>>(
     trajectory: TimedTrajectory<S>
-) : TrajectoryIterator<Time, TimedEntry<S>>(trajectory) {
-    override fun addition(a: Time, b: Time) = a + b
+) : TrajectoryIterator<SIUnit<Second>, TimedEntry<S>>(trajectory) {
+    override fun addition(a: SIUnit<Second>, b: SIUnit<Second>) = a + b
 }
 
-fun Trajectory<Time, TimedEntry<Pose2dWithCurvature>>.mirror() =
-    TimedTrajectory(points.map { TimedEntry(it.state.mirror(), it._t, it._velocity, it._acceleration) }, this.reversed)
+fun Trajectory<SIUnit<Second>, TimedEntry<Pose2dWithCurvature>>.mirror() =
+        TimedTrajectory(points.map { TimedEntry(it.state.mirror, it.t, it.velocity, it.acceleration) }, this.reversed)
 
-fun Trajectory<Time, TimedEntry<Pose2dWithCurvature>>.transform(transform: Pose2d) =
-    TimedTrajectory(
-        points.map { TimedEntry(it.state + transform, it._t, it._velocity, it._acceleration) },
-        this.reversed
-    )
+fun Trajectory<SIUnit<Second>, TimedEntry<Pose2dWithCurvature>>.transform(transform: Pose2d) =
+        TimedTrajectory(
+                points.map { TimedEntry(it.state + transform, it.t, it.velocity, it.acceleration) },
+                this.reversed
+        )
 
-val Trajectory<Time, TimedEntry<Pose2dWithCurvature>>.duration get() = this.lastState.t
+val Trajectory<SIUnit<Second>, TimedEntry<Pose2dWithCurvature>>.duration get() = this.lastState.t

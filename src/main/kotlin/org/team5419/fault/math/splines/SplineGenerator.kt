@@ -2,7 +2,9 @@ package org.team5419.fault.math.splines
 
 import org.team5419.fault.math.geometry.Pose2d
 import org.team5419.fault.math.geometry.Pose2dWithCurvature
-import org.team5419.fault.math.geometry.Rotation2d
+import org.team5419.fault.math.units.Meter
+import org.team5419.fault.math.units.SIUnit
+import org.team5419.fault.math.units.derived.Radian
 
 @SuppressWarnings("LongParameterList")
 object SplineGenerator {
@@ -11,9 +13,9 @@ object SplineGenerator {
 
     fun parameterizeSpline(
         s: Spline,
-        maxDx: Double,
-        maxDy: Double,
-        maxDTheta: Rotation2d,
+        maxDx: SIUnit<Meter>,
+        maxDy: SIUnit<Meter>,
+        maxDTheta: SIUnit<Radian>,
         t0: Double = 0.0,
         t1: Double = 1.0
     ): MutableList<Pose2dWithCurvature> {
@@ -30,18 +32,18 @@ object SplineGenerator {
 
     fun parameterizeSpline(
         s: Spline,
-        maxDx: Double,
-        maxDy: Double,
-        maxDTheta: Rotation2d
+        maxDx: SIUnit<Meter>,
+        maxDy: SIUnit<Meter>,
+        maxDTheta: SIUnit<Radian>
     ): MutableList<Pose2dWithCurvature> {
         return parameterizeSpline(s, maxDx, maxDy, maxDTheta, 0.0, 1.0)
     }
 
     fun parameterizeSplines(
         splines: List<Spline>,
-        maxDx: Double,
-        maxDy: Double,
-        maxDTheta: Rotation2d
+        maxDx: SIUnit<Meter>,
+        maxDy: SIUnit<Meter>,
+        maxDTheta: SIUnit<Radian>
     ): MutableList<Pose2dWithCurvature> {
         val rv: MutableList<Pose2dWithCurvature> = mutableListOf()
         if (splines.isEmpty()) return rv
@@ -59,9 +61,9 @@ object SplineGenerator {
         rv: MutableList<Pose2dWithCurvature>,
         t0: Double,
         t1: Double,
-        maxDx: Double,
-        maxDy: Double,
-        maxDTheta: Rotation2d
+        maxDx: SIUnit<Meter>,
+        maxDy: SIUnit<Meter>,
+        maxDTheta: SIUnit<Radian>
     ) {
         val p0 = s.getPoint(t0)
         val p1 = s.getPoint(t1)

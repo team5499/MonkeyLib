@@ -1,8 +1,8 @@
 package org.team5419.fault.hardware
 
-import org.team5419.fault.math.units.SIUnit
+import org.team5419.fault.math.units.SIKey
 
-abstract class AbstractBerkeliumMotor<T : SIUnit<T>> : BerkeliumMotor<T> {
+abstract class AbstractBerkeliumMotor<T : SIKey> : BerkeliumMotor<T> {
 
     override var useMotionProfileForPosition = false
 

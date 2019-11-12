@@ -1,17 +1,18 @@
 package org.team5419.fault.auto
 
-import org.team5419.fault.math.units.Length
+import org.team5419.fault.math.units.Meter
+import org.team5419.fault.math.units.SIUnit
 import org.team5419.fault.math.units.derived.LinearVelocity
 import org.team5419.fault.math.units.derived.velocity
-import org.team5419.fault.math.units.inch
+import org.team5419.fault.math.units.inches
 import org.team5419.fault.subsystems.drivetrain.AbstractTankDrive
 import kotlin.math.absoluteValue
 
 class DriveStraightAction(
     private val drivetrain: AbstractTankDrive,
-    private val distance: Length,
-    private val acceptableDistanceError: Length = 2.inch, // inches
-    private val acceptableVelocityError: LinearVelocity = 2.inch.velocity // inches / s
+    private val distance: SIUnit<Meter>,
+    private val acceptableDistanceError: SIUnit<Meter> = 2.inches, // inches
+    private val acceptableVelocityError: SIUnit<LinearVelocity> = 2.inches.velocity // inches / s
 ) : Action() {
 
     private val distanceErrorAcceptable = {

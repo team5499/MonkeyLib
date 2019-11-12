@@ -8,31 +8,22 @@ import org.team5419.fault.trajectory.TrajectoryIterator
 import org.team5419.fault.trajectory.types.Trajectory
 import org.team5419.fault.trajectory.types.TimedEntry
 
-import edu.wpi.first.wpilibj.Timer
-import org.team5419.fault.math.geometry.radian
-import org.team5419.fault.math.units.Time
-import org.team5419.fault.math.units.derived.LinearAcceleration
-import org.team5419.fault.math.units.derived.AngularAcceleration
-import org.team5419.fault.math.units.derived.LinearVelocity
-import org.team5419.fault.math.units.derived.AngularVelocity
-import org.team5419.fault.math.units.derived.acceleration
-import org.team5419.fault.math.units.derived.velocity
-import org.team5419.fault.math.units.meter
-import org.team5419.fault.math.units.millisecond
+import org.team5419.fault.math.units.*
+import org.team5419.fault.math.units.operations.times
+import org.team5419.fault.math.units.operations.div
+import org.team5419.fault.math.units.derived.*
 import org.team5419.fault.util.time.DeltaTime
 
 abstract class TrajectoryFollower {
 
-    private var trajectoryIterator: TrajectoryIterator<Time, TimedEntry<Pose2dWithCurvature>>? = null
+    private var trajectoryIterator: TrajectoryIterator<SIUnit<Second>, TimedEntry<Pose2dWithCurvature>>? = null
     private var deltaTimeController = DeltaTime()
     private var previousVelocity: TrajectoryFollowerVelocityOutput? = null
 
     val referencePoint get() = trajectoryIterator?.currentState
     val isFinished get() = trajectoryIterator?.isDone ?: true
 
-    fun reset(
-        trajectory: Trajectory<Time, TimedEntry<Pose2dWithCurvature>>
-    ) {
+    fun reset(trajectory: Trajectory<SIUnit<Second>, TimedEntry<Pose2dWithCurvature>>) {
         trajectoryIterator = trajectory.iterator()
         deltaTimeController.reset()
         previousVelocity = null
@@ -40,87 +31,64 @@ abstract class TrajectoryFollower {
 
     fun nextState(
         currentRobotPose: Pose2d,
-        currentTime: Time = Timer.getFPGATimestamp().millisecond
+        currentTime: SIUnit<Second> = System.currentTimeMillis().toDouble().milliseconds
     ): TrajectoryFollowerOutput {
         val iterator = trajectoryIterator
         require(iterator != null) {
-            "You cannot get the next state from the TrajectoryTracker without a" +
-            "trajectory! Call TrajectoryTracker.reset() first!"
+            "You cannot get the next state from the TrajectoryTracker without a trajectory! Call TrajectoryTracker#reset first!"
         }
         val deltaTime = deltaTimeController.updateTime(currentTime)
         iterator.advance(deltaTime)
+
         val velocity = calculateState(iterator, currentRobotPose)
         val previousVelocity = this.previousVelocity
         this.previousVelocity = velocity
 
-        return if (previousVelocity == null || deltaTime.value <= 0.0) {
+        // Calculate Acceleration (useful for drive dynamics)
+        return if (previousVelocity == null || deltaTime.value <= 0) {
             TrajectoryFollowerOutput(
-                _linearVelocity = velocity._linearVelocity,
-                _linearAcceleration = 0.0,
-                _angularVelocity = velocity._angularVelocity,
-                _angularAcceleration = 0.0
+                    linearVelocity = velocity.linearVelocity,
+                    linearAcceleration = 0.0.meters.acceleration,
+                    angularVelocity = velocity.angularVelocity,
+                    angularAcceleration = 0.0.radians.acceleration
             )
         } else {
             TrajectoryFollowerOutput(
-                _linearVelocity = velocity._linearVelocity,
-                _linearAcceleration = (velocity._linearVelocity - previousVelocity._linearVelocity) / deltaTime.value,
-                _angularVelocity = velocity._angularVelocity,
-                _angularAcceleration = (velocity._angularVelocity - previousVelocity._angularVelocity) / deltaTime.value
+                    linearVelocity = velocity.linearVelocity,
+                    linearAcceleration = (velocity.linearVelocity - previousVelocity.linearVelocity) / deltaTime,
+                    angularVelocity = velocity.angularVelocity,
+                    angularAcceleration = (velocity.angularVelocity - previousVelocity.angularVelocity) / deltaTime
             )
         }
     }
 
     protected abstract fun calculateState(
-        iterator: TrajectoryIterator<Time, TimedEntry<Pose2dWithCurvature>>,
+        iterator: TrajectoryIterator<SIUnit<Second>, TimedEntry<Pose2dWithCurvature>>,
         robotPose: Pose2d
     ): TrajectoryFollowerVelocityOutput
 
-    protected data class TrajectoryFollowerVelocityOutput internal constructor(
-        internal val _linearVelocity: Double,
-        internal val _angularVelocity: Double
-    ) {
-        constructor(
-            linearVelocity: LinearVelocity,
-            angularVelocity: AngularVelocity
-        ) : this(
-                _linearVelocity = linearVelocity.value,
-                _angularVelocity = angularVelocity.value
+    protected data class TrajectoryFollowerVelocityOutput constructor(
+        val linearVelocity: SIUnit<LinearVelocity>,
+        val angularVelocity: SIUnit<AngularVelocity>
+    )
+}
+
+data class TrajectoryFollowerOutput constructor(
+    val linearVelocity: SIUnit<LinearVelocity>,
+    val linearAcceleration: SIUnit<LinearAcceleration>,
+    val angularVelocity: SIUnit<AngularVelocity>,
+    val angularAcceleration: SIUnit<AngularAcceleration>
+) {
+
+    val differentialDriveVelocity
+        get() = DifferentialDrive.ChassisState(
+                linearVelocity.value,
+                angularVelocity.value
         )
-    }
 
-    data class TrajectoryFollowerOutput internal constructor(
-        internal val _linearVelocity: Double,
-        internal val _linearAcceleration: Double,
-        internal val _angularVelocity: Double,
-        internal val _angularAcceleration: Double
-    ) {
-        val linearVelocity get() = _linearVelocity.meter.velocity
-        val linearAcceleration get() = _linearAcceleration.meter.acceleration
-        val angularVelocity get() = _angularVelocity.radian.velocity
-        val angularAcceleration get() = _angularAcceleration.radian.acceleration
-
-        val differentialDriveVelocity
-            get() = DifferentialDrive.ChassisState(
-                _linearVelocity,
-                _angularVelocity
-            )
-
-        val differentialDriveAcceleration
-            get() = DifferentialDrive.ChassisState(
-                    _linearAcceleration,
-                    _angularAcceleration
-            )
-
-        constructor(
-            linearVelocity: LinearVelocity,
-            linearAcceleration: LinearAcceleration,
-            angularVelocity: AngularVelocity,
-            angularAcceleration: AngularAcceleration
-        ) : this(
-                _linearVelocity = linearVelocity.value,
-                _linearAcceleration = linearAcceleration.value,
-                _angularVelocity = angularVelocity.value,
-                _angularAcceleration = angularAcceleration.value
+    val differentialDriveAcceleration
+        get() = DifferentialDrive.ChassisState(
+                linearAcceleration.value,
+                angularAcceleration.value
         )
-    }
 }

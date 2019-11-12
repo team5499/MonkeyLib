@@ -2,7 +2,7 @@ package org.team5419.fault.math.units.derived
 
 import org.team5419.fault.math.units.*
 
-typealias Acceleration<T> = Frac<T, Mult<Second, Second>>
+typealias Acceleration<T> = Frac<Frac<T, Second>, Second>
 typealias LinearAcceleration = Acceleration<Meter>
 typealias AngularAcceleration = Acceleration<Radian>
 

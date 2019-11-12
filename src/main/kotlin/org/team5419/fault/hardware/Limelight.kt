@@ -3,8 +3,7 @@ package org.team5419.fault.hardware
 import edu.wpi.first.networktables.NetworkTableInstance
 import org.team5419.fault.math.geometry.Rotation2d
 import org.team5419.fault.math.geometry.degree
-import org.team5419.fault.math.units.Length
-import org.team5419.fault.math.units.inch
+import org.team5419.fault.math.units.*
 import kotlin.math.PI
 import kotlin.math.asin
 import kotlin.math.tan
@@ -12,8 +11,8 @@ import kotlin.math.tan
 open class Limelight(
     networkTableName: String = "limelight",
     val inverted: Boolean = false,
-    private val mTargetHeight: Length = 0.inch,
-    private val mCameraHeight: Length = 0.inch,
+    private val mTargetHeight: SIUnit<Meter> = 0.inches,
+    private val mCameraHeight: SIUnit<Meter> = 0.inches,
     private val mCameraAngle: Rotation2d = 0.degree // angle below (or above) horizontal
 ) {
 
@@ -63,7 +62,7 @@ open class Limelight(
 
     // CALCULATED VARIABLES
 
-    val horizontalDistance: Length
+    val horizontalDistance: SIUnit<Meter>
         get() = (mTargetHeight - mCameraHeight) / tan(mCameraAngle.radian + horizontalOffset.degree.radian)
 
     val calculateTargetSkew: Double

@@ -2,14 +2,13 @@ package org.team5419.fault.trajectory.types
 
 import org.team5419.fault.math.epsilonEquals
 import org.team5419.fault.math.geometry.State
+import org.team5419.fault.math.units.*
 import org.team5419.fault.trajectory.TrajectoryIterator
-import org.team5419.fault.math.units.Length
-import org.team5419.fault.math.units.meter
 
 // distance and state
 class DistanceTrajectory<S : State<S>>(
     override val points: List<S>
-) : Trajectory<Length, S> {
+) : Trajectory<SIUnit<Meter>, S> {
 
     private val distances: List<Double>
 
@@ -22,7 +21,7 @@ class DistanceTrajectory<S : State<S>>(
         distances = tempDistances
     }
 
-    override fun sample(interpolant: Length) = sample(interpolant.value)
+    override fun sample(interpolant: SIUnit<Meter>) = sample(interpolant.value)
 
     fun sample(interpolant: Double) = when {
         interpolant >= lastInterpolant.value -> TrajectorySamplePoint(getPoint(points.size - 1))
@@ -50,14 +49,14 @@ class DistanceTrajectory<S : State<S>>(
     override val firstState get() = points.first()
     override val lastState get() = points.last()
 
-    override val firstInterpolant get() = 0.0.meter
-    override val lastInterpolant get() = distances.last().toDouble().meter
+    override val firstInterpolant get() = 0.0.meters
+    override val lastInterpolant get() = distances.last().toDouble().meters
 
     override fun iterator() = DistanceIterator(this)
 }
 
 class DistanceIterator<S : State<S>>(
     trajectory: DistanceTrajectory<S>
-) : TrajectoryIterator<Length, S>(trajectory) {
-    override fun addition(a: Length, b: Length) = a + b
+) : TrajectoryIterator<SIUnit<Meter>, S>(trajectory) {
+    override fun addition(a: SIUnit<Meter>, b: SIUnit<Meter>) = a + b
 }

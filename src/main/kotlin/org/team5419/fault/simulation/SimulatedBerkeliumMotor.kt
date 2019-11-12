@@ -2,25 +2,32 @@ package org.team5419.fault.simulation
 
 import org.team5419.fault.hardware.BerkeliumEncoder
 import org.team5419.fault.hardware.BerkeliumMotor
-import org.team5419.fault.math.geometry.Rotation2d
-import org.team5419.fault.math.units.Length
+import org.team5419.fault.math.units.Meter
+import org.team5419.fault.math.units.SIKey
 import org.team5419.fault.math.units.SIUnit
+import org.team5419.fault.math.units.derived.Acceleration
+import org.team5419.fault.math.units.derived.Radian
+import org.team5419.fault.math.units.derived.Velocity
+import org.team5419.fault.math.units.derived.Volt
+import org.team5419.fault.math.units.native.NativeUnit
+import org.team5419.fault.math.units.native.NativeUnitVelocity
 
-typealias LinearSimulatedMonkeyMotor = SimulatedBerkeliumMotor<Length>
-typealias AngularSimulatedMonkeyMotor = SimulatedBerkeliumMotor<Rotation2d>
+typealias LinearSimulatedMonkeyMotor = SimulatedBerkeliumMotor<Meter>
+typealias AngularSimulatedMonkeyMotor = SimulatedBerkeliumMotor<Radian>
 
-class SimulatedBerkeliumMotor<T : SIUnit<T>> : BerkeliumMotor<T> {
+class SimulatedBerkeliumMotor<T : SIKey> : BerkeliumMotor<T> {
 
-    var velocity = 0.0
-    override val voltageOutput = 0.0
+    var velocity = SIUnit<Velocity<T>>(0.0)
+    override val voltageOutput = SIUnit<Volt>(0.0)
 
     override val encoder = object : BerkeliumEncoder<T> {
-        override val position: Double get() = rawPosition
-        override val velocity: Double get() = rawVelocity
-        override val rawPosition: Double get() = this@SimulatedBerkeliumMotor.velocity
-        override val rawVelocity: Double get() = 0.0
+        override val position: SIUnit<T> get() = SIUnit(0.0)
+        override val velocity: SIUnit<Velocity<T>> get() = this@SimulatedBerkeliumMotor.velocity
+        override val rawPosition: SIUnit<NativeUnit> get() = SIUnit(position.value)
+        override val rawVelocity: SIUnit<NativeUnitVelocity> get() = SIUnit(velocity.value)
 
-        override fun resetPosition(newPosition: Double) {}
+        override fun resetPosition(newPosition: SIUnit<T>) {}
+        override fun resetPositionRaw(newPosition: SIUnit<NativeUnit>) {}
     }
 
     override var outputInverted: Boolean
@@ -35,35 +42,35 @@ class SimulatedBerkeliumMotor<T : SIUnit<T>> : BerkeliumMotor<T> {
         TODO("not implemented")
     }
 
-    override fun setVoltage(voltage: Double, arbitraryFeedForward: Double) {
+    override fun setVoltage(voltage: SIUnit<Volt>, arbitraryFeedForward: SIUnit<Volt>) {
         TODO("not implemented")
     }
 
-    override fun setPercent(percent: Double, arbitraryFeedForward: Double) {
+    override fun setPercent(percent: Double, arbitraryFeedForward: SIUnit<Volt>) {
         TODO("not implemented")
     }
 
-    override fun setVelocity(velocity: Double, arbitraryFeedForward: Double) {
+    override fun setVelocity(velocity: SIUnit<Velocity<T>>, arbitraryFeedForward: SIUnit<Volt>) {
         this.velocity = velocity
     }
 
-    override fun setPosition(position: Double, arbitraryFeedForward: Double) {
+    override fun setPosition(position: SIUnit<T>, arbitraryFeedForward: SIUnit<Volt>) {
         TODO("not implemented")
     }
 
     override fun setNeutral() {
-        velocity = 0.0
+        velocity = SIUnit(0.0)
     }
 
-    override var voltageCompSaturation: Double
+    override var voltageCompSaturation: SIUnit<Volt>
         get() = TODO("not implemented")
         set(value) {}
 
-    override var motionProfileCruiseVelocity: Double
+    override var motionProfileCruiseVelocity: SIUnit<Velocity<T>>
         get() = TODO("not implemented")
         set(value) {}
 
-    override var motionProfileAcceleration: Double
+    override var motionProfileAcceleration: SIUnit<Acceleration<T>>
         get() = TODO("not implemented")
         set(value) {}
 

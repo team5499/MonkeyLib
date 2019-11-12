@@ -1,6 +1,8 @@
 package org.team5419.fault.auto
 
-import org.team5419.fault.math.units.Time
+import org.team5419.fault.math.units.SIUnit
+import org.team5419.fault.math.units.SIUnitBuilder
+import org.team5419.fault.math.units.Second
 import org.team5419.fault.util.BooleanSource
 import org.team5419.fault.util.Source
 import org.team5419.fault.util.or
@@ -13,7 +15,7 @@ open class Action(
     private val timer: ITimer = WPITimer()
 ) {
 
-    protected var mTimeout = Time(0.0)
+    protected var mTimeout = SIUnitBuilder(0.0).seconds
 
     protected var finishCondition = FinishCondition(Source(false))
 
@@ -51,7 +53,7 @@ open class Action(
 
     fun overrideExit(condition: BooleanSource) = also { finishCondition.set(condition) }
 
-    fun withTimeout(time: Time) = also {
+    fun withTimeout(time: SIUnit<Second>) = also {
         this.mTimeout = time
         finishCondition += { timedOut() }
     }

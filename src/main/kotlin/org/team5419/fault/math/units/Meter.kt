@@ -31,5 +31,3 @@ fun SIUnit<Meter>.inDecimeters() = value.div(kDeci)
 fun SIUnit<Meter>.inCentimeters() = value.div(kCenti)
 fun SIUnit<Meter>.inMillimeters() = value.div(kMilli)
 fun SIUnit<Meter>.inMicrometers() = value.div(kMicro)
-
-
