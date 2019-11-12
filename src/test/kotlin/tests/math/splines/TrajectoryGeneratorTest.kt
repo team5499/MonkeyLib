@@ -1,7 +1,6 @@
 package tests.math.splines
 
 import org.junit.Test
-import org.knowm.xchart.SwingWrapper
 import org.knowm.xchart.XYChartBuilder
 import org.team5419.fault.math.geometry.Pose2d
 import org.team5419.fault.math.geometry.Vector2
@@ -162,7 +161,7 @@ class TrajectoryGeneratorTest {
                 refList.map { it.y.inFeet() }.toDoubleArray()
         )
         // Uncomment these to see generation
-        SwingWrapper(chart).displayChart()
-        Thread.sleep(1000000)
+//        SwingWrapper(chart).displayChart()
+//        Thread.sleep(1000000)
     }
 }

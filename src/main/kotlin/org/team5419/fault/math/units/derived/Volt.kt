@@ -1,6 +1,12 @@
 package org.team5419.fault.math.units.derived
 
-import org.team5419.fault.math.units.*
+import org.team5419.fault.math.units.Frac
+import org.team5419.fault.math.units.Mult
+import org.team5419.fault.math.units.Kilogram
+import org.team5419.fault.math.units.Meter
+import org.team5419.fault.math.units.Second
+import org.team5419.fault.math.units.Ampere
+import org.team5419.fault.math.units.SIUnit
 
 typealias Volt = Frac<Mult<Kilogram, Mult<Meter, Meter>>,
         Mult<Ampere, Mult<Second, Mult<Second, Second>>>>

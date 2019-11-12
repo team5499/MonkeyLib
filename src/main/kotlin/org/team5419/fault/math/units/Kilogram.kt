@@ -1,3 +1,4 @@
+@file:SuppressWarnings("TopLevelPropertyNaming")
 package org.team5419.fault.math.units
 
 object Kilogram : SIKey
