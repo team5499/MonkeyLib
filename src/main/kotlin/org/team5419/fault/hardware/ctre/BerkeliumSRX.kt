@@ -1,7 +1,13 @@
 package org.team5419.fault.hardware.ctre
 
 import com.ctre.phoenix.motorcontrol.can.TalonSRX
-import org.team5419.fault.math.units.*
+import org.team5419.fault.math.units.SIUnit
+import org.team5419.fault.math.units.SIKey
+import org.team5419.fault.math.units.Meter
+import org.team5419.fault.math.units.Second
+import org.team5419.fault.math.units.inMilliseconds
+import org.team5419.fault.math.units.Ampere
+import org.team5419.fault.math.units.inAmps
 import org.team5419.fault.math.units.derived.Radian
 import org.team5419.fault.math.units.native.NativeUnitModel
 

@@ -41,7 +41,7 @@ abstract class PositionTracker(
         val newRobotPosition = robotPosition + update(headingDelta)
         robotPosition = Pose2d(
                 newRobotPosition.translation,
-                newHeading + headingOffset // TODO: CHECK THIS
+                newHeading + headingOffset // check this
         )
         lastHeading = newHeading
 

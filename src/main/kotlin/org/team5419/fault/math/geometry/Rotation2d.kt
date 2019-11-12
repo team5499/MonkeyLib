@@ -6,6 +6,7 @@ import org.team5419.fault.math.kEpsilon
 val Number.radian get() = Rotation2d(toDouble())
 val Number.degree get() = Math.toRadians(toDouble()).radian
 
+@Suppress("EqualsWithHashCodeExist")
 class Rotation2d {
 
     val value: Double
@@ -52,7 +53,7 @@ class Rotation2d {
     }
 
     override fun equals(other: Any?): Boolean {
-        return other is Rotation2d && other.value epsilonEquals value
+        return other is Rotation2d && other.sin epsilonEquals this.sin && other.cos epsilonEquals this.cos
     }
 
     companion object {

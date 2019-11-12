@@ -49,12 +49,18 @@ abstract class CTREBerkeliumMotor<T : SIKey> internal constructor(
             motorController.enableVoltageCompensation(true)
     }
 
-    override var motionProfileCruiseVelocity: SIUnit<Velocity<T>> by Delegates.observable(SIUnit(0.0)) { _, _, newValue ->
-        motorController.configMotionCruiseVelocity(model.toNativeUnitVelocity(newValue).nativeUnitsPer100ms.roundToInt(), 0)
+    override var motionProfileCruiseVelocity: SIUnit<Velocity<T>>
+            by Delegates.observable(SIUnit(0.0)) { _, _, newValue ->
+        motorController.configMotionCruiseVelocity(
+                model.toNativeUnitVelocity(newValue).nativeUnitsPer100ms.roundToInt(), 0
+        )
     }
 
-    override var motionProfileAcceleration: SIUnit<Acceleration<T>> by Delegates.observable(SIUnit(0.0)) { _, _, newValue ->
-        motorController.configMotionAcceleration(model.toNativeUnitAcceleration(newValue).inNativeUnitsPer100msPerSecond().roundToInt(), 0)
+    override var motionProfileAcceleration: SIUnit<Acceleration<T>>
+            by Delegates.observable(SIUnit(0.0)) { _, _, newValue ->
+        motorController.configMotionAcceleration(
+                model.toNativeUnitAcceleration(newValue).inNativeUnitsPer100msPerSecond().roundToInt(), 0
+        )
     }
 
     init {

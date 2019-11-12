@@ -2,10 +2,26 @@ package tests.math.units
 
 import org.junit.Test
 import org.team5419.fault.math.epsilonEquals
-import org.team5419.fault.math.units.*
+import org.team5419.fault.math.units.SIUnit
+import org.team5419.fault.math.units.inches
+import org.team5419.fault.math.units.inInches
+import org.team5419.fault.math.units.meters
+import org.team5419.fault.math.units.seconds
+import org.team5419.fault.math.units.feet
+import org.team5419.fault.math.units.Kilogram
+import org.team5419.fault.math.units.inMeters
+import org.team5419.fault.math.units.inLbs
+
 import org.team5419.fault.math.units.derived.radians
 import org.team5419.fault.math.units.derived.velocity
-import org.team5419.fault.math.units.native.*
+import org.team5419.fault.math.units.native.nativeUnits
+import org.team5419.fault.math.units.native.NativeUnitLengthModel
+import org.team5419.fault.math.units.native.toNativeUnitVelocity
+import org.team5419.fault.math.units.native.toNativeUnitAcceleration
+import org.team5419.fault.math.units.native.fromNativeUnitPosition
+import org.team5419.fault.math.units.native.nativeUnitsPer100ms
+import org.team5419.fault.math.units.native.nativeUnitsPer100msPerSecond
+
 import org.team5419.fault.math.units.operations.times
 import org.team5419.fault.math.units.operations.div
 

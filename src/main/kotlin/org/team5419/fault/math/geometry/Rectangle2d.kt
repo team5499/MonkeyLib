@@ -65,7 +65,7 @@ data class Rectangle2d constructor(
 
     operator fun contains(p: Vector2) = p.x in x..(x + w) && p.y in y..(y + h)
 
-    @Suppress("ComplexMethod")
+    @Suppress("ComplexMethod", "ReturnCount")
     fun doesCollide(rectangle: Rectangle2d, translation: Vector2): Boolean {
         if (translation.x.value epsilonEquals 0.0 && translation.y.value epsilonEquals 0.0) return false
         // Check if its even in range

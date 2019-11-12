@@ -1,6 +1,8 @@
 package org.team5419.fault.util.time
 
-import org.team5419.fault.math.units.*
+import org.team5419.fault.math.units.SIUnit
+import org.team5419.fault.math.units.Second
+import org.team5419.fault.math.units.milliseconds
 
 public class SystemTimer : ITimer {
 

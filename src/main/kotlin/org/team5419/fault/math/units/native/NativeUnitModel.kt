@@ -24,11 +24,11 @@ abstract class NativeUnitModel<K : SIKey> {
     open fun toNativeUnitVelocity(modelledUnitVelocity: SIUnit<Velocity<K>>): SIUnit<NativeUnitVelocity> =
             SIUnit(toNativeUnitPosition(SIUnit(modelledUnitVelocity.value)).value)
 
-    open fun fromNativeUnitAcceleration(nativeUnitAcceleration: SIUnit<NativeUnitAcceleration>): SIUnit<Acceleration<K>> =
-            SIUnit(fromNativeUnitVelocity(SIUnit(nativeUnitAcceleration.value)).value)
+    open fun fromNativeUnitAcceleration(nativeUnitAcceleration: SIUnit<NativeUnitAcceleration>):
+            SIUnit<Acceleration<K>> = SIUnit(fromNativeUnitVelocity(SIUnit(nativeUnitAcceleration.value)).value)
 
-    open fun toNativeUnitAcceleration(modelledUnitAcceleration: SIUnit<Acceleration<K>>): SIUnit<NativeUnitAcceleration> =
-            SIUnit(toNativeUnitVelocity(SIUnit(modelledUnitAcceleration.value)).value)
+    open fun toNativeUnitAcceleration(modelledUnitAcceleration: SIUnit<Acceleration<K>>):
+            SIUnit<NativeUnitAcceleration> = SIUnit(toNativeUnitVelocity(SIUnit(modelledUnitAcceleration.value)).value)
 }
 
 object DefaultNativeUnitModel : NativeUnitModel<NativeUnit>() {

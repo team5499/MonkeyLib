@@ -1,10 +1,14 @@
+
 package org.team5419.fault.math.geometry
 
-import org.team5419.fault.math.units.*
+import org.team5419.fault.math.units.meters
+import org.team5419.fault.math.units.SIUnit
+import org.team5419.fault.math.units.Meter
 import kotlin.math.hypot
 
 fun Rotation2d.toTranslation() = Vector2(cos.meters, sin.meters)
 
+@Suppress("TooManyFunctions")
 data class Vector2 constructor(
     val x: SIUnit<Meter>,
     val y: SIUnit<Meter>

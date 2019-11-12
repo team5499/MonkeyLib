@@ -3,7 +3,14 @@ package tests.math.control
 import org.junit.Test
 import org.knowm.xchart.XYChartBuilder
 import org.team5419.fault.math.geometry.Pose2d
-import org.team5419.fault.math.units.*
+import org.team5419.fault.math.units.Meter
+import org.team5419.fault.math.units.inFeet
+import org.team5419.fault.math.units.inches
+import org.team5419.fault.math.units.feet
+import org.team5419.fault.math.units.seconds
+import org.team5419.fault.math.units.milliseconds
+import org.team5419.fault.math.units.inSeconds
+
 import org.team5419.fault.math.units.derived.degrees
 import org.team5419.fault.simulation.SimulatedBerkeliumMotor
 import org.team5419.fault.simulation.SimulatedDifferentialDrive
@@ -13,11 +20,12 @@ import java.awt.Color
 import java.awt.Font
 import java.text.DecimalFormat
 
-class RamseteControllerTest {
+class RamseteFollowerTest {
 
     private val kBeta = 2.0
     private val kZeta = 0.85
 
+    @Suppress("LongMethod")
     @Test
     fun testTrajectoryFollower() {
         val ramseteTracker = RamseteFollower(

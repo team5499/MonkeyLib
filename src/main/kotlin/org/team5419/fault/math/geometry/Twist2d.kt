@@ -5,7 +5,10 @@ import org.team5419.fault.math.units.Meter
 import org.team5419.fault.math.units.SIUnit
 import org.team5419.fault.math.units.derived.Radian
 import org.team5419.fault.math.units.meters
-import kotlin.math.*
+import kotlin.math.hypot
+import kotlin.math.sin
+import kotlin.math.cos
+import kotlin.math.abs
 
 class Twist2d constructor(
     val dx: SIUnit<Meter>,

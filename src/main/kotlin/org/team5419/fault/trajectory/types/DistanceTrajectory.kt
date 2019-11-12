@@ -2,7 +2,9 @@ package org.team5419.fault.trajectory.types
 
 import org.team5419.fault.math.epsilonEquals
 import org.team5419.fault.math.geometry.State
-import org.team5419.fault.math.units.*
+import org.team5419.fault.math.units.SIUnit
+import org.team5419.fault.math.units.Meter
+import org.team5419.fault.math.units.meters
 import org.team5419.fault.trajectory.TrajectoryIterator
 
 // distance and state

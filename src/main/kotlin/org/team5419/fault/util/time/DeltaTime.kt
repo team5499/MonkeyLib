@@ -1,6 +1,7 @@
 package org.team5419.fault.util.time
 
-import org.team5419.fault.math.units.*
+import org.team5419.fault.math.units.SIUnit
+import org.team5419.fault.math.units.Second
 
 class DeltaTime internal constructor(startTime: SIUnit<Second> = SIUnit(0.0)) {
 
@@ -8,7 +9,7 @@ class DeltaTime internal constructor(startTime: SIUnit<Second> = SIUnit(0.0)) {
     internal var _currentTime = startTime
         private set
     @Suppress("VariableNaming")
-    internal var _deltaTime = SIUnitBuilder(0.0).seconds
+    internal var _deltaTime = SIUnit<Second>(0.0)
         private set
 
     val deltaTime get() = _deltaTime

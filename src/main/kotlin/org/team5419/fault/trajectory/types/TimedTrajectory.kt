@@ -7,7 +7,8 @@ import org.team5419.fault.math.geometry.State
 import org.team5419.fault.math.lerp
 import org.team5419.fault.math.geometry.Pose2dWithCurvature
 import org.team5419.fault.math.geometry.Pose2d
-import org.team5419.fault.math.units.*
+import org.team5419.fault.math.units.SIUnit
+import org.team5419.fault.math.units.Second
 import org.team5419.fault.math.units.derived.LinearAcceleration
 import org.team5419.fault.math.units.derived.LinearVelocity
 import org.team5419.fault.math.units.operations.times

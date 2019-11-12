@@ -1,4 +1,4 @@
-@file:SuppressWarnings("TopLevelPropertyNaming")
+@file:SuppressWarnings("TopLevelPropertyNaming", "TooManyFunctions")
 package org.team5419.fault.math.units
 
 import org.team5419.fault.math.epsilonEquals

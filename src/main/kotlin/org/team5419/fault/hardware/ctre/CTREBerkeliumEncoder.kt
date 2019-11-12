@@ -15,8 +15,10 @@ class CTREBerkeliumEncoder<T : SIKey>(
     val pidIdx: Int = 0,
     model: NativeUnitModel<T>
 ) : AbstractBerkeliumEncoder<T>(model) {
-    override val rawPosition get() = motorController.getSelectedSensorPosition(pidIdx).toDouble().nativeUnits
-    override val rawVelocity get() = motorController.getSelectedSensorVelocity(pidIdx).toDouble().nativeUnitsPer100ms // check this
+    override val rawPosition get() =
+        motorController.getSelectedSensorPosition(pidIdx).toDouble().nativeUnits
+    override val rawVelocity get() =
+        motorController.getSelectedSensorVelocity(pidIdx).toDouble().nativeUnitsPer100ms // check this
 
     var encoderPhase by Delegates.observable(false) {
         _, _, newValue -> motorController.setSensorPhase(newValue)

@@ -2,7 +2,11 @@ package org.team5419.fault.auto
 
 import org.team5419.fault.math.geometry.Rotation2d
 import org.team5419.fault.math.units.SIUnit
-import org.team5419.fault.math.units.derived.*
+import org.team5419.fault.math.units.derived.Radian
+import org.team5419.fault.math.units.derived.degrees
+import org.team5419.fault.math.units.derived.velocity
+import org.team5419.fault.math.units.derived.AngularVelocity
+
 import org.team5419.fault.subsystems.drivetrain.AbstractTankDrive
 
 // ALLOW for absolute turn in future (using rotation2d math maybe)

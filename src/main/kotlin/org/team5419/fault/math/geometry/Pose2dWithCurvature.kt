@@ -33,7 +33,8 @@ data class Pose2dWithCurvature(
 
     override fun equals(other: Any?): Boolean {
         if (other is Pose2dWithCurvature) {
-            return this.pose.equals(other.pose) && this.curvature epsilonEquals other.curvature && this.dkds epsilonEquals other.dkds
+            return this.pose.equals(other.pose) && this.curvature epsilonEquals other.curvature &&
+                    this.dkds epsilonEquals other.dkds
         }
         return false
     }

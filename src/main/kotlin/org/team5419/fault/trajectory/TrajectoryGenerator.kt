@@ -15,11 +15,15 @@ import org.team5419.fault.trajectory.types.DistanceTrajectory
 import org.team5419.fault.math.splines.QuinticHermiteSpline
 import org.team5419.fault.math.splines.Spline
 import org.team5419.fault.math.splines.SplineGenerator
-import org.team5419.fault.math.units.*
+import org.team5419.fault.math.units.inches
+import org.team5419.fault.math.units.Meter
+import org.team5419.fault.math.units.SIUnit
+
 import org.team5419.fault.math.units.derived.LinearAcceleration
 import org.team5419.fault.math.units.derived.LinearVelocity
 import org.team5419.fault.math.units.derived.Radian
 import org.team5419.fault.math.units.derived.degrees
+import org.team5419.fault.util.Oof
 
 import kotlin.math.absoluteValue
 import kotlin.math.pow
@@ -319,7 +323,7 @@ public class TrajectoryGenerator(
             }
             t += dt
             if (t.isNaN() || t.isInfinite()) {
-                throw RuntimeException()
+                throw Oof("FUCK!")
             }
 
             v = constrainedState.maxVelocity

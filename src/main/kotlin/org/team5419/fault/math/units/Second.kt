@@ -1,8 +1,11 @@
+@file:SuppressWarnings("TooManyFunctions")
 package org.team5419.fault.math.units
 
 object Second : SIKey
 
+@Suppress("TopLevelPropertyNaming")
 const val kMinuteToSecond = 60.0
+@Suppress("TopLevelPropertyNaming")
 const val kHourToSecond = kMinuteToSecond * 60.0
 
 val Double.seconds get() = SIUnit<Second>(this)

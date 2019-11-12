@@ -6,7 +6,12 @@ import org.team5419.fault.trajectory.types.TimedEntry
 import org.team5419.fault.math.geometry.Pose2d
 import org.team5419.fault.math.geometry.Pose2dWithCurvature
 import org.team5419.fault.math.geometry.Vector2
-import org.team5419.fault.math.units.*
+import org.team5419.fault.math.units.SIUnit
+import org.team5419.fault.math.units.Second
+import org.team5419.fault.math.units.Meter
+import org.team5419.fault.math.units.inches
+import org.team5419.fault.math.units.seconds
+import org.team5419.fault.math.units.meters
 
 import kotlin.math.pow
 

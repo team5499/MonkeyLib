@@ -61,8 +61,8 @@ val SIUnit<NativeUnitAcceleration>.STUPer100msPerSecond
 fun SIUnit<NativeUnitAcceleration>.inNativeUnitsPer100msPerSecond() = value.div(10.0)
 fun SIUnit<NativeUnitAcceleration>.inSTUPer100msPerSecond() = inNativeUnitsPer100msPerSecond()
 
-fun <K : SIKey> SIUnit<Acceleration<K>>.toNativeUnitAcceleration(model: NativeUnitModel<K>): SIUnit<NativeUnitAcceleration> =
-        model.toNativeUnitAcceleration(this)
+fun <K : SIKey> SIUnit<Acceleration<K>>.toNativeUnitAcceleration(model: NativeUnitModel<K>):
+        SIUnit<NativeUnitAcceleration> = model.toNativeUnitAcceleration(this)
 
-fun <K : SIKey> SIUnit<NativeUnitAcceleration>.fromNativeUnitAcceleration(model: NativeUnitModel<K>): SIUnit<Acceleration<K>> =
-        model.fromNativeUnitAcceleration(this)
+fun <K : SIKey> SIUnit<NativeUnitAcceleration>.fromNativeUnitAcceleration(model: NativeUnitModel<K>):
+        SIUnit<Acceleration<K>> = model.fromNativeUnitAcceleration(this)

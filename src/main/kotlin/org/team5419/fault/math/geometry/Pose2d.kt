@@ -72,6 +72,7 @@ data class Pose2d(
         return twist.dy.value epsilonEquals 0.0 && twist.dTheta.value epsilonEquals 0.0
     }
 
+    @Suppress("ReturnCount")
     override fun interpolate(endValue: Pose2d, t: Double): Pose2d {
         if (t <= 0) {
             return Pose2d(this.translation, this.rotation)

@@ -3,7 +3,10 @@ package org.team5419.fault.hardware
 import edu.wpi.first.networktables.NetworkTableInstance
 import org.team5419.fault.math.geometry.Rotation2d
 import org.team5419.fault.math.geometry.degree
-import org.team5419.fault.math.units.*
+import org.team5419.fault.math.units.Meter
+import org.team5419.fault.math.units.inches
+import org.team5419.fault.math.units.SIUnit
+
 import kotlin.math.PI
 import kotlin.math.asin
 import kotlin.math.tan
