@@ -12,8 +12,8 @@ import org.team5419.fault.trajectory.followers.TrajectoryFollower
 
 class SimulatedDifferentialDrive(
     override val differentialDrive: DifferentialDrive,
-    override val leftMasterMotor: LinearSimulatedMonkeyMotor,
-    override val rightMasterMotor: LinearSimulatedMonkeyMotor,
+    override val leftMasterMotor: LinearSimulatedBerkeleiumMotor,
+    override val rightMasterMotor: LinearSimulatedBerkeleiumMotor,
     override val trajectoryFollower: TrajectoryFollower,
     private val angularFactor: Double = 1.0
 

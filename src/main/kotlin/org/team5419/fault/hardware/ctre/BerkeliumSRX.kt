@@ -11,8 +11,8 @@ import org.team5419.fault.math.units.inAmps
 import org.team5419.fault.math.units.derived.Radian
 import org.team5419.fault.math.units.native.NativeUnitModel
 
-typealias LinearMonkeySRX = BerkeliumSRX<Meter>
-typealias AngularMonkeySRX = BerkeliumSRX<Radian>
+typealias LinearBerkeleiumSRX = BerkeliumSRX<Meter>
+typealias AngularBerkeleiumSRX = BerkeliumSRX<Radian>
 
 class BerkeliumSRX<T : SIKey>(
     val talonSRX: TalonSRX,
