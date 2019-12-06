@@ -1,6 +1,6 @@
 package org.team5419.fault.math.splines
 
-import org.team5419.fault.math.geometry.Vector2
+import org.team5419.fault.math.geometry.Vector2d
 import org.team5419.fault.math.geometry.Rotation2d
 import org.team5419.fault.math.geometry.Pose2d
 import org.team5419.fault.math.units.meters
@@ -9,7 +9,7 @@ import org.team5419.fault.math.units.operations.div
 
 // yes external contructors are disgusting. but they work
 @Suppress("FunctionNaming", "MagicNumber")
-fun QuinticHermiteSpline(p0: Vector2, p1: Vector2, h0: Rotation2d, h1: Rotation2d): QuinticHermiteSpline {
+fun QuinticHermiteSpline(p0: Vector2d, p1: Vector2d, h0: Rotation2d, h1: Rotation2d): QuinticHermiteSpline {
     val scale = 1.2 * p0.distance(p1)
 
     val x0 = p0.x.value
@@ -114,14 +114,14 @@ class QuinticHermiteSpline(
     }
 
     val startPose: Pose2d
-        get() = Pose2d(Vector2(x0.meters, y0.meters), Rotation2d(dx0, dy0, true))
+        get() = Pose2d(Vector2d(x0.meters, y0.meters), Rotation2d(dx0, dy0, true))
     val endPose: Pose2d
-        get() = Pose2d(Vector2(x1.meters, y1.meters), Rotation2d(dx1, dy1, true))
+        get() = Pose2d(Vector2d(x1.meters, y1.meters), Rotation2d(dx1, dy1, true))
 
-    override fun getPoint(t: Double): Vector2 {
+    override fun getPoint(t: Double): Vector2d {
         val x = ax * t * t * t * t * t + bx * t * t * t * t + cx * t * t * t + dx * t * t + ex * t + fx
         val y = ay * t * t * t * t * t + by * t * t * t * t + cy * t * t * t + dy * t * t + ey * t + fy
-        return Vector2(x.meters, y.meters)
+        return Vector2d(x.meters, y.meters)
     }
 
     private fun dx(t: Double) = 5 * ax * t * t * t * t + 4 * bx * t * t * t + 3 * cx * t * t + 2 * dx * t + ex
@@ -244,7 +244,7 @@ class QuinticHermiteSpline(
             }
             magnitude = Math.sqrt(magnitude)
 
-            val p2 = Vector2(0.0.meters, sumDCurvature2(splines).meters)
+            val p2 = Vector2d(0.0.meters, sumDCurvature2(splines).meters)
 
             for (i in 0..splines.size - 2) {
                 if (splines.get(i).startPose.isCollinear(splines.get(i + 1).startPose) &&
@@ -263,7 +263,7 @@ class QuinticHermiteSpline(
                 splines.get(i + 1).calcCoeffs()
             }
 
-            val p1 = Vector2(-kStepSize.meters, sumDCurvature2(splines).meters)
+            val p1 = Vector2d(-kStepSize.meters, sumDCurvature2(splines).meters)
 
             for (i in 0..splines.size - 2) {
                 if (splines.get(i).startPose.isCollinear(splines.get(i + 1).startPose) &&
@@ -280,7 +280,7 @@ class QuinticHermiteSpline(
                 splines.get(i + 1).calcCoeffs()
             }
 
-            val p3 = Vector2(kStepSize.meters, sumDCurvature2(splines).meters)
+            val p3 = Vector2d(kStepSize.meters, sumDCurvature2(splines).meters)
 
             val stepSize = FunctionalQuadraticSpline(
                     p1, p2, p3

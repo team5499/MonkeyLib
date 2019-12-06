@@ -14,8 +14,8 @@ import org.team5419.fault.math.units.operations.div
 
 @Suppress("FunctionName")
 fun Rectangle2d(
-    one: Vector2,
-    two: Vector2
+    one: Vector2d,
+    two: Vector2d
 ): Rectangle2d {
     val minX = min(one.x.value, two.x.value)
     val minY = min(one.y.value, two.y.value)
@@ -29,7 +29,7 @@ fun Rectangle2d(
 
 @Suppress("FunctionName", "UnsafeCallOnNullableType")
 fun Rectangle2d(
-    vararg pointsToInclude: Vector2
+    vararg pointsToInclude: Vector2d
 ): Rectangle2d {
     val minX = pointsToInclude.minBy { it.x }!!.x
     val minY = pointsToInclude.minBy { it.y }!!.y
@@ -63,10 +63,10 @@ data class Rectangle2d constructor(
 
     fun isWithin(r: Rectangle2d) = r.x in x..(x + w - r.w) && r.y in y..(y + h - r.h)
 
-    operator fun contains(p: Vector2) = p.x in x..(x + w) && p.y in y..(y + h)
+    operator fun contains(p: Vector2d) = p.x in x..(x + w) && p.y in y..(y + h)
 
     @Suppress("ComplexMethod", "ReturnCount")
-    fun doesCollide(rectangle: Rectangle2d, translation: Vector2): Boolean {
+    fun doesCollide(rectangle: Rectangle2d, translation: Vector2d): Boolean {
         if (translation.x.value epsilonEquals 0.0 && translation.y.value epsilonEquals 0.0) return false
         // Check if its even in range
         val boxRect = Rectangle2d(

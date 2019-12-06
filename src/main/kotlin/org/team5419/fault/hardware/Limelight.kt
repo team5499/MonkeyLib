@@ -2,7 +2,7 @@ package org.team5419.fault.hardware
 
 import edu.wpi.first.networktables.NetworkTableInstance
 import org.team5419.fault.math.geometry.Rotation2d
-import org.team5419.fault.math.geometry.degree
+import org.team5419.fault.math.units.derived.*
 import org.team5419.fault.math.units.Meter
 import org.team5419.fault.math.units.inches
 import org.team5419.fault.math.units.SIUnit
@@ -16,7 +16,7 @@ open class Limelight(
     val inverted: Boolean = false,
     private val mTargetHeight: SIUnit<Meter> = 0.inches,
     private val mCameraHeight: SIUnit<Meter> = 0.inches,
-    private val mCameraAngle: Rotation2d = 0.degree // angle below (or above) horizontal
+    private val mCameraAngle: Rotation2d = Rotation2d() // angle below (or above) horizontal
 ) {
 
     // FEEDBACK VARIABLES
@@ -66,7 +66,7 @@ open class Limelight(
     // CALCULATED VARIABLES
 
     val horizontalDistance: SIUnit<Meter>
-        get() = (mTargetHeight - mCameraHeight) / tan(mCameraAngle.radian + horizontalOffset.degree.radian)
+        get() = (mTargetHeight - mCameraHeight) / (mCameraAngle.radian + horizontalOffset.degrees).tan
 
     val calculateTargetSkew: Double
         get() {

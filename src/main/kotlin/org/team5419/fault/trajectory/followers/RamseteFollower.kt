@@ -40,7 +40,7 @@ class RamseteFollower(
 
         return TrajectoryFollower.TrajectoryFollowerVelocityOutput(
             linearVelocity = SIUnit(vd * error.rotation.cos + k1 * error.translation.x.value),
-            angularVelocity = SIUnit(wd + kBeta * vd * sinc(angleError) * error.translation.y.value + k1 * angleError)
+            angularVelocity = SIUnit(wd + kBeta * vd * sinc(angleError.value) * error.translation.y.value + k1 * angleError.value)
         )
     }
 
