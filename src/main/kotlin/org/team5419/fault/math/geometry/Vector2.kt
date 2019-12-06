@@ -2,6 +2,7 @@
 package org.team5419.fault.math.geometry
 
 import org.team5419.fault.math.units.*
+import org.team5419.fault.math.epsilonEquals
 import kotlin.math.hypot
 
 fun Rotation2d.toTranslation() = Vector2(cos.meters, sin.meters)
@@ -13,8 +14,7 @@ data class Vector2<T : SIKey> constructor(
     val y: SIUnit<T>
 ) : State<Vector2<T>> {
 
-    constructor( x: Double, y : Double) : this(SIUnit<T>(x), SIUnit<T>(y))
-
+    // constructor( x: Double, y : Double) : this(SIUnit<T>(x), SIUnit<T>(y))
     constructor() : this(SIUnit<T>(0.0), SIUnit<T>(0.0))
 
     // Vector to Translation3d
@@ -68,7 +68,7 @@ data class Vector2<T : SIKey> constructor(
 
     override fun equals(other: Any?): Boolean {
         if (other is Vector2<*>){
-            return other.x epsilonEquals this.x && other.y epsilonEquals this.y
+            return other.x == this.x && other.y == this.y
         }
         return false
     }
