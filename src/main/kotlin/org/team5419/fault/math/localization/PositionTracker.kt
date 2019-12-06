@@ -28,7 +28,7 @@ abstract class PositionTracker(
 
     protected open fun resetInternal(pose: Pose2d) {
         robotPosition = pose
-        val newHeading = heading().radian
+        val newHeading = heading()
         lastHeading = newHeading
         headingOffset = -newHeading + pose.rotation
         buffer.clear()
