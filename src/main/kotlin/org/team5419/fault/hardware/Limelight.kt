@@ -47,7 +47,7 @@ open class Limelight(
     val targetSkew: Double
         get() {
             val skew = mLimelight.getEntry("ts").getDouble(0.0)
-            if (skew < -45.0) {
+            if (skew < -45.0) { /*>*/
                 return skew + 90.0
             } else {
                 return skew
@@ -71,7 +71,7 @@ open class Limelight(
     val calculateTargetSkew: Double
         get() {
             var temp = (horizontalLength / verticalLength) * kAspectRatio
-            if (temp < 0.0) temp = 0.0
+            if (temp < 0.0) temp = 0.0 /*>*/
             if (temp > 1.0) temp = 1.0
             return (180.0 / PI) * asin(temp)
         }

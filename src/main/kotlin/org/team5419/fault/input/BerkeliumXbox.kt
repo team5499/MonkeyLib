@@ -4,28 +4,28 @@ package org.team5419.fault.input
 import edu.wpi.first.wpilibj.GenericHID
 import edu.wpi.first.wpilibj.XboxController
 
-typealias MonkeyXboxController = MonkeyHID<XboxController>
-typealias MonkeyXboxBuilder = MonkeyHIDBuilder<XboxController>
+typealias BerkeleiumXboxController = BerkeleiumHID<XboxController>
+typealias BerkeleiumXboxBuilder = BerkeleiumHIDBuilder<XboxController>
 
-fun xboxController(port: Int, block: MonkeyXboxBuilder.() -> Unit): MonkeyXboxController =
+fun xboxController(port: Int, block: BerkeleiumXboxBuilder.() -> Unit): BerkeleiumXboxController =
         XboxController(port).mapControls(block)
 
-fun MonkeyXboxBuilder.button(
+fun BerkeleiumXboxBuilder.button(
     button: XboxButton,
     block: HIDButtonBuilder.() -> Unit = {}
 ) = button(button.id, block)
 
-fun MonkeyXboxBuilder.triggerAxisButton(
+fun BerkeleiumXboxBuilder.triggerAxisButton(
     hand: GenericHID.Hand,
     threshold: Double = HIDButton.kDefaultThreshold,
     block: HIDButtonBuilder.() -> Unit = {}
 ) = axisButton(yTriggerAxisToRawAxis(hand), threshold, block)
 
-fun MonkeyXboxController.getY(hand: GenericHID.Hand) = getRawAxis(yAxisToRawAxis(hand))
+fun BerkeleiumXboxController.getY(hand: GenericHID.Hand) = getRawAxis(yAxisToRawAxis(hand))
 
-fun MonkeyXboxController.getX(hand: GenericHID.Hand) = getRawAxis(xAxisToRawAxis(hand))
+fun BerkeleiumXboxController.getX(hand: GenericHID.Hand) = getRawAxis(xAxisToRawAxis(hand))
 
-fun MonkeyXboxController.getRawButton(button: XboxButton) = getRawButton(button.id)
+fun BerkeleiumXboxController.getRawButton(button: XboxButton) = getRawButton(button.id)
 
 private fun yAxisToRawAxis(hand: GenericHID.Hand) = if (hand == GenericHID.Hand.kLeft) 1 else 5
 private fun xAxisToRawAxis(hand: GenericHID.Hand) = if (hand == GenericHID.Hand.kLeft) 0 else 4

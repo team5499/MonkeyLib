@@ -6,8 +6,8 @@ import org.team5419.fault.math.units.SIKey
 import org.team5419.fault.math.units.derived.Radian
 import org.team5419.fault.math.units.native.NativeUnitModel
 
-typealias LinearMonkeySPX = BerkeliumSPX<Meter>
-typealias AngularMonkeySPX = BerkeliumSPX<Radian>
+typealias LinearBerkeleiumSPX = BerkeliumSPX<Meter>
+typealias AngularBerkeleiumSPX = BerkeliumSPX<Radian>
 
 class BerkeliumSPX<T : SIKey>(
     val victorSPX: VictorSPX,

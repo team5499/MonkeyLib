@@ -4,28 +4,28 @@ package org.team5419.fault.input
 import edu.wpi.first.wpilibj.GenericHID
 import edu.wpi.first.wpilibj.Joystick
 
-typealias MonkeyPS4Controller = MonkeyHID<Joystick>
-typealias MonkeyPS4Builder = MonkeyHIDBuilder<Joystick>
+typealias BerkeleiumPS4Controller = BerkeleiumHID<Joystick>
+typealias BerkeleiumPS4Builder = BerkeleiumHIDBuilder<Joystick>
 
 fun ps4Controller(
     port: Int,
-    block: MonkeyPS4Builder.() -> Unit
+    block: BerkeleiumPS4Builder.() -> Unit
 ) = Joystick(port).mapControls(block)
 
-fun MonkeyPS4Builder.button(
+fun BerkeleiumPS4Builder.button(
     button: PS4Button,
     block: HIDButtonBuilder.() -> Unit = {}
 ) = button(button.id, block)
 
-fun MonkeyPS4Builder.triggerAxisButton(
+fun BerkeleiumPS4Builder.triggerAxisButton(
     hand: GenericHID.Hand,
     threshold: Double = HIDButton.kDefaultThreshold,
     block: HIDButtonBuilder.() -> Unit = {}
 ) = axisButton(yTriggerAxisToRawAxis(hand), threshold, block)
 
-fun MonkeyPS4Controller.getY(hand: GenericHID.Hand) = getRawAxis(yAxisToRawAxis(hand))
-fun MonkeyPS4Controller.getX(hand: GenericHID.Hand) = getRawAxis(xAxisToRawAxis(hand))
-fun MonkeyPS4Controller.getRawButton(button: PS4Button) = getRawButton(button.id)
+fun BerkeleiumPS4Controller.getY(hand: GenericHID.Hand) = getRawAxis(yAxisToRawAxis(hand))
+fun BerkeleiumPS4Controller.getX(hand: GenericHID.Hand) = getRawAxis(xAxisToRawAxis(hand))
+fun BerkeleiumPS4Controller.getRawButton(button: PS4Button) = getRawButton(button.id)
 
 private fun yAxisToRawAxis(hand: GenericHID.Hand) = if (hand == GenericHID.Hand.kLeft) 1 else 5
 private fun xAxisToRawAxis(hand: GenericHID.Hand) = if (hand == GenericHID.Hand.kLeft) 0 else 2

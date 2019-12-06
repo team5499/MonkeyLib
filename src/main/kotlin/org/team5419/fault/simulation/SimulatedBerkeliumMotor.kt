@@ -12,8 +12,8 @@ import org.team5419.fault.math.units.derived.Volt
 import org.team5419.fault.math.units.native.NativeUnit
 import org.team5419.fault.math.units.native.NativeUnitVelocity
 
-typealias LinearSimulatedMonkeyMotor = SimulatedBerkeliumMotor<Meter>
-typealias AngularSimulatedMonkeyMotor = SimulatedBerkeliumMotor<Radian>
+typealias LinearSimulatedBerkeleiumMotor = SimulatedBerkeliumMotor<Meter>
+typealias AngularSimulatedBerkeleiumMotor = SimulatedBerkeliumMotor<Radian>
 
 class SimulatedBerkeliumMotor<T : SIKey> : BerkeliumMotor<T> {
 
