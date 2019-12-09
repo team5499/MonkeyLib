@@ -1,20 +1,20 @@
 package org.team5419.fault.auto
 
 import org.team5419.fault.math.geometry.Pose2d
-import org.team5419.fault.math.geometry.Vector2
+import org.team5419.fault.math.geometry.Vector2d
 import org.team5419.fault.math.units.derived.degrees
 import org.team5419.fault.math.units.meters
 import java.util.concurrent.atomic.AtomicLong
 
 class Routine(
     name: String? = null,
-    val startPose: Pose2d = Pose2d(Vector2(0.0.meters, 0.0.meters), 0.degrees),
+    val startPose: Pose2d = Pose2d(Vector2d(0.0.meters, 0.0.meters), 0.degrees),
     override val actions: MutableList<Action>
 ) : SerialAction(actions) {
 
     constructor(
         name: String? = null,
-        startPose: Pose2d = Pose2d(Vector2(0.0.meters, 0.0.meters), 0.degrees),
+        startPose: Pose2d = Pose2d(Vector2d(0.0.meters, 0.0.meters), 0.degrees),
         vararg actions: Action
     ) : this(name, startPose, actions.toMutableList())
 

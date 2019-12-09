@@ -4,8 +4,8 @@ import org.junit.Assert
 import org.junit.Test
 import org.team5419.fault.math.geometry.Pose2d
 import org.team5419.fault.math.geometry.Rectangle2d
-import org.team5419.fault.math.geometry.Vector2
-import org.team5419.fault.math.geometry.degree
+import org.team5419.fault.math.geometry.Vector2d
+import org.team5419.fault.math.units.derived.degrees
 import org.team5419.fault.math.kEpsilon
 import org.team5419.fault.math.units.meters
 
@@ -15,15 +15,15 @@ class GeometryTests {
     @Test
     fun testTransforms() {
         // Position of the static object
-        val staticObjectPose = Pose2d(10.meters, 10.meters, 0.degree)
+        val staticObjectPose = Pose2d(10.meters, 10.meters, 0.degrees)
 
         // Position of the camera on the robot.
         // Camera is on the back of the robot (1 foot behind the center)
         // Camera is facing backward
-        val robotToCamera = Pose2d((-1).meters, 0.meters, 180.degree)
+        val robotToCamera = Pose2d((-1).meters, 0.meters, 180.degrees)
 
         // The camera detects the static object 9 meter in front and 2 meter to the right of it.
-        val cameraToStaticObject = Pose2d(9.meters, 2.meters, 0.degree)
+        val cameraToStaticObject = Pose2d(9.meters, 2.meters, 0.degrees)
 
         // Transform the static object into the robot's coordinates
         val robotToStaticObject = robotToCamera + cameraToStaticObject
@@ -38,13 +38,13 @@ class GeometryTests {
 
         Assert.assertEquals(0.0, globalRobotPose.translation.x.value, kEpsilon)
         Assert.assertEquals(8.0, globalRobotPose.translation.y.value, kEpsilon)
-        Assert.assertEquals((-180).degree, globalRobotPose.rotation)
+        Assert.assertEquals((-180).degrees, globalRobotPose.rotation.radian)
     }
 
     @Test
     fun testRectangleContains() {
-        val rectangle = Rectangle2d(Vector2(0.meters, 0.meters), Vector2(10.meters, 10.meters))
-        val translation = Vector2(5.meters, 7.meters)
+        val rectangle = Rectangle2d(Vector2d(0.meters, 0.meters), Vector2d(10.meters, 10.meters))
+        val translation = Vector2d(5.meters, 7.meters)
         assert(rectangle.contains(translation))
     }
 

@@ -5,7 +5,7 @@ import org.team5419.fault.trajectory.types.TimedEntry
 
 import org.team5419.fault.math.geometry.Pose2d
 import org.team5419.fault.math.geometry.Pose2dWithCurvature
-import org.team5419.fault.math.geometry.Vector2
+import org.team5419.fault.math.geometry.Vector2d
 import org.team5419.fault.math.units.SIUnit
 import org.team5419.fault.math.units.Second
 import org.team5419.fault.math.units.Meter
@@ -90,7 +90,7 @@ class PurePursuitFollower(
 
         return lookaheadPoseByDistance.transformBy(
             Pose2d(
-                Vector2(remaining * if (iterator.trajectory.reversed) -1 else 1, 0.0.meters)
+                Vector2d(remaining * if (iterator.trajectory.reversed) -1 else 1, 0.0.meters)
             )
         )
     }
