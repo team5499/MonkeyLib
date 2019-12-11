@@ -40,7 +40,12 @@ abstract class AbstractTankDrive : IDifferentialFollowerDrive, Subsystem() {
     abstract fun setPercent(left: Double, right: Double)
     abstract fun setTurn(angle: Rotation2d, type: TurnType = TurnType.Relative)
     abstract fun setPosition(distance: SIUnit<Meter>)
-    abstract fun setVelocity(leftVelocity: LinearVelocity, rightVelocity: LinearVelocity, leftFF: Volt, rightFF: Volt)
+    abstract fun setVelocity(
+        leftVelocity: LinearVelocity,
+        rightVelocity: SIUnit<LinearVelocity>,
+        leftFF: SIUnit<Volt>,
+        rightFF: SIUnit<Volt>
+    )
 
     enum class TurnType { Relative, Absolute }
 }
