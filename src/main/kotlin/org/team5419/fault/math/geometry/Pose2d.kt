@@ -6,22 +6,21 @@ import org.team5419.fault.math.units.Meter
 import org.team5419.fault.math.units.SIUnit
 import org.team5419.fault.math.units.derived.Radian
 import org.team5419.fault.math.units.derived.toRotation2d
-import org.team5419.fault.math.units.derived.toUnbounded
 import kotlin.math.absoluteValue
 
-data class Pose2d(
-    val translation: Vector2 = Vector2(),
-    val rotation: Rotation2d = Rotation2d(0.0)
+data class Pose2d (
+    val translation: Vector2<Meter> = Vector2(),
+    val rotation: Rotation2d = Rotation2d()
 ) : State<Pose2d> {
 
     constructor(
         x: SIUnit<Meter>,
         y: SIUnit<Meter>,
-        rotation: Rotation2d = Rotation2d(0.0)
+        rotation: Rotation2d = Rotation2d()
     ) : this(Vector2(x, y), rotation)
 
     constructor(
-        translation: Vector2 = Vector2(),
+        translation: Vector2<Meter> = Vector2(),
         rotation: SIUnit<Radian>
     ) : this(translation, rotation.toRotation2d())
 
@@ -33,7 +32,7 @@ data class Pose2d(
 
     val twist: Twist2d
         get() {
-            val dtheta = rotation.radian
+            val dtheta = rotation.radian.value
             val halfDTheta = dtheta / 2.0
             val cosMinusOne = rotation.cos - 1.0
 
@@ -44,7 +43,7 @@ data class Pose2d(
             }
             val translationPart = translation *
                     Rotation2d(halfThetaByTanOfHalfDTheta, -halfDTheta, false)
-            return Twist2d(translationPart.x, translationPart.y, rotation.toUnbounded())
+            return Twist2d(translationPart.x, translationPart.y, rotation.radian)
         }
 
     val mirror get() = Pose2d(Vector2(translation.x, -translation.y), -rotation)

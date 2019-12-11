@@ -5,12 +5,12 @@ import org.team5419.fault.util.BooleanSource
 import org.team5419.fault.util.DoubleSource
 
 fun <T : GenericHID> T.mapControls(
-    block: MonkeyHIDBuilder<T>.() -> Unit
-) = MonkeyHIDBuilder(this).also(block).build()
+    block: BerkeleiumHIDBuilder<T>.() -> Unit
+) = BerkeleiumHIDBuilder(this).also(block).build()
 
-class MonkeyHIDBuilder<T : GenericHID>(private val genericHID: T) {
+class BerkeleiumHIDBuilder<T : GenericHID>(private val genericHID: T) {
     private val controlBuilders = mutableListOf<HIDControlBuilder>()
-    private val stateControlBuilders = mutableMapOf<BooleanSource, MonkeyHIDBuilder<T>>()
+    private val stateControlBuilders = mutableMapOf<BooleanSource, BerkeleiumHIDBuilder<T>>()
 
     fun button(
         buttonId: Int,
@@ -41,11 +41,11 @@ class MonkeyHIDBuilder<T : GenericHID>(private val genericHID: T) {
         return builder
     }
 
-    fun state(state: BooleanSource, block: MonkeyHIDBuilder<T>.() -> Unit) =
-            stateControlBuilders.compute(state) { _, _ -> MonkeyHIDBuilder(genericHID).also(block) }
+    fun state(state: BooleanSource, block: BerkeleiumHIDBuilder<T>.() -> Unit) =
+            stateControlBuilders.compute(state) { _, _ -> BerkeleiumHIDBuilder(genericHID).also(block) }
 
-    fun build(): MonkeyHID<T> {
-        return MonkeyHID(
+    fun build(): BerkeleiumHID<T> {
+        return BerkeleiumHID(
                 genericHID,
                 controlBuilders.map { it.build() },
                 stateControlBuilders.mapValues { it.value.build() }
@@ -53,10 +53,10 @@ class MonkeyHIDBuilder<T : GenericHID>(private val genericHID: T) {
     }
 }
 
-class MonkeyHID<T : GenericHID>(
+class BerkeleiumHID<T : GenericHID>(
     private val genericHID: T,
     private val controls: List<HIDControl>,
-    private val stateControls: Map<BooleanSource, MonkeyHID<T>>
+    private val stateControls: Map<BooleanSource, BerkeleiumHID<T>>
 ) {
 
     fun getRawAxis(axisId: Int): DoubleSource = HIDAxisSource(genericHID, axisId)

@@ -3,10 +3,10 @@ package org.team5419.fault.math.localization
 import edu.wpi.first.wpilibj.Timer
 import org.team5419.fault.math.geometry.Pose2d
 import org.team5419.fault.math.geometry.Rotation2d
-import org.team5419.fault.math.geometry.degree
 import org.team5419.fault.math.units.SIUnit
 import org.team5419.fault.math.units.Second
 import org.team5419.fault.math.units.seconds
+import org.team5419.fault.math.units.derived.degrees
 import org.team5419.fault.util.CSVWritable
 import org.team5419.fault.util.Source
 import kotlin.reflect.KProperty
@@ -19,8 +19,8 @@ abstract class PositionTracker(
     var robotPosition = Pose2d()
         private set
 
-    private var lastHeading = 0.degree
-    private var headingOffset = 0.degree
+    private var lastHeading = Rotation2d()
+    private var headingOffset = Rotation2d()
 
     override fun invoke() = robotPosition
 
@@ -28,7 +28,7 @@ abstract class PositionTracker(
 
     protected open fun resetInternal(pose: Pose2d) {
         robotPosition = pose
-        val newHeading = heading()
+        val newHeading = heading().radian
         lastHeading = newHeading
         headingOffset = -newHeading + pose.rotation
         buffer.clear()

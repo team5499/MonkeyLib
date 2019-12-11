@@ -3,7 +3,6 @@ package org.team5419.fault.math.localization
 import org.team5419.fault.math.geometry.Pose2d
 import org.team5419.fault.math.geometry.Rotation2d
 import org.team5419.fault.math.geometry.Twist2d
-import org.team5419.fault.math.units.derived.toUnbounded
 import org.team5419.fault.math.units.meters
 import org.team5419.fault.util.Source
 
@@ -29,6 +28,6 @@ class TankPositionTracker(
         val leftDelta = currentLeftDistance - lastLeftDistance
         val rightDelta = currentRightDistance - lastRightDistance
         val dx = (leftDelta + rightDelta) / 2.0
-        return Twist2d(dx.meters, 0.0.meters, deltaHeading.toUnbounded()).asPose
+        return Twist2d(dx.meters, 0.0.meters, deltaHeading.radian).asPose
     }
 }

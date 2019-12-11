@@ -2,20 +2,20 @@ package org.team5419.fault.math.geometry
 
 import org.team5419.fault.math.epsilonEquals
 import org.team5419.fault.math.kEpsilon
-
-val Number.radian get() = Rotation2d(toDouble())
-val Number.degree get() = Math.toRadians(toDouble()).radian
+import org.team5419.fault.math.units.SIUnit
+import org.team5419.fault.math.units.derived.*
+// import org.team5419.fault.math.units.derived.radians
 
 @Suppress("EqualsWithHashCodeExist")
 class Rotation2d {
 
-    val value: Double
+    val value: SIUnit<Radian>
     val cos: Double
     val sin: Double
 
-    constructor() : this(0.0)
+    constructor() : this(0.0.radians)
 
-    constructor(value: Double) : this(Math.cos(value), Math.sin(value), true)
+    constructor(heading: SIUnit<Radian>) : this(heading.cos, heading.sin, true)
 
     constructor(x: Double, y: Double, normalize: Boolean) {
         if (normalize) {
@@ -31,13 +31,13 @@ class Rotation2d {
             cos = x
             sin = y
         }
-        value = Math.atan2(sin, cos)
+        value = Math.atan2(sin, cos).radians
     }
 
     val radian get() = value
-    val degree get() = Math.toDegrees(value)
+    val degree get() = value.inDegrees()
 
-    fun isParallel(rotation: Rotation2d) = (this - rotation).radian epsilonEquals 0.0
+    fun isParallel(rotation: Rotation2d) = (this - rotation).radian epsilonEquals 0.0.radians
 
     operator fun minus(other: Rotation2d) = plus(-other)
     operator fun unaryMinus() = Rotation2d(-value)
@@ -54,9 +54,5 @@ class Rotation2d {
 
     override fun equals(other: Any?): Boolean {
         return other is Rotation2d && other.sin epsilonEquals this.sin && other.cos epsilonEquals this.cos
-    }
-
-    companion object {
-        fun fromDegrees(x: Double) = Rotation2d(Math.toRadians(x))
     }
 }

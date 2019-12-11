@@ -37,7 +37,7 @@ dependencies {
 
 }
 
-group = 'org.team5499'
+group = 'org.team5419'
 version = '3.0.0-SNAPSHOT'
 
 
@@ -109,14 +109,14 @@ task install_hooks(dependsOn: 'tox')
 publishing {
     publications {
         library(MavenPublication) {
-            artifactId = 'monkey-lib'
+            artifactId = 'fault'
             from components.java
             artifact sourcesJar
             artifact javadocJar
             pom {
-                name = 'MonkeyLib'
-                description = 'Commonly used utilities in FRC Team 5499\'s codebase'
-                url = 'https://github.com/team5499/MonkeyLib'
+                name = 'Fault'
+                description = 'Commonly used utilities in FRC Team 5419\'s codebase'
+                url = 'https://github.com/team5419/fault'
             }
         }
     }

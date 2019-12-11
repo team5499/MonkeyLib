@@ -1,6 +1,6 @@
 package org.team5419.fault.math.splines
 
-import org.team5419.fault.math.geometry.Vector2
+import org.team5419.fault.math.geometry.Vector2d
 import org.team5419.fault.math.units.Meter
 import org.team5419.fault.math.units.Mult
 import org.team5419.fault.math.units.SIUnit
@@ -8,9 +8,9 @@ import org.team5419.fault.math.units.operations.times
 import org.team5419.fault.math.units.operations.div
 
 data class FunctionalQuadraticSpline(
-    private val p1: Vector2,
-    private val p2: Vector2,
-    private val p3: Vector2
+    private val p1: Vector2d,
+    private val p2: Vector2d,
+    private val p3: Vector2d
 ) {
 
     private val a: SIUnit<Mult<Meter, Meter>>

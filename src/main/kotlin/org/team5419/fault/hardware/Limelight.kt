@@ -2,7 +2,7 @@ package org.team5419.fault.hardware
 
 import edu.wpi.first.networktables.NetworkTableInstance
 import org.team5419.fault.math.geometry.Rotation2d
-import org.team5419.fault.math.geometry.degree
+import org.team5419.fault.math.units.derived.*
 import org.team5419.fault.math.units.Meter
 import org.team5419.fault.math.units.inches
 import org.team5419.fault.math.units.SIUnit
@@ -16,7 +16,7 @@ open class Limelight(
     val inverted: Boolean = false,
     private val mTargetHeight: SIUnit<Meter> = 0.inches,
     private val mCameraHeight: SIUnit<Meter> = 0.inches,
-    private val mCameraAngle: Rotation2d = 0.degree // angle below (or above) horizontal
+    private val mCameraAngle: Rotation2d = Rotation2d() // angle below (or above) horizontal
 ) {
 
     // FEEDBACK VARIABLES
@@ -47,7 +47,7 @@ open class Limelight(
     val targetSkew: Double
         get() {
             val skew = mLimelight.getEntry("ts").getDouble(0.0)
-            if (skew < -45.0) {
+            if (skew < -45.0) { /*>*/
                 return skew + 90.0
             } else {
                 return skew
@@ -66,12 +66,12 @@ open class Limelight(
     // CALCULATED VARIABLES
 
     val horizontalDistance: SIUnit<Meter>
-        get() = (mTargetHeight - mCameraHeight) / tan(mCameraAngle.radian + horizontalOffset.degree.radian)
+        get() = (mTargetHeight - mCameraHeight) / (mCameraAngle.radian + horizontalOffset.degrees).tan
 
     val calculateTargetSkew: Double
         get() {
             var temp = (horizontalLength / verticalLength) * kAspectRatio
-            if (temp < 0.0) temp = 0.0
+            if (temp < 0.0) temp = 0.0 /*>*/
             if (temp > 1.0) temp = 1.0
             return (180.0 / PI) * asin(temp)
         }
