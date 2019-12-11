@@ -3,20 +3,20 @@ package tests.math.splines
 import org.junit.Test
 import org.knowm.xchart.XYChartBuilder
 import org.team5419.fault.math.geometry.Pose2d
-import org.team5419.fault.math.geometry.Vector2
-import org.team5419.fault.math.geometry.degree
+import org.team5419.fault.math.geometry.Vector2d
 import org.team5419.fault.math.physics.DCMotorTransmission
 import org.team5419.fault.math.physics.DifferentialDrive
+import org.team5419.fault.math.units.derived.velocity
+import org.team5419.fault.math.units.derived.acceleration
+import org.team5419.fault.math.units.derived.degrees
+import org.team5419.fault.math.units.derived.radians
+import org.team5419.fault.math.units.derived.volts
 import org.team5419.fault.math.units.inches
 import org.team5419.fault.math.units.seconds
 import org.team5419.fault.math.units.feet
 import org.team5419.fault.math.units.milliseconds
 import org.team5419.fault.math.units.inFeet
 import org.team5419.fault.math.units.inSeconds
-import org.team5419.fault.math.units.derived.acceleration
-import org.team5419.fault.math.units.derived.velocity
-import org.team5419.fault.math.units.derived.radians
-import org.team5419.fault.math.units.derived.volts
 import org.team5419.fault.math.units.milli
 import org.team5419.fault.trajectory.DefaultTrajectoryGenerator
 import org.team5419.fault.trajectory.constraints.AngularAccelerationConstraint
@@ -35,8 +35,8 @@ class TrajectoryGeneratorTest {
         private const val kRobotAngularInertia = 10.0 // kg m^2
         private const val kRobotAngularDrag = 12.0  // N*m / (rad/sec)
         private const val kDriveVIntercept = 1.055  // V
-        private const val kDriveKv = 0.135  // V per rad/s
-        private const val kDriveKa = 0.012  // V per rad/s^2
+        private const val kDriveKv = 0.135 // V per rad/s
+        private const val kDriveKa = 0.012 // V per rad/s^2
 
         private val kDriveWheelRadiusInches = 3.0.inches
         private val kWheelBaseDiameter = 29.5.inches
@@ -64,15 +64,15 @@ class TrajectoryGeneratorTest {
 
         private const val kTolerance = 0.1
 
-        private val kSideStart = Pose2d(1.54.feet, 23.234167.feet, 180.0.degree)
-        private val kNearScaleEmpty = Pose2d(23.7.feet, 20.2.feet, 160.0.degree)
+        private val kSideStart = Pose2d(1.54.feet, 23.234167.feet, 180.0.degrees)
+        private val kNearScaleEmpty = Pose2d(23.7.feet, 20.2.feet, 160.0.degrees)
 
         val trajectory = DefaultTrajectoryGenerator.generateTrajectory(
                 listOf(
                         kSideStart,
-                        kSideStart + Pose2d((-13.0).feet, 0.0.feet, 0.0.degree),
-                        kSideStart + Pose2d((-19.5).feet, 5.0.feet, (-90.0).degree),
-                        kSideStart + Pose2d((-19.5).feet, 14.0.feet, (-90.0).degree),
+                        kSideStart + Pose2d((-13.0).feet, 0.0.feet, 0.0.degrees),
+                        kSideStart + Pose2d((-19.5).feet, 5.0.feet, (-90.0).degrees),
+                        kSideStart + Pose2d((-19.5).feet, 14.0.feet, (-90.0).degrees),
                         kNearScaleEmpty.mirror
                 ),
                 listOf(
@@ -119,7 +119,7 @@ class TrajectoryGeneratorTest {
         val iterator = trajectory.iterator()
         var time = 0.seconds
         var dt = 20.milliseconds
-        val refList = mutableListOf<Vector2>()
+        val refList = mutableListOf<Vector2d>()
         while (!iterator.isDone) {
             val pt = iterator.advance(dt)
             time += dt

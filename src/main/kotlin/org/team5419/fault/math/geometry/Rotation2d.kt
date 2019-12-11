@@ -3,7 +3,11 @@ package org.team5419.fault.math.geometry
 import org.team5419.fault.math.epsilonEquals
 import org.team5419.fault.math.kEpsilon
 import org.team5419.fault.math.units.SIUnit
-import org.team5419.fault.math.units.derived.*
+import org.team5419.fault.math.units.derived.Radian
+import org.team5419.fault.math.units.derived.cos
+import org.team5419.fault.math.units.derived.sin
+import org.team5419.fault.math.units.derived.radians
+import org.team5419.fault.math.units.derived.inDegrees
 // import org.team5419.fault.math.units.derived.radians
 
 @Suppress("EqualsWithHashCodeExist")
