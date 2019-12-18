@@ -8,7 +8,7 @@ import org.team5419.fault.math.units.derived.Radian
 import org.team5419.fault.math.units.derived.toRotation2d
 import kotlin.math.absoluteValue
 
-data class Pose2d (
+data class Pose2d(
     val translation: Vector2<Meter> = Vector2(),
     val rotation: Rotation2d = Rotation2d()
 ) : State<Pose2d> {

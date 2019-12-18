@@ -6,7 +6,6 @@ import org.team5419.fault.math.geometry.Rotation2d
 import org.team5419.fault.math.units.SIUnit
 import org.team5419.fault.math.units.Second
 import org.team5419.fault.math.units.seconds
-import org.team5419.fault.math.units.derived.degrees
 import org.team5419.fault.util.CSVWritable
 import org.team5419.fault.util.Source
 import kotlin.reflect.KProperty

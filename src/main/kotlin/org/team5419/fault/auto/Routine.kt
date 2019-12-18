@@ -26,7 +26,7 @@ class Routine(
 }
 
 fun <T : ActionGroup> T.toRoutine(name: String? = null, startPose: Pose2d = Pose2d()) = Routine(
-        name,
-        startPose,
-        this.actions.toMutableList()
+    name,
+    startPose,
+    this.actions.toMutableList()
 )

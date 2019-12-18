@@ -1,11 +1,13 @@
 
 package org.team5419.fault.math.geometry
 
-import org.team5419.fault.math.units.*
-import org.team5419.fault.math.epsilonEquals
+import org.team5419.fault.math.units.SIUnit
+import org.team5419.fault.math.units.Meter
+import org.team5419.fault.math.units.SIKey
 import kotlin.math.hypot
 
 fun Rotation2d.toTranslation() = Vector2(cos.meters, sin.meters)
+
 typealias Vector2d = Vector2<Meter>
 
 @Suppress("TooManyFunctions")
@@ -67,7 +69,7 @@ data class Vector2<T : SIKey> constructor(
     override fun hashCode() = super.hashCode()
 
     override fun equals(other: Any?): Boolean {
-        if (other is Vector2<*>){
+        if (other is Vector2<*>) {
             return other.x == this.x && other.y == this.y
         }
         return false
