@@ -1,20 +1,29 @@
 package org.team5419.fault.util
 
-class MovingAverageFilter(
-    private val weight: Double,
-    private val initial: Double = 0.0
-) {
+import java.util.LinkedList
 
-    private var prevValue = 0.0
+class MovingAverageFilter(numberOfValues: Int) {
+    private val values: LinkedList<Double>
+    private val numberOfValues: Int
+    public val average: Double
+        get() = values.toDoubleArray().sum() / values.size
 
-    fun update(currentValue: Double): Double {
-        prevValue = prevValue * (weight) + (1.0 - weight) * currentValue
-        return prevValue
+    private var staticAddValue = { value ->
+        values.add(value)
+        values.remove()
     }
 
-    fun reset() {
-        prevValue = initial
+    private var addValue = { value ->
+        values.add(value)
+        if (values.size == numberOfValues) {
+            addValue = staticAddValue
+        }
     }
 
-    fun getLast() = prevValue
+    init {
+        this.values = LinkedList()
+        this.numberOfValues = numberOfValues
+    }
+
+    operator fun plusAssing(value: Double) = addValue(value)
 }
