@@ -8,22 +8,24 @@ class MovingAverageFilter(numberOfValues: Int) {
     public val average: Double
         get() = values.toDoubleArray().sum() / values.size
 
-    private var staticAddValue = { value ->
-        values.add(value)
-        values.remove()
-    }
-
-    private var addValue = { value ->
-        values.add(value)
-        if (values.size == numberOfValues) {
-            addValue = staticAddValue
-        }
-    }
-
     init {
         this.values = LinkedList()
         this.numberOfValues = numberOfValues
     }
 
-    operator fun plusAssing(value: Double) = addValue(value)
+    private var staticAddValue: (Double) -> Unit = { value ->
+        this.values.add(value)
+        this.values.remove()
+    }
+
+    private var initAddValue: (Double) -> Unit = { value ->
+        this.values.add(value)
+        if (this.values.size == numberOfValues) {
+            addValue = staticAddValue
+        }
+    }
+
+    private var addValue: (Double) -> Unit = initAddValue
+
+    operator fun plusAssign(value: Double) = addValue(value)
 }
