@@ -3,18 +3,14 @@
   <component name="ChangeListManager">
     <list default="true" id="d9b5d613-e916-43ad-8b2e-715c35222a4b" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/hardware/ctre/CTREBerkeliumMotor.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/hardware/ctre/CTREBerkeliumMotor.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/math/geometry/Twist2d.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/math/geometry/Twist2d.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/hardware/Limelight.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/hardware/Limelight.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/math/geometry/Pose2d.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/math/geometry/Pose2d.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/math/geometry/Rotation2d.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/math/geometry/Rotation2d.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/math/geometry/Vector2.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/math/geometry/Vector2.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/math/localization/PositionTracker.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/math/localization/PositionTracker.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/math/units/Meter.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/math/units/Meter.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/math/units/SIUnit.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/math/units/SIUnit.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/math/units/Second.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/math/units/Second.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/math/units/native/NativeUnit.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/math/units/native/NativeUnit.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/math/units/native/NativeUnitModel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/math/units/native/NativeUnitModel.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/trajectory/TrajectoryGenerator.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/trajectory/TrajectoryGenerator.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/trajectory/followers/TrajectoryFollower.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/org/team5419/fault/trajectory/followers/TrajectoryFollower.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/kotlin/tests/math/control/RamseteFollowerTest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/tests/math/control/RamseteFollowerTest.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/tests/math/GeometryTests.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/tests/math/GeometryTests.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/tests/math/splines/QuinticHermiteOptimizerTest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/tests/math/splines/QuinticHermiteOptimizerTest.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/tests/math/splines/TrajectoryGeneratorTest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/tests/math/splines/TrajectoryGeneratorTest.kt" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />

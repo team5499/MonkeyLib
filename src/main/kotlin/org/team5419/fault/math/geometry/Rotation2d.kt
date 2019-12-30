@@ -4,9 +4,11 @@ import org.team5419.fault.math.epsilonEquals
 import org.team5419.fault.math.kEpsilon
 import org.team5419.fault.math.units.SIUnit
 import org.team5419.fault.math.units.derived.Radian
+import org.team5419.fault.math.units.derived.cos
+import org.team5419.fault.math.units.derived.sin
+import org.team5419.fault.math.units.derived.radians
+import org.team5419.fault.math.units.derived.inDegrees
 // import org.team5419.fault.math.units.derived.radians
-
-val Double.rotation get() = Rotation2d(this)
 
 @Suppress("EqualsWithHashCodeExist")
 class Rotation2d {

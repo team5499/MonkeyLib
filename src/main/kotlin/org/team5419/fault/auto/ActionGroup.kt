@@ -2,14 +2,16 @@ package org.team5419.fault.auto
 
 abstract class ActionGroup internal constructor() : Action() {
 
-    internal abstract val actions: Array<out Action>
+    internal abstract val actions: List<Action>
 }
 
-open class ParallelAction(vararg actions: Action) : ActionGroup() {
+open class ParallelAction(actions: List<Action>) : ActionGroup() {
 
-    override val actions: Array<Action> = action
+    override val actions: List<Action> = actions
 
     protected val actionMap = mutableMapOf<Action, Boolean>()
+
+    constructor(vararg actions: Action) : this(actions.toList())
 
     init {
         finishCondition += {
@@ -50,13 +52,15 @@ open class ParallelAction(vararg actions: Action) : ActionGroup() {
     }
 }
 
-open class SerialAction(vararg actions: Action) : ActionGroup() {
+open class SerialAction(actions: List<Action>) : ActionGroup() {
+
+    constructor(vararg actions: Action) : this(actions.toList())
 
     private var index = 0
     private val isLastAction = { index == (actions.size - 1) }
     private val isLastActionDone = { actions.last().next() }
 
-    override val actions: MutableList<Action>
+    override val actions: List<Action>
 
     init {
         finishCondition += { isLastAction() }

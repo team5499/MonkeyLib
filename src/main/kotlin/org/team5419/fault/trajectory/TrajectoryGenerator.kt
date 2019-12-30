@@ -2,7 +2,7 @@ package org.team5419.fault.trajectory
 
 import org.team5419.fault.math.geometry.Pose2d
 import org.team5419.fault.math.geometry.Pose2dWithCurvature
-import org.team5419.fault.math.geometry.Vector2d
+import org.team5419.fault.math.geometry.Vector2
 import org.team5419.fault.math.geometry.State
 
 import org.team5419.fault.trajectory.constraints.TimingConstraint
@@ -50,7 +50,7 @@ public class TrajectoryGenerator(
         reversed: Boolean,
         optimizeSplines: Boolean = true
     ): TimedTrajectory<Pose2dWithCurvature> {
-        val flippedPosition = Pose2d(Vector2d(), 180.0.degrees)
+        val flippedPosition = Pose2d(Vector2(), 180.0.degrees)
         val newWaypoints = waypoints.asSequence().map { point ->
             if (reversed) point + flippedPosition else point
         }

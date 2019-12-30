@@ -6,18 +6,17 @@ import org.team5419.fault.math.geometry.Pose2d
 import org.team5419.fault.math.geometry.Vector2d
 import org.team5419.fault.math.physics.DCMotorTransmission
 import org.team5419.fault.math.physics.DifferentialDrive
+import org.team5419.fault.math.units.derived.velocity
+import org.team5419.fault.math.units.derived.acceleration
+import org.team5419.fault.math.units.derived.degrees
+import org.team5419.fault.math.units.derived.radians
+import org.team5419.fault.math.units.derived.volts
 import org.team5419.fault.math.units.inches
 import org.team5419.fault.math.units.seconds
 import org.team5419.fault.math.units.feet
 import org.team5419.fault.math.units.milliseconds
 import org.team5419.fault.math.units.inFeet
 import org.team5419.fault.math.units.inSeconds
-import org.team5419.fault.math.units.derived.acceleration
-import org.team5419.fault.math.units.derived.velocity
-import org.team5419.fault.math.units.derived.radians
-import org.team5419.fault.math.units.derived.degrees
-
-import org.team5419.fault.math.units.derived.volts
 import org.team5419.fault.math.units.milli
 import org.team5419.fault.trajectory.DefaultTrajectoryGenerator
 import org.team5419.fault.trajectory.constraints.AngularAccelerationConstraint
@@ -36,8 +35,8 @@ class TrajectoryGeneratorTest {
         private const val kRobotAngularInertia = 10.0 // kg m^2
         private const val kRobotAngularDrag = 12.0  // N*m / (rad/sec)
         private const val kDriveVIntercept = 1.055  // V
-        private const val kDriveKv = 0.135  // V per rad/s
-        private const val kDriveKa = 0.012  // V per rad/s^2
+        private const val kDriveKv = 0.135 // V per rad/s
+        private const val kDriveKa = 0.012 // V per rad/s^2
 
         private val kDriveWheelRadiusInches = 3.0.inches
         private val kWheelBaseDiameter = 29.5.inches

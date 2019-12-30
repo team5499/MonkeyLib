@@ -4,9 +4,10 @@ import org.junit.Assert
 import org.junit.Test
 import org.team5419.fault.math.geometry.Pose2d
 import org.team5419.fault.math.geometry.Rectangle2d
-import org.team5419.fault.math.geometry.Vector2d
-import org.team5419.fault.math.units.derived.degrees
+import org.team5419.fault.math.geometry.Vector2
 import org.team5419.fault.math.kEpsilon
+import org.team5419.fault.math.units.derived.degrees
+import org.team5419.fault.math.units.derived.toRotation2d
 import org.team5419.fault.math.units.meters
 
 @Suppress("LargeClass")
@@ -38,13 +39,14 @@ class GeometryTests {
 
         Assert.assertEquals(0.0, globalRobotPose.translation.x.value, kEpsilon)
         Assert.assertEquals(8.0, globalRobotPose.translation.y.value, kEpsilon)
-        Assert.assertEquals((-180).degrees, globalRobotPose.rotation.radian)
+        println(globalRobotPose.rotation.toString())
+        Assert.assertEquals((-180).degrees.toRotation2d(), globalRobotPose.rotation)
     }
 
     @Test
     fun testRectangleContains() {
-        val rectangle = Rectangle2d(Vector2d(0.meters, 0.meters), Vector2d(10.meters, 10.meters))
-        val translation = Vector2d(5.meters, 7.meters)
+        val rectangle = Rectangle2d(Vector2(0.meters, 0.meters), Vector2(10.meters, 10.meters))
+        val translation = Vector2(5.meters, 7.meters)
         assert(rectangle.contains(translation))
     }
 

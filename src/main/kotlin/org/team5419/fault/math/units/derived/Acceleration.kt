@@ -6,7 +6,7 @@ import org.team5419.fault.math.units.Second
 import org.team5419.fault.math.units.SIKey
 import org.team5419.fault.math.units.SIUnit
 
-typealias Acceleration<T> = SIUnit<Frac<Frac<T, Second>, Second>>
+typealias Acceleration<T> = Frac<Frac<T, Second>, Second>
 typealias LinearAcceleration = Acceleration<Meter>
 typealias AngularAcceleration = Acceleration<Radian>
 

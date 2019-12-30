@@ -2,6 +2,7 @@ package org.team5419.fault.hardware
 
 import edu.wpi.first.networktables.NetworkTableInstance
 import org.team5419.fault.math.geometry.Rotation2d
+import org.team5419.fault.math.units.derived.tan
 import org.team5419.fault.math.units.derived.degrees
 import org.team5419.fault.math.units.Meter
 import org.team5419.fault.math.units.inches

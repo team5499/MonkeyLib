@@ -8,10 +8,6 @@ import org.team5419.fault.math.units.native.NativeUnitModel
 abstract class AbstractBerkeliumEncoder<T : SIKey>(
     val model: NativeUnitModel<T>
 ) : BerkeliumEncoder<T> {
-
     override val position: SIUnit<T> get() = model.fromNativeUnitPosition(rawPosition)
     override val velocity: SIUnit<Velocity<T>> get() = model.fromNativeUnitVelocity(rawVelocity)
-
-    fun zero() {
-    }
 }
