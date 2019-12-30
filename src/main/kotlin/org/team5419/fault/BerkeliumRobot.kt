@@ -10,7 +10,7 @@ import org.team5419.fault.subsystems.Subsystem
 import org.team5419.fault.subsystems.SubsystemManager
 
 @Suppress("TooManyFunctions")
-abstract class BerkeliumRobot(period: SIUnit<Second>) {
+abstract class BerkeliumRobot(period: SIUnit<Second> = SIUnit<Second>(0.05)) {
 
     protected val wrappedValue = WpiTimedRobot(period.value)
 
