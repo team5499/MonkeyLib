@@ -1,13 +1,13 @@
 package org.team5419.fault.math.splines
 
-import org.team5419.fault.math.geometry.Vector2
+import org.team5419.fault.math.geometry.Vector2d
 import org.team5419.fault.math.geometry.Rotation2d
 import org.team5419.fault.math.geometry.Pose2d
 import org.team5419.fault.math.geometry.Pose2dWithCurvature
 
 abstract class Spline {
 
-    abstract fun getPoint(t: Double): Vector2
+    abstract fun getPoint(t: Double): Vector2d
 
     abstract fun getHeading(t: Double): Rotation2d
 

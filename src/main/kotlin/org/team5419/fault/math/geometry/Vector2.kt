@@ -1,68 +1,77 @@
+
 package org.team5419.fault.math.geometry
 
+import org.team5419.fault.math.epsilonEquals
+import org.team5419.fault.math.units.meters
+import org.team5419.fault.math.units.SIUnit
+import org.team5419.fault.math.units.SIKey
+import org.team5419.fault.math.units.Meter
+import kotlin.math.hypot
+
+fun Rotation2d.toTranslation() = Vector2(cos.meters, sin.meters)
+typealias Vector2d = Vector2<Meter>
+
 @Suppress("TooManyFunctions")
-class Vector2(val x: Double, val y: Double) : Geometric<Vector2> {
+data class Vector2<T : SIKey> constructor(
+    val x: SIUnit<T>,
+    val y: SIUnit<T>
+) : State<Vector2<T>> {
 
-    companion object {
-        fun distanceBetween(a: Vector2, b: Vector2) = (a - b).magnitude
-        fun cross(a: Vector2, b: Vector2) = a.x * b.y - a.y * b.x
+    constructor() : this(SIUnit<T>(0.0), SIUnit<T>(0.0))
+
+    // Vector to Translation3d
+    constructor(
+        rotation: Rotation2d,
+        distance: SIUnit<T> = SIUnit<T>(0.0)
+    ) : this (distance * rotation.cos, distance * rotation.sin)
+
+    val norm get() = hypot(x.value, y.value).meters
+
+    override fun interpolate(endValue: Vector2<T>, t: Double) = when {
+        t <= 0 -> this
+        t >= 1 -> endValue
+        else -> Vector2(
+            x.lerp(endValue.x, t),
+            y.lerp(endValue.y, t)
+        )
     }
 
-    val magnitude by lazy { Math.hypot(y, x) }
-    val angle by lazy { Math.atan2(y, x) }
-    val normalized by lazy {
-        val len = magnitude
-        Vector2(x / len.toDouble(), y / len.toDouble())
+    override fun distance(other: Vector2<T>): Double {
+        val x = this.x.value - other.x.value
+        val y = this.y.value - other.y.value
+        return hypot(x, y)
     }
 
-    constructor(other: Vector2): this(other.x, other.y)
-    constructor(): this(0.0, 0.0)
-    constructor(x: Int, y: Int): this(x.toDouble(), y.toDouble())
-    constructor(start: Vector2, end: Vector2): this(end.x - start.x, end.y - start.y)
+    operator fun plus(other: Vector2<T>) = Vector2(x + other.x, y + other.y)
+    operator fun minus(other: Vector2<T>) = Vector2(x - other.x, y - other.y)
 
-    operator fun plus(other: Vector2) = Vector2(x + other.x, y + other.y)
+    operator fun times(other: Rotation2d) = Vector2(
+            x * other.cos - y * other.sin,
+            x * other.sin + y * other.cos
+    )
 
-    operator fun minus(other: Vector2) = Vector2(x - other.x, y - other.y)
+    operator fun times(other: Number): Vector2<T> {
+        val factor = other.toDouble()
+        return Vector2(x * factor, y * factor)
+    }
 
-    operator fun times(coef: Int) = Vector2(this * coef.toDouble())
-
-    operator fun times(coef: Double) = Vector2(x * coef, y * coef)
-
-    operator fun div(coef: Double) = when (coef) {
-        0.0 -> throw IllegalArgumentException("Division by 0")
-        else -> Vector2(x / coef, y / coef)
+    operator fun div(other: Number): Vector2<T> {
+        val factor = other.toDouble()
+        return Vector2(x / factor, y / factor)
     }
 
     operator fun unaryMinus() = Vector2(-x, -y)
 
-    fun dot(other: Vector2) = x * other.x + y * other.y
+    override fun toCSV() = "${x.value}, ${y.value}"
 
-    fun distanceTo(other: Vector2) = (this - other).magnitude
-
-    fun translateBy(other: Vector2) = Vector2(this + other)
-    fun translateBy(x: Double, y: Double) = Vector2(this.x + x, this.y + y)
-
-    fun rotateBy(r: Rotation2d) = Vector2(x * r.cosAngle - y * r.sinAngle, x * r.sinAngle + y * r.cosAngle)
-
-    fun extrapolate(other: Vector2, x: Double) = Vector2(
-        x * (other.x - this.x) + this.x, x * (other.y - this.y) + this.y
-    )
-
-    @Suppress("ReturnCount")
-    override fun interpolate(other: Vector2, x: Double): Vector2 {
-        if (x <= 0) return Vector2(this)
-        else if (x >= 1) return Vector2(other)
-        else return extrapolate(other, x)
-    }
-
-    override fun equals(other: Any?): Boolean {
-        if (other == null || other !is Vector2) return false
-        return x == other.x && y == other.y
-    }
+    override fun toString() = toCSV()
 
     override fun hashCode() = super.hashCode()
 
-    override fun toString(): String = "(X: %.3f, Y: %.3f)".format(x, y)
-
-    override fun toCSV() = "$x,$y"
+    override fun equals(other: Any?): Boolean {
+        if (other is Vector2<*>) {
+            return other.x.value epsilonEquals this.x.value && other.y.value epsilonEquals this.y.value
+        }
+        return false
+    }
 }

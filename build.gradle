@@ -2,12 +2,13 @@ import org.gradle.api.tasks.options.Option
 
 plugins {
     id 'org.jetbrains.kotlin.jvm' version '1.3.20'
-    id "edu.wpi.first.GradleRIO" version "2019.4.1"
+    id "edu.wpi.first.GradleRIO" version "2019.3.2"
     id 'java-library'
     id 'maven-publish'
     id 'jacoco'
     id 'maven'
     id 'org.jetbrains.dokka' version '0.9.17'
+    id 'idea'
 }
 
 repositories {
@@ -32,10 +33,12 @@ dependencies {
     testCompile 'org.powermock:powermock-module-junit4:1.6.6'
     testCompile 'org.powermock:powermock-api-mockito2:1.6.6'
 
+    testCompile group: 'org.knowm.xchart', name: 'xchart', version: '3.5.4'
+
 }
 
 group = 'org.team5419'
-version = '2.11.1'
+version = '3.0.0-SNAPSHOT'
 
 
 task sourcesJar(type: Jar) {
@@ -111,7 +114,7 @@ publishing {
             artifact sourcesJar
             artifact javadocJar
             pom {
-                name = 'fault'
+                name = 'Fault'
                 description = 'Commonly used utilities in FRC Team 5419\'s codebase'
                 url = 'https://github.com/team5419/fault'
             }

@@ -1,284 +1,72 @@
 package tests.math
 
-import org.team5419.fault.math.geometry.Vector2
-import org.team5419.fault.math.geometry.Rotation2d
-import org.team5419.fault.math.geometry.Pose2d
-import org.team5419.fault.math.geometry.Twist2d
-
-import org.team5419.fault.math.Epsilon
-
+import org.junit.Assert
 import org.junit.Test
-import org.junit.Assert.assertEquals
-import org.junit.Assert.assertTrue
-import org.junit.Assert.assertFalse
+import org.team5419.fault.math.geometry.Pose2d
+import org.team5419.fault.math.geometry.Rectangle2d
+import org.team5419.fault.math.geometry.Vector2
+import org.team5419.fault.math.kEpsilon
+import org.team5419.fault.math.units.derived.degrees
+import org.team5419.fault.math.units.derived.toRotation2d
+import org.team5419.fault.math.units.meters
 
 @Suppress("LargeClass")
-public class GeometryTests {
+class GeometryTests {
 
-    companion object {
-        private const val testEpsilon = Epsilon.EPSILON
+    @Test
+    fun testTransforms() {
+        // Position of the static object
+        val staticObjectPose = Pose2d(10.meters, 10.meters, 0.degrees)
+
+        // Position of the camera on the robot.
+        // Camera is on the back of the robot (1 foot behind the center)
+        // Camera is facing backward
+        val robotToCamera = Pose2d((-1).meters, 0.meters, 180.degrees)
+
+        // The camera detects the static object 9 meter in front and 2 meter to the right of it.
+        val cameraToStaticObject = Pose2d(9.meters, 2.meters, 0.degrees)
+
+        // Transform the static object into the robot's coordinates
+        val robotToStaticObject = robotToCamera + cameraToStaticObject
+
+        // Get the global robot pose
+        val globalRobotPose = staticObjectPose - robotToStaticObject
+
+        println(
+                "X: ${globalRobotPose.translation.x.value}, Y: ${globalRobotPose.translation.y.value}, " +
+                        "Angle: ${globalRobotPose.rotation.degree}"
+        )
+
+        Assert.assertEquals(0.0, globalRobotPose.translation.x.value, kEpsilon)
+        Assert.assertEquals(8.0, globalRobotPose.translation.y.value, kEpsilon)
+        println(globalRobotPose.rotation.toString())
+        Assert.assertEquals((-180).degrees.toRotation2d(), globalRobotPose.rotation)
+    }
+
+    @Test
+    fun testRectangleContains() {
+        val rectangle = Rectangle2d(Vector2(0.meters, 0.meters), Vector2(10.meters, 10.meters))
+        val translation = Vector2(5.meters, 7.meters)
+        assert(rectangle.contains(translation))
     }
 
     @Suppress("LongMethod")
     @Test
-    fun testVector2() {
-        var pos1 = Vector2()
-        assertEquals(0.0, pos1.x, testEpsilon)
-        assertEquals(0.0, pos1.y, testEpsilon)
-        assertEquals(0.0, pos1.magnitude, testEpsilon)
-
-        pos1 = Vector2(3.0, 4.0)
-        assertEquals(3.0, pos1.x, testEpsilon)
-        assertEquals(4.0, pos1.y, testEpsilon)
-        assertEquals(5.0, pos1.magnitude, testEpsilon)
-
-        pos1 = Vector2(3.152, 4.1666)
-        var pos2 = -pos1
-        assertEquals(-pos2.x, pos1.x, testEpsilon)
-        assertEquals(-pos2.y, pos1.y, testEpsilon)
-        assertEquals(pos1.magnitude, pos2.magnitude, testEpsilon)
-
-        pos1 = Vector2(2, 0)
-        var rot1 = Rotation2d.fromDegrees(90.0)
-        pos2 = pos1.rotateBy(rot1)
-        assertEquals(0.0, pos2.x, testEpsilon)
-        assertEquals(2.0, pos2.y, testEpsilon)
-        assertEquals(pos1.magnitude, pos2.magnitude, testEpsilon)
-
-        pos1 = Vector2(2, 0)
-        rot1 = Rotation2d.fromDegrees(-45.0)
-        pos2 = pos1.rotateBy(rot1)
-        assertEquals(Math.sqrt(2.0), pos2.x, testEpsilon)
-        assertEquals(-Math.sqrt(2.0), pos2.y, testEpsilon)
-
-        pos1 = Vector2(2, 0)
-        pos2 = Vector2(-2, 1)
-        var pos3 = pos1.translateBy(pos2)
-        assertEquals(0.0, pos3.x, testEpsilon)
-        assertEquals(1.0, pos3.y, testEpsilon)
-        assertEquals(1.0, pos3.magnitude, testEpsilon)
-
-        val identity = Vector2()
-        pos1 = Vector2(2.16612, -23.55)
-        pos2 = pos1.translateBy(-pos1)
-        assertEquals(identity.x, pos2.x, testEpsilon)
-        assertEquals(identity.y, pos2.y, testEpsilon)
-        assertEquals(identity.magnitude, pos2.magnitude, testEpsilon)
-
-        pos1 = Vector2(0, 1)
-        pos2 = Vector2(10, -1)
-        pos3 = pos1.interpolate(pos2, 0.5)
-        assertEquals(5.0, pos3.x, testEpsilon)
-        assertEquals(0.0, pos3.y, testEpsilon)
-
-        pos1 = Vector2(0, 1)
-        pos2 = Vector2(10, -1)
-        pos3 = pos1.interpolate(pos2, 0.75)
-        assertEquals(7.5, pos3.x, testEpsilon)
-        assertEquals(-0.5, pos3.y, testEpsilon)
+    fun testPose() {
     }
 
     @Suppress("LongMethod")
     @Test
     fun testTwist() {
-        var twist = Twist2d(1.0, 0.0, 0.0)
-        var pose = Pose2d.exp(twist)
-        assertEquals(1.0, pose.translation.x, testEpsilon)
-        assertEquals(0.0, pose.translation.y, testEpsilon)
-        assertEquals(0.0, pose.rotation.degrees, testEpsilon)
-
-        twist = Twist2d(1.0, 0.0, 0.0)
-        pose = Pose2d.exp(twist * 2.5)
-        assertEquals(2.5, pose.translation.x, testEpsilon)
-        assertEquals(0.0, pose.translation.y, testEpsilon)
-        assertEquals(0.0, pose.rotation.degrees, testEpsilon)
-
-        pose = Pose2d(Vector2(2.0, 2.0), Rotation2d.fromRadians(Math.PI / 2))
-        twist = Pose2d.log(pose)
-        assertEquals(Math.PI, twist.dx, testEpsilon)
-        assertEquals(0.0, twist.dy, testEpsilon)
-        assertEquals(Math.PI / 2, twist.dTheta, testEpsilon)
-
-        val new_pose = Pose2d.exp(twist)
-        assertEquals(new_pose.translation.x, pose.translation.x, testEpsilon)
-        // println("pose y: ${new_pose.translation.y}, pose y: ${pose.translation.y}")
-        assertEquals(new_pose.translation.y, pose.translation.y, testEpsilon)
-        assertEquals(new_pose.rotation.degrees, pose.rotation.degrees, testEpsilon)
     }
 
     @Suppress("LongMethod")
     @Test
     fun testRotation() {
-        // Test constructors
-        var rot1 = Rotation2d()
-        assertEquals(1.0, rot1.cosAngle, testEpsilon)
-        assertEquals(0.0, rot1.sinAngle, testEpsilon)
-        // println(rot1.tan)
-        assertEquals(0.0, rot1.tan, testEpsilon)
-        assertEquals(0.0, rot1.degrees, testEpsilon)
-        assertEquals(0.0, rot1.radians, testEpsilon)
-
-        rot1 = Rotation2d(1.0, 1.0, true)
-        assertEquals(Math.sqrt(2.0) / 2.0, rot1.cosAngle, testEpsilon)
-        assertEquals(Math.sqrt(2.0) / 2.0, rot1.sinAngle, testEpsilon)
-        assertEquals(1.0, rot1.tan, testEpsilon)
-        assertEquals(45.0, rot1.degrees, testEpsilon)
-        assertEquals(Math.PI / 4.0, rot1.radians, testEpsilon)
-
-        rot1 = Rotation2d.fromRadians(Math.PI / 2)
-        assertEquals(0.0, rot1.cosAngle, testEpsilon)
-        assertEquals(1.0, rot1.sinAngle, testEpsilon)
-        assertTrue(1.0 / testEpsilon < rot1.tan)
-        assertEquals(90.0, rot1.degrees, testEpsilon)
-        assertEquals(Math.PI / 2.0, rot1.radians, testEpsilon)
-
-        rot1 = Rotation2d.fromDegrees(270.0)
-        assertEquals(0.0, rot1.cosAngle, testEpsilon)
-        assertEquals(-1.0, rot1.sinAngle, testEpsilon)
-        // println(rot1.tan)
-        assertTrue(-1.0 / testEpsilon > rot1.tan)
-        assertEquals(-90.0, rot1.degrees, testEpsilon)
-        assertEquals(-Math.PI / 2.0, rot1.radians, testEpsilon)
-
-        // Test inversion
-        rot1 = Rotation2d.fromDegrees(270.0)
-        var rot2 = rot1.inverse()
-        // println(rot2.cosAngle)
-        assertEquals(0.0, rot2.cosAngle, testEpsilon)
-        assertEquals(1.0, rot2.sinAngle, testEpsilon)
-        assertTrue(1.0 / testEpsilon < rot2.tan)
-        assertEquals(90.0, rot2.degrees, testEpsilon)
-        assertEquals(Math.PI / 2, rot2.radians, testEpsilon)
-
-        rot1 = Rotation2d.fromDegrees(1.0)
-        rot2 = rot1.inverse()
-        assertEquals(rot1.cosAngle, rot2.cosAngle, testEpsilon)
-        assertEquals(-rot1.sinAngle, rot2.sinAngle, testEpsilon)
-        assertEquals(-1.0, rot2.degrees, testEpsilon)
-
-        // Test rotateBy
-        rot1 = Rotation2d.fromDegrees(45.0)
-        rot2 = Rotation2d.fromDegrees(45.0)
-        var rot3 = rot1.rotateBy(rot2)
-        assertEquals(0.0, rot3.cosAngle, testEpsilon)
-        assertEquals(1.0, rot3.sinAngle, testEpsilon)
-        assertTrue(1.0 / testEpsilon < rot3.tan)
-        assertEquals(90.0, rot3.degrees, testEpsilon)
-        assertEquals(Math.PI / 2.0, rot3.radians, testEpsilon)
-
-        rot1 = Rotation2d.fromDegrees(45.0)
-        rot2 = Rotation2d.fromDegrees(-45.0)
-        rot3 = rot1.rotateBy(rot2)
-        assertEquals(1.0, rot3.cosAngle, testEpsilon)
-        assertEquals(0.0, rot3.sinAngle, testEpsilon)
-        assertEquals(0.0, rot3.tan, testEpsilon)
-        assertEquals(0.0, rot3.degrees, testEpsilon)
-        assertEquals(0.0, rot3.radians, testEpsilon)
-
-        // A rotation times its inverse should be the identity
-        val identity = Rotation2d()
-        rot1 = Rotation2d.fromDegrees(21.45)
-        rot2 = rot1.rotateBy(rot1.inverse())
-        assertEquals(identity.cosAngle, rot2.cosAngle, testEpsilon)
-        assertEquals(identity.sinAngle, rot2.sinAngle, testEpsilon)
-        assertEquals(identity.degrees, rot2.degrees, testEpsilon)
-
-        // Test interpolation
-
-        rot1 = Rotation2d.fromDegrees(45.0)
-        rot2 = Rotation2d.fromDegrees(135.0)
-        rot3 = rot1.interpolate(rot2, 0.5)
-        assertEquals(90.0, rot3.degrees, testEpsilon)
-
-        rot1 = Rotation2d.fromDegrees(45.0)
-        rot2 = Rotation2d.fromDegrees(135.0)
-        rot3 = rot1.interpolate(rot2, 0.75)
-        assertEquals(112.5, rot3.degrees, testEpsilon)
-
-        rot1 = Rotation2d.fromDegrees(45.0)
-        rot2 = Rotation2d.fromDegrees(-45.0)
-        rot3 = rot1.interpolate(rot2, 0.5)
-        assertEquals(0.0, rot3.degrees, testEpsilon)
-
-        rot1 = Rotation2d.fromDegrees(45.0)
-        rot2 = Rotation2d.fromDegrees(45.0)
-        rot3 = rot1.interpolate(rot2, 0.5)
-        assertEquals(45.0, rot3.degrees, testEpsilon)
-
-        rot1 = Rotation2d.fromDegrees(45.0)
-        rot2 = Rotation2d.fromDegrees(45.0)
-        rot3 = rot1.interpolate(rot2, 0.5)
-        assertEquals(45.0, rot3.degrees, testEpsilon)
-
-        // Test parallel.
-        rot1 = Rotation2d.fromDegrees(45.0)
-        rot2 = Rotation2d.fromDegrees(45.0)
-        assertTrue(rot1.isParallel(rot2))
-
-        rot1 = Rotation2d.fromDegrees(45.0)
-        rot2 = Rotation2d.fromDegrees(-45.0)
-        assertFalse(rot1.isParallel(rot2))
-
-        rot1 = Rotation2d.fromDegrees(45.0)
-        rot2 = Rotation2d.fromDegrees(-135.0)
-        assertTrue(rot1.isParallel(rot2))
     }
 
     @Suppress("LongMethod")
     @Test
     fun testPose2d() {
-        var pose1 = Pose2d()
-        var pose2 = Pose2d()
-
-        // assertTrue(pose1.equals(pose2))
-        println(pose1.toString())
-        println(pose1.toCSV())
-        println(pose1.hashCode())
-
-        assertEquals(0.0, pose1.translation.x, testEpsilon)
-        assertEquals(0.0, pose1.translation.y, testEpsilon)
-        assertEquals(0.0, pose1.rotation.degrees, testEpsilon)
-
-        pose1 = Pose2d(Vector2(3, 4), Rotation2d.fromDegrees(45.0))
-        assertEquals(3.0, pose1.translation.x, testEpsilon)
-        assertEquals(4.0, pose1.translation.y, testEpsilon)
-        assertEquals(45.0, pose1.rotation.degrees, testEpsilon)
-
-        pose1 = Pose2d(Vector2(3, 4), Rotation2d.fromDegrees(90.0))
-        pose2 = Pose2d(Vector2(1, 0), Rotation2d.fromDegrees(0.0))
-        var pose3 = pose1.transformBy(pose2)
-        assertEquals(3.0, pose3.translation.x, testEpsilon)
-        assertEquals(5.0, pose3.translation.y, testEpsilon)
-        assertEquals(90.0, pose3.rotation.degrees, testEpsilon)
-
-        pose1 = Pose2d(Vector2(3, 4), Rotation2d.fromDegrees(90.0))
-        pose2 = Pose2d(Vector2(1, 0), Rotation2d.fromDegrees(-90.0))
-        pose3 = pose1.transformBy(pose2)
-        assertEquals(3.0, pose3.translation.x, testEpsilon)
-        assertEquals(5.0, pose3.translation.y, testEpsilon)
-        assertEquals(0.0, pose3.rotation.degrees, testEpsilon)
-
-        val identity = Pose2d()
-        pose1 = Pose2d(Vector2(3.51512152, 4.23), Rotation2d.fromDegrees(91.6))
-        pose2 = pose1.transformBy(pose1.inverse())
-        assertEquals(identity.translation.x, pose2.translation.x, testEpsilon)
-        assertEquals(identity.translation.y, pose2.translation.y, testEpsilon)
-        assertEquals(identity.rotation.degrees, pose2.rotation.degrees, testEpsilon)
-
-        pose1 = Pose2d(Vector2(3, 4), Rotation2d.fromDegrees(90.0))
-        pose2 = Pose2d(Vector2(13, -6), Rotation2d.fromDegrees(0.0))
-        pose3 = pose1.interpolate(pose2, 0.5)
-        var expected_angle_rads = Math.PI / 4.0
-        assertEquals(3.0 + 10.0 * Math.cos(expected_angle_rads), pose3.translation.x, testEpsilon)
-        assertEquals(-6.0 + 10.0 * Math.sin(expected_angle_rads), pose3.translation.y, testEpsilon)
-        assertEquals(expected_angle_rads, pose3.rotation.radians, testEpsilon)
-
-        pose1 = Pose2d(Vector2(3, 4), Rotation2d.fromDegrees(90.0))
-        pose2 = Pose2d(Vector2(13, -6), Rotation2d.fromDegrees(0.0))
-        pose3 = pose1.interpolate(pose2, 0.75)
-        expected_angle_rads = Math.PI / 8.0
-        assertEquals(3.0 + 10.0 * Math.cos(expected_angle_rads), pose3.translation.x, testEpsilon)
-        assertEquals(-6.0 + 10.0 * Math.sin(expected_angle_rads), pose3.translation.y, testEpsilon)
-        assertEquals(expected_angle_rads, pose3.rotation.radians, testEpsilon)
     }
 }

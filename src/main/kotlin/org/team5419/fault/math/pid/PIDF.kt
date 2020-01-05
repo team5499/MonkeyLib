@@ -1,154 +1,137 @@
 package org.team5419.fault.math.pid
 
-import edu.wpi.first.wpilibj.Timer
+import org.team5419.fault.math.kEpsilon
+import org.team5419.fault.util.DoubleSource
+import kotlin.math.absoluteValue
 
-public class PIDF {
-    /**
-     * The PIDF proportional constant.
-     */
-    public var kP: Double
+// adapted from:
+// https://github.com/Team1323/2019DeepSpace/blob/13d5d4ac56c2da11d112ab9ab84241c8b6878018/src/main/java/com/team1323/lib/util/SynchronousPIDF.java
+class PIDF(
+    var kP: Double = 0.0,
+    var kI: Double = 0.0,
+    var kD: Double = 0.0,
+    var kF: Double = 0.0,
+    private val feedbackVariable: DoubleSource
+) {
 
-    /**
-     * The PIDF integral constant.
-     */
-    public var kI: Double
+    constructor(
+        kP: Double = 0.0,
+        kI: Double = 0.0,
+        kD: Double = 0.0,
+        feedbackVariable: DoubleSource
+    ): this(kP, kI, kD, 0.0, feedbackVariable)
 
-    /**
-     * The PIDF derivative constant.
-     */
-    public var kD: Double
+    constructor(
+        kP: Double = 0.0,
+        kD: Double = 0.0,
+        feedbackVariable: DoubleSource
+    ): this(kP, 0.0, kD, 0.0, feedbackVariable)
 
-    /**
-     * The PIDF final constant.
-     */
-    public var kF: Double
+    var setpoint = 0.0
+        set(value) {
+            if (value == field) return
+            field = if (maximumInput > minimumInput) {
+                if (value > maximumInput) maximumInput
+                else if (value < minimumInput) minimumInput
+                else value
+            } else value
+        }
 
-    /**
-     * The max absolute value of the output.
-     */
-    public var totalMax: Double
+    var maximumOutput = 1.0
+        private set
+    var minimumOutput = -1.0
+        private set
 
-    /**
-     * The set point the pid loop is targeting
-     */
-    public var setpoint: Double
+    var maximumInput = 0.0
+        private set
+    var minimumInput = 0.0
+        private set
 
-    /**
-     * The value of the system. Used to get error when calculate is called.
-     */
-    public var processVariable: Double
+    var deadband = 0.0
 
-    /**
-     * Number of iterations the accumulator keeps track of.
-     * 0 disables this (keeps track of all loops)
-     */
-    public var integralZone: Int
+    var continuous = false
+    var inverted = false
 
-    private var lastError: Double
-    private var accumulator: Double
-    private var integralZoneBuffer: MutableList<Double>
-    private val timer: Timer
+    var error = 0.0
+        private set
+    var output = 0.0
+        private set
 
-    /**
-     * Calculates the error based off of the current processVariable and setpoint
-     */
-    val error: Double
-        get() = (setpoint - processVariable)
+    private var lastError = 0.0
+    private var lastInput = Double.NaN
+    private var accumulator = 0.0
 
-    init {
-        timer = Timer()
-        timer.reset()
-        accumulator = 0.0
-        lastError = 0.0
-        setpoint = 0.0
-        processVariable = 0.0
-        totalMax = 0.0
-        integralZoneBuffer = mutableListOf<Double>()
-        integralZone = 0
+    @Suppress("ComplexMethod")
+    fun calculate(dt: Double): Double {
+        var newDt = dt
+        if (newDt < kEpsilon) newDt = kEpsilon
+        val input = feedbackVariable()
+        lastInput = input
+        error = setpoint - input
+        if (continuous) {
+            if (error.absoluteValue > (maximumInput - minimumInput) / 2.0) {
+                if (error > 0) {
+                    error = error - maximumInput + minimumInput
+                } else {
+                    error = error + maximumInput - minimumInput
+                }
+            }
+        }
+        if ((error * kP < maximumOutput) && (error * kP > minimumOutput)) {
+            accumulator += error * newDt
+        } else {
+            accumulator = 0.0
+        }
+
+        val propError = if (error.absoluteValue < deadband) 0.0 else error
+
+        output = kP * propError + kI * accumulator + kD * (error - lastError) / dt + kF * setpoint
+        lastError = error
+
+        if (output > maximumOutput) {
+            output = maximumOutput
+        } else if (output < minimumOutput) {
+            output = minimumOutput
+        }
+
+        return output * if (inverted) -1.0 else 1.0
     }
 
-    public constructor(kP: Double, kI: Double, kD: Double, kF: Double, totalMax: Double = 0.0) {
+    fun setPID(kP: Double, kI: Double, kD: Double) = setPID(kP, kI, kD, 0.0)
+    fun setPID(kP: Double, kI: Double, kD: Double, kF: Double) {
         this.kP = kP
         this.kI = kI
         this.kD = kD
         this.kF = kF
-        this.totalMax = totalMax
     }
 
-    public constructor(): this(0.0, 0.0, 0.0, 0.0)
-
-    private fun updateAccumulator() {
-        if (integralZone == 0) {
-            accumulator += error * timer.get()
-        } else {
-            accumulator = 0.0
-            integralZoneBuffer.add(error * timer.get())
-            while (integralZoneBuffer.size > integralZone) {
-                integralZoneBuffer.removeAt(0)
-            }
-            for (value in integralZoneBuffer) {
-                accumulator += value
-            }
+    fun setInputRange(min: Double, max: Double) {
+        if (min > max) {
+            println("ERROR: tried to set min input to greater than max input in PID")
+            return
         }
+        minimumInput = min
+        maximumInput = max
     }
 
-    /**
-     * Calculates the current PIDF output based of the error.
-     * It also updates the accumulator and sets the last error.
-     *
-     * Make sure to update the processVariable before calling it.
-     *
-     * @return the PIDF output
-     */
-    public fun calculate(): Double {
-        var total = 0.0
-
-        if (kP != 0.0) {
-            total += kP * error
+    fun setOutputRange(min: Double, max: Double) {
+        if (min > max) {
+            println("ERROR: tried to set min output to greater than max output in PID")
+            return
         }
-
-        if (kI != 0.0) {
-            updateAccumulator()
-
-            total += kI * accumulator
-        }
-
-        if (kD != 0.0) {
-            total += kD * (error - lastError) / timer.get()
-
-            timer.stop()
-            timer.reset()
-            timer.start()
-        }
-
-        if (kF != 0.0) {
-            total += kF * setpoint
-        }
-
-        lastError = error
-
-        if (totalMax != 0.0) {
-            if (total > totalMax) {
-                total = totalMax
-            }
-
-            if (total < /** > */ -totalMax) {
-                total = -totalMax
-            }
-        }
-
-        return total
+        minimumOutput = min
+        maximumOutput = max
     }
 
-    /**
-     * Resets the pid loop timer, acumulator and setpoint.
-     * It dosent change the constants.
-     */
-    public fun reset() {
-        timer.stop()
-        timer.reset()
-        accumulator = 0.0
+    fun reset() {
+        lastInput = Double.NaN
         lastError = 0.0
+        output = 0.0
         setpoint = 0.0
+        resetAccumulator()
+    }
+
+    fun resetAccumulator() {
+        accumulator = 0.0
     }
 }
