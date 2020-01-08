@@ -12,7 +12,7 @@
       "libName": "CTRE_Phoenix_WPI",
       "sharedLibrary": false,
       "skipInvalidPlatforms": true,
-      "version": "5.12.0"
+      "version": "5.17.3"
     },
     {
       "artifactId": "api-cpp",
@@ -26,7 +26,7 @@
       "libName": "CTRE_Phoenix",
       "sharedLibrary": false,
       "skipInvalidPlatforms": true,
-      "version": "5.12.0"
+      "version": "5.17.3"
     },
     {
       "artifactId": "cci",
@@ -40,14 +40,61 @@
       "libName": "CTRE_PhoenixCCI",
       "sharedLibrary": false,
       "skipInvalidPlatforms": true,
-      "version": "5.12.0"
+      "version": "5.17.3"
+    },
+    {
+      "artifactId": "diagnostics",
+      "binaryPlatforms": [
+        "linuxathena",
+        "windowsx86-64",
+        "linuxx86-64"
+      ],
+      "groupId": "com.ctre.phoenix",
+      "headerClassifier": "headers",
+      "libName": "CTRE_PhoenixDiagnostics",
+      "sharedLibrary": false,
+      "skipInvalidPlatforms": true,
+      "version": "5.17.3"
+    },
+    {
+      "artifactId": "canutils",
+      "binaryPlatforms": [
+        "windowsx86-64",
+        "linuxx86-64"
+      ],
+      "groupId": "com.ctre.phoenix",
+      "headerClassifier": "headers",
+      "libName": "CTRE_PhoenixCanutils",
+      "sharedLibrary": false,
+      "skipInvalidPlatforms": true,
+      "version": "5.17.3"
+    },
+    {
+      "artifactId": "platform-stub",
+      "binaryPlatforms": [
+        "windowsx86-64",
+        "linuxx86-64"
+      ],
+      "groupId": "com.ctre.phoenix",
+      "headerClassifier": "headers",
+      "libName": "CTRE_PhoenixPlatform",
+      "sharedLibrary": false,
+      "skipInvalidPlatforms": true,
+      "version": "5.17.3"
     },
     {
       "artifactId": "core",
+      "binaryPlatforms": [
+        "linuxathena",
+        "windowsx86-64",
+        "linuxx86-64"
+      ],
       "groupId": "com.ctre.phoenix",
       "headerClassifier": "headers",
       "libName": "CTRE_PhoenixCore",
-      "version": "5.12.0"
+      "sharedLibrary": false,
+      "skipInvalidPlatforms": true,
+      "version": "5.17.3"
     }
   ],
   "fileName": "Phoenix.json",
@@ -55,12 +102,12 @@
     {
       "artifactId": "api-java",
       "groupId": "com.ctre.phoenix",
-      "version": "5.12.0"
+      "version": "5.17.3"
     },
     {
       "artifactId": "wpiapi-java",
       "groupId": "com.ctre.phoenix",
-      "version": "5.12.0"
+      "version": "5.17.3"
     }
   ],
   "jniDependencies": [
@@ -74,7 +121,53 @@
         "windowsx86-64",
         "linuxx86-64"
       ],
-      "version": "5.12.0"
+      "version": "5.17.3"
+    },
+    {
+      "artifactId": "diagnostics",
+      "groupId": "com.ctre.phoenix",
+      "isJar": false,
+      "skipInvalidPlatforms": true,
+      "validPlatforms": [
+        "linuxathena",
+        "windowsx86-64",
+        "linuxx86-64"
+      ],
+      "version": "5.17.3"
+    },
+    {
+      "artifactId": "canutils",
+      "groupId": "com.ctre.phoenix",
+      "isJar": false,
+      "skipInvalidPlatforms": true,
+      "validPlatforms": [
+        "windowsx86-64",
+        "linuxx86-64"
+      ],
+      "version": "5.17.3"
+    },
+    {
+      "artifactId": "platform-stub",
+      "groupId": "com.ctre.phoenix",
+      "isJar": false,
+      "skipInvalidPlatforms": true,
+      "validPlatforms": [
+        "windowsx86-64",
+        "linuxx86-64"
+      ],
+      "version": "5.17.3"
+    },
+    {
+      "artifactId": "core",
+      "groupId": "com.ctre.phoenix",
+      "isJar": false,
+      "skipInvalidPlatforms": true,
+      "validPlatforms": [
+        "linuxathena",
+        "windowsx86-64",
+        "linuxx86-64"
+      ],
+      "version": "5.17.3"
     }
   ],
   "jsonUrl": "http://devsite.ctr-electronics.com/maven/release/com/ctre/phoenix/Phoenix-latest.json",
@@ -83,5 +176,5 @@
   ],
   "name": "CTRE-Phoenix",
   "uuid": "ab676553-b602-441f-a38d-f1296eff6537",
-  "version": "5.12.0"
+  "version": "5.17.3"
 }
