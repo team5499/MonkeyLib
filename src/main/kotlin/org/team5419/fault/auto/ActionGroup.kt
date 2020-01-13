@@ -66,7 +66,7 @@ open class SerialAction(actions: List<Action>) : ActionGroup() {
         finishCondition += { isLastAction() }
         finishCondition += { isLastActionDone() }
         this.actions = actions.toMutableList()
-        assert(this.actions.size < 1) { "No actions added to command group" }
+        // assert(this.actions.size < 1) { "No actions added to command group" }
         index = 0
     }
 
