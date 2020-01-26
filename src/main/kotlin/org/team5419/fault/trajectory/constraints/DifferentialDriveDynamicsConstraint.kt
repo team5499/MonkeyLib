@@ -5,7 +5,7 @@ import org.team5419.fault.math.geometry.Pose2dWithCurvature
 import org.team5419.fault.math.units.SIUnit
 import org.team5419.fault.math.units.derived.Volt
 
-class DifferentialDriveDynamicsConstraint internal constructor(
+class DifferentialDriveDynamicsConstraint constructor(
     private val drive: DifferentialDrive,
     private val maxVoltage: SIUnit<Volt>
 ) : TimingConstraint<Pose2dWithCurvature> {

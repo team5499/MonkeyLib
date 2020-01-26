@@ -6,7 +6,7 @@ import org.team5419.fault.math.units.Meter
 import org.team5419.fault.math.units.SIUnit
 import org.team5419.fault.math.units.derived.LinearVelocity
 
-class VelocityLimitRadiusConstraint internal constructor(
+class VelocityLimitRadiusConstraint constructor(
     private val point: Vector2d,
     private val radius: SIUnit<Meter>,
     private val velocityLimit: SIUnit<LinearVelocity>
