@@ -7,7 +7,7 @@ import org.team5419.fault.math.units.derived.LinearAcceleration
 import kotlin.math.absoluteValue
 import kotlin.math.sqrt
 
-class CentripetalAccelerationConstraint internal constructor(
+class CentripetalAccelerationConstraint constructor(
     private val maxCentripetalAcceleration: SIUnit<LinearAcceleration>
 ) : TimingConstraint<Pose2dWithCurvature> {
 

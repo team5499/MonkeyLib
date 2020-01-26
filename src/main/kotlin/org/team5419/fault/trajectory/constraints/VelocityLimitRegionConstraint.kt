@@ -5,7 +5,7 @@ import org.team5419.fault.math.geometry.Rectangle2d
 import org.team5419.fault.math.units.SIUnit
 import org.team5419.fault.math.units.derived.LinearVelocity
 
-public class VelocityLimitRegionConstraint internal constructor(
+public class VelocityLimitRegionConstraint constructor(
     private val region: Rectangle2d,
     private val velocityLimit: SIUnit<LinearVelocity>
 ) : TimingConstraint<Pose2dWithCurvature> {

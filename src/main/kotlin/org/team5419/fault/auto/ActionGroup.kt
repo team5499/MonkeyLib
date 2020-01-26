@@ -52,9 +52,9 @@ open class ParallelAction(actions: List<Action>) : ActionGroup() {
     }
 }
 
-open class SerialAction(actions: List<Action>) : ActionGroup() {
+open class SerialAction(actions: MutableList<Action>) : ActionGroup() {
 
-    constructor(vararg actions: Action) : this(actions.toList())
+    constructor(vararg actions: Action) : this(actions.toMutableList())
 
     private var index = 0
     private val isLastAction = { index == (actions.size - 1) }
@@ -65,8 +65,8 @@ open class SerialAction(actions: List<Action>) : ActionGroup() {
     init {
         finishCondition += { isLastAction() }
         finishCondition += { isLastActionDone() }
-        this.actions = actions.toMutableList()
-        assert(this.actions.size < 1) { "No actions added to command group" }
+        this.actions = actions
+        // assert(this.actions.size < 1) { "No actions added to command group" }
         index = 0
     }
 
