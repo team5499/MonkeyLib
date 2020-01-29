@@ -8,7 +8,7 @@ import kotlin.math.absoluteValue
 import kotlin.math.sqrt
 import kotlin.math.abs
 
-class AngularAccelerationConstraint (
+class AngularAccelerationConstraint constructor(
     val maxAngularAcceleration: SIUnit<AngularAcceleration>
 ) : TimingConstraint<Pose2dWithCurvature> {
 
