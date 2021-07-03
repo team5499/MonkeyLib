@@ -1,5 +1,7 @@
 package org.team5499.monkeyLib.util
 
+import org.team5499.monkeyLib.math.Epsilon
+
 @SuppressWarnings("MagicNumber")
 object Utils {
 
@@ -103,5 +105,13 @@ object Utils {
 
     public fun degreesToTalonAngle(gyroTicksPerRotation: Int, degrees: Double): Int {
         return ((gyroTicksPerRotation / 360.0) * degrees).toInt()
+    }
+
+    public fun allCloseTo(list: MutableList<Double>, value: Double, epsilon: Double): Boolean {
+        var result = false
+        for (v in list) {
+            result = result && Epsilon.epsilonEquals(v, value, epsilon)
+        }
+        return result
     }
 }

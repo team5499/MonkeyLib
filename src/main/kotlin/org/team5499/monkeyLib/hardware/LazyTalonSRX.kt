@@ -7,11 +7,11 @@ import com.ctre.phoenix.motorcontrol.NeutralMode
 
 class LazyTalonSRX(deviceNumber: Int) : TalonSRX(deviceNumber) {
 
-    private var lastSet = Double.NaN
-    private var lastSecondarySet = Double.NaN
-    private var lastControlMode: ControlMode? = null
-    private var lastDemandType: DemandType? = null
-    private var lastBrakeMode: NeutralMode? = null
+    internal var lastSet = Double.NaN
+    internal var lastSecondarySet = Double.NaN
+    internal var lastControlMode: ControlMode? = null
+    internal var lastDemandType: DemandType? = null
+    internal var lastBrakeMode: NeutralMode? = null
 
     public override fun set(mode: ControlMode, value: Double) {
         if (value != lastSet || mode != lastControlMode) {
